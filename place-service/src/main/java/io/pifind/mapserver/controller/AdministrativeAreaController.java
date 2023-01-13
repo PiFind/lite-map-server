@@ -4,10 +4,7 @@ import io.pifind.common.response.R;
 import io.pifind.place.api.IAdministrativeAreaService;
 import io.pifind.place.model.AdministrativeAreaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 
@@ -18,11 +15,27 @@ public class AdministrativeAreaController {
     @Autowired
     private IAdministrativeAreaService administrativeAreaService;
 
-    @GetMapping("/{id}/{layerLevel}")
+    @GetMapping("/get")
     public R<AdministrativeAreaDTO> getAdministrativeAreaById(
-            @PathVariable Long id,
-            @PathVariable Integer layerLevel) {
-        return administrativeAreaService.getAdministrativeAreaById(id,layerLevel);
+            @RequestParam("id") Long id,
+            @RequestParam(value = "deep",defaultValue = "1",required = false) Integer deep
+    ) {
+        return administrativeAreaService.getAdministrativeAreaById(id,deep);
+    }
+
+    @GetMapping("/exist")
+    public R<Boolean> existAdministrativeAreaById(
+            @RequestParam("id") Long id
+    ) {
+        return administrativeAreaService.existAdministrativeAreaById(id);
+    }
+
+    @GetMapping("/detail")
+    public R<String> getDetailedAddress(
+            @RequestParam("id") Long id,
+            @RequestParam(value = "separator",defaultValue = "/",required = false) String separator
+    ) {
+        return administrativeAreaService.getDetailedAddress(id,separator);
     }
 
 }

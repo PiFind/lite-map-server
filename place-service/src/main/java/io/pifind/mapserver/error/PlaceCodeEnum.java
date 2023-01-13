@@ -18,7 +18,11 @@ public enum PlaceCodeEnum {
     /**
      * 未能定位到行政区
      */
-    FAILED_TO_LOCATE_TO_ADMINISTRATIVE_AREA(0x1A01,"Place.FailedToLocateToAdministrativeArea")
+    FAILED_TO_LOCATE_TO_ADMINISTRATIVE_AREA(0x1A01,"Place.FailedToLocateToAdministrativeArea"),
+    /**
+     * 无法解析的坐标系
+     */
+    UNRESOLVED_COORDINATE_SYSTEM(0x1A02,"Place.UnresolvedCoordinateSystem"),
     ;
 
     private final int code;

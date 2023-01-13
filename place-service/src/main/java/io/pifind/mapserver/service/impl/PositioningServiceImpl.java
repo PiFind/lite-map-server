@@ -114,7 +114,6 @@ public class PositioningServiceImpl implements IPositioningService {
         return R.success(locationDTO);
     }
 
-
     /**
      * 调用 google API 进行查询地址
      * @param coordinate 需要查询的目标坐标
