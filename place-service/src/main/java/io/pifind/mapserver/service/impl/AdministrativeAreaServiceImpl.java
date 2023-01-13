@@ -1,9 +1,10 @@
 package io.pifind.mapserver.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import io.pifind.common.i18n.MessageBundle;
 import io.pifind.common.response.R;
+import io.pifind.common.response.StandardCode;
 import io.pifind.mapserver.converter.dto.AdministrativeAreaDtoConverter;
+import io.pifind.mapserver.error.PlaceCodeEnum;
 import io.pifind.mapserver.mapper.AdministrativeAreaMapper;
 import io.pifind.mapserver.model.po.AdministrativeAreaPO;
 import io.pifind.place.api.IAdministrativeAreaService;
@@ -12,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -22,9 +22,6 @@ import java.util.Locale;
 public class AdministrativeAreaServiceImpl implements IAdministrativeAreaService {
 
     public static final int MAX_LEVEL = 10;
-
-    @Resource(name = "PlaceService-MessageBundle")
-    private MessageBundle messageBundle;
 
     @Autowired
     private AdministrativeAreaMapper administrativeAreaMapper;
@@ -38,10 +35,7 @@ public class AdministrativeAreaServiceImpl implements IAdministrativeAreaService
                 new LambdaQueryWrapper<AdministrativeAreaPO>()
                         .eq(AdministrativeAreaPO::getId,id)
         );
-        return R.success(
-                messageBundle.get("AdministrativeAreaService.Success"),
-                exist
-        );
+        return R.success(exist);
     }
 
     @Override
@@ -52,16 +46,11 @@ public class AdministrativeAreaServiceImpl implements IAdministrativeAreaService
 
         // 如果为null
         if (tree == null) {
-            return R.failure(
-                    messageBundle.get("AdministrativeAreaService.AdministrativeAreaNotFound")
-            );
+            return R.failure(PlaceCodeEnum.ADMINISTRATIVE_AREA_NOT_FOUND);
         }
 
         // 返回成功结果
-        return R.success(
-                messageBundle.get("AdministrativeAreaService.Success"),
-                tree
-        );
+        return R.success(tree);
 
     }
 
@@ -71,9 +60,7 @@ public class AdministrativeAreaServiceImpl implements IAdministrativeAreaService
         // 获取要查询的行政区信息
         AdministrativeAreaPO areaPO = administrativeAreaMapper.selectById(id);
         if (areaPO == null) {
-            return R.failure(
-                    messageBundle.get("AdministrativeAreaService.AdministrativeAreaNotFound")
-            );
+            return R.failure(PlaceCodeEnum.ADMINISTRATIVE_AREA_NOT_FOUND);
         }
 
         StringBuilder address = new StringBuilder();
@@ -100,7 +87,7 @@ public class AdministrativeAreaServiceImpl implements IAdministrativeAreaService
         }
 
         return R.success(
-                messageBundle.get("AdministrativeAreaService.Success"),
+                StandardCode.SUCCESS_MESSAGE,
                 address.toString()
         );
 

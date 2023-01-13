@@ -2,6 +2,7 @@ package io.pifind.mapserver.converter.dto;
 
 import io.pifind.map.constant.GeographicCoordinateSystemEnum;
 import io.pifind.map.model.CoordinateDTO;
+
 import io.pifind.mapserver.model.po.IP2LocationPO;
 import io.pifind.place.model.LocationDTO;
 import org.mapstruct.Mapper;
@@ -16,21 +17,10 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface LocationDtoConverter {
 
-    String DEFAULT_FULL_NAME_SEPARATOR = " ";
-
     default LocationDTO convert(IP2LocationPO po) {
         LocationDTO dto = new LocationDTO();
 
-        // 构建全名
-        String fullName =
-                po.getCountryName() +
-                DEFAULT_FULL_NAME_SEPARATOR +
-                po.getRegionName() +
-                DEFAULT_FULL_NAME_SEPARATOR +
-                po.getCityName();
-
         dto.setName(po.getCityName());
-        dto.setFullName(fullName);
 
         // 构建坐标系
         CoordinateDTO coordinate = new CoordinateDTO();

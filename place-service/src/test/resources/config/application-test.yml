@@ -1,2 +1,12 @@
 server:
   port: 7017
+
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://120.79.38.99:3306/ip2location
+    username: root
+    password: zm19971205
+  messages:
+    basename: i18n.message
+    encoding: utf-8
