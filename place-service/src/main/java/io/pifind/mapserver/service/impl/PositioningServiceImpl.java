@@ -47,6 +47,9 @@ public class PositioningServiceImpl implements IPositioningService {
                         .le(IP2LocationPO::getIpFrom,ipAddress)
                         .ge(IP2LocationPO::getIpTo,ipAddress)
         );
+        if (ip2LocationPO == null) {
+            return R.failure(PlaceCodeEnum.FAILED_TO_LOCATE_TO_ADMINISTRATIVE_AREA);
+        }
 
         LocationDTO locationDTO = locationDtoConverter.convert(ip2LocationPO);
 
@@ -120,7 +123,6 @@ public class PositioningServiceImpl implements IPositioningService {
      * @return 定位的 AreaID
      */
     private Long getAdministrativeAreaIdByCoordinate(@NotNull CoordinateDTO coordinate) {
-        // GoogleAPI
 
         return null;
     }

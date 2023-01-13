@@ -9,7 +9,12 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>poi-service</artifactId>
+    <groupId>io.pifind.map3rd</groupId>
+    <artifactId>third-party</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>google</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -17,12 +22,4 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <dependencies>
-        <!-- 地点服务标准API -->
-        <dependency>
-            <groupId>io.pifind.map</groupId>
-            <artifactId>poi-api</artifactId>
-            <version>${io.pifind.map.api}</version>
-        </dependency>
-    </dependencies>
 </project>

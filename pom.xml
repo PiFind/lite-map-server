@@ -13,14 +13,14 @@
 
     <groupId>io.pifind.mapserver</groupId>
     <artifactId>lite-map-server</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
+        <module>map-base</module>
+        <module>third-party</module>
         <module>place-service</module>
         <module>poi-service</module>
-        <module>map-base</module>
-        <module>authentication-service</module>
     </modules>
 
     <repositories>
