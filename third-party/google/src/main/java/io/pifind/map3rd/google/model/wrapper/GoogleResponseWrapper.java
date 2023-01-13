@@ -15,7 +15,7 @@ public class GoogleResponseWrapper<T> {
     /**
      * 查询结果
      */
-    private List<T> result;
+    private List<T> results;
 
     /**
      * 返回状态编码

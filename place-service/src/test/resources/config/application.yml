@@ -11,4 +11,5 @@ spring:
     basename: i18n.PlaceService
     encoding: utf-8
 
-google-map-api: ""
+map-3rd:
+  google-api-key: "XXXXXXX"

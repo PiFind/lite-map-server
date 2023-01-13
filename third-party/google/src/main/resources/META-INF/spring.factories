@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=io.pifind.map3rd.google.config.GoogleMapConfiguration

@@ -34,7 +34,7 @@ public class GeocodingServiceImpl implements IGeocodingService {
 
         GeocodingStatusEnum status = GeocodingStatusEnum.valueOf(response.getStatus());
         if (status.equals(GeocodingStatusEnum.OK)) {
-            return R.success(response.getResult());
+            return R.success(response.getResults());
         } else {
             return R.failure(status.name());
         }
@@ -54,7 +54,7 @@ public class GeocodingServiceImpl implements IGeocodingService {
 
         ReverseGeocodingStatusEnum status = ReverseGeocodingStatusEnum.valueOf(response.getStatus());
         if (status.equals(ReverseGeocodingStatusEnum.OK)) {
-            return R.success(response.getResult());
+            return R.success(response.getResults());
         } else {
             return R.failure(status.name());
         }

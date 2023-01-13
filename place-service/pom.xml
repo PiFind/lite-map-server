@@ -18,5 +18,11 @@
             <artifactId>place-api</artifactId>
             <version>${io.pifind.map.api}</version>
         </dependency>
+        <dependency>
+            <groupId>io.pifind.map3rd</groupId>
+            <artifactId>google</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

@@ -22,7 +22,7 @@ public class GoogleMapTemplateConfiguration {
             GoogleApiTemplate googleApiTemplate = new GoogleApiTemplate(key);
             // 配置FastJson消息转换器
             googleApiTemplate.getMessageConverters().add(0,new FastJsonHttpMessageConverter());
-            return new GoogleApiTemplate(key);
+            return googleApiTemplate;
         }
         throw new RuntimeException("没有配置Google API");
     }

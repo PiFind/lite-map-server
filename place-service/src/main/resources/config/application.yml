@@ -12,4 +12,5 @@ spring:
     encoding: utf-8
 
 # 配置 Google API
-google-map-api: "AAAAAAAAAA"
+map-3rd:
+  google-api-key: "XXXXXX"
