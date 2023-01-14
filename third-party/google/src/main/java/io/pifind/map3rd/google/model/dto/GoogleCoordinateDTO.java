@@ -3,7 +3,7 @@ package io.pifind.map3rd.google.model.dto;
 import lombok.Data;
 
 @Data
-public class WGS84CoordinateDTO {
+public class GoogleCoordinateDTO {
 
     /**
      * 维度

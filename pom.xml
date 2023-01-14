@@ -47,6 +47,8 @@
         <!-- mapstruct -->
         <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
         <org.projectlombok.version>1.18.24</org.projectlombok.version>
+
+        <io.pifind.common>0.0.2-snapshot</io.pifind.common>
         <io.pifind.map.api>0.0.1-snapshot</io.pifind.map.api>
     </properties>
 
@@ -138,7 +140,14 @@
         <dependency>
             <groupId>io.pifind</groupId>
             <artifactId>common</artifactId>
-            <version>0.0.2-snapshot</version>
+            <version>${io.pifind.common}</version>
+        </dependency>
+
+        <!-- 地图服务公共库 -->
+        <dependency>
+            <groupId>io.pifind.map</groupId>
+            <artifactId>common</artifactId>
+            <version>${io.pifind.map.api}</version>
         </dependency>
 
     </dependencies>

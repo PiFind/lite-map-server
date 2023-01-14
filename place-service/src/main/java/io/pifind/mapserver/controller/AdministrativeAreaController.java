@@ -18,7 +18,7 @@ public class AdministrativeAreaController {
     @GetMapping("/get")
     public R<AdministrativeAreaDTO> getAdministrativeAreaById(
             @RequestParam("id") Long id,
-            @RequestParam(value = "deep",defaultValue = "1",required = false) Integer deep
+            @RequestParam(value = "deep",defaultValue = "2",required = false) Integer deep
     ) {
         return administrativeAreaService.getAdministrativeAreaById(id,deep);
     }

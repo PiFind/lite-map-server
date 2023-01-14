@@ -14,7 +14,7 @@ public enum PlaceCodeEnum {
     /**
      * 未找到行政区
      */
-    ADMINISTRATIVE_AREA_NOT_FOUND(0x1001,"Place.AdministrativeAreaNotFound"),
+    ADMINISTRATIVE_AREA_NOT_FOUND(0x1001,"Place.AdministrativeAreaNotFounds"),
     /**
      * 未能定位到行政区
      */
@@ -26,21 +26,21 @@ public enum PlaceCodeEnum {
     ;
 
     private final int code;
-    private final String messageId;
+    private final String message;
 
     private static Map<Integer,PlaceCodeEnum> map;
 
-    PlaceCodeEnum(int code, String messageId) {
+    PlaceCodeEnum(int code, String message) {
         this.code = code;
-        this.messageId = messageId;
+        this.message = message;
     }
 
     public int code() {
         return code;
     }
 
-    public String messageId() {
-        return messageId;
+    public String message() {
+        return message;
     }
 
     public static PlaceCodeEnum valueOf(int code) {

@@ -9,7 +9,7 @@ import java.util.List;
  * 地理编码/反向地理编码返回值实体类
  */
 @Data
-public class GeocodingDTO {
+public class GoogleGeocodingDTO {
 
     /**
      * 数组表示返回结果的类型。此数组包含一组零个或多个标记，用于标识结果中返回的地图项类型。
@@ -100,7 +100,7 @@ public class GeocodingDTO {
         /**
          * 包含经过地理编码的纬度和经度值。对于正常的地址查询，此字段通常是最重要的。
          */
-        private WGS84CoordinateDTO location;
+        private GoogleCoordinateDTO location;
 
         /**
          * 存储有关指定位置的其他数据。目前支持以下值：
@@ -130,13 +130,13 @@ public class GeocodingDTO {
          * {@code southwest} 和 {@code northeast} 角。通常，视口会在向用户显示
          * 结果时对结果进行框架处理。
          */
-        private RegionDTO viewport;
+        private GoogleRegionDTO viewport;
 
         /**
          * （可选返回）存储可完全包含返回结果的边界框。请注意，这些边界可能与推荐的视口不匹配。
          * （例如，旧金山包含法拉隆岛，理论上它是这个城市的一部分，但不应该在视口中返回）。
          */
-        private RegionDTO bounds;
+        private GoogleRegionDTO bounds;
     }
 
     /**

@@ -12,7 +12,9 @@
     <groupId>io.pifind.map3rd</groupId>
     <artifactId>third-party</artifactId>
     <packaging>pom</packaging>
+
     <modules>
+        <module>unified-api</module>
         <module>google</module>
     </modules>
 

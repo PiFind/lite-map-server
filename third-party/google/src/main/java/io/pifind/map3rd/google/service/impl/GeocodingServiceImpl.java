@@ -1,64 +1,75 @@
 package io.pifind.map3rd.google.service.impl;
 
 import io.pifind.common.response.R;
-import io.pifind.common.util.UriSplicedUtils;
-import io.pifind.map3rd.google.model.constant.GeocodingStatusEnum;
-import io.pifind.map3rd.google.model.constant.ReverseGeocodingStatusEnum;
-import io.pifind.map3rd.google.model.dto.GeocodingDTO;
+import io.pifind.common.response.StandardCode;
+import io.pifind.map.model.CoordinateDTO;
+import io.pifind.map3rd.api.IGeocodingService;
+import io.pifind.map3rd.google.converter.CoordinateDtoConverter;
+import io.pifind.map3rd.google.model.dto.GoogleCoordinateDTO;
+import io.pifind.map3rd.google.model.dto.GoogleGeocodingDTO;
 import io.pifind.map3rd.google.model.qo.GeocodingQO;
-import io.pifind.map3rd.google.model.qo.ReverseGeocodingQO;
-import io.pifind.map3rd.google.model.wrapper.GeocodingWrapper;
-import io.pifind.map3rd.google.request.GoogleApiTemplate;
-import io.pifind.map3rd.google.service.IGeocodingService;
+import io.pifind.map3rd.google.service.IGoogleGeocodingService;
+import io.pifind.map3rd.model.GeocodingDTO;
+import io.pifind.map3rd.model.ReverseGeocodingDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+/**
+ * 统一地理编码服务实现
+ */
+@Service("Google-GeocodingService")
 public class GeocodingServiceImpl implements IGeocodingService {
 
     @Autowired
-    private GoogleApiTemplate googleApiTemplate;
+    private IGoogleGeocodingService googleGeocodingService;
+
+    @Autowired
+    private CoordinateDtoConverter coordinateDtoConverter;
 
     @Override
-    public R<List<GeocodingDTO>> geocoding(GeocodingQO qo) {
+    public R<GeocodingDTO> geocoding(String address) {
+        GeocodingQO qo = new GeocodingQO();
 
-        String uri = UriSplicedUtils.spliceToString(qo);
-        GeocodingWrapper response = googleApiTemplate.getForObject(uri, GeocodingWrapper.class);
+        R<List<GoogleGeocodingDTO>> result = googleGeocodingService.geocoding(qo);
+        if (result.getCode() != StandardCode.SUCCESS) {
+            return new R<>(
+                    result.getCode(),
+                    result.getMessage()
+            );
+        }
 
-        // 如果未能请求到结果，那么返回错误信息
-        if (response == null) {
+        List<GoogleGeocodingDTO> googleGeocodingData = result.getData();
+        if (googleGeocodingData.isEmpty()) {
             return R.failure();
-        }
-
-        GeocodingStatusEnum status = GeocodingStatusEnum.valueOf(response.getStatus());
-        if (status.equals(GeocodingStatusEnum.OK)) {
-            return R.success(response.getResults());
         } else {
-            return R.failure(status.name());
-        }
 
+            // 只获取第一个
+            GoogleGeocodingDTO googleGeocoding = googleGeocodingData.get(0);
+
+            // 创建一个地理编码实体
+            GeocodingDTO geocodingDTO = new GeocodingDTO();
+            geocodingDTO.setName(googleGeocoding.getFormattedAddress());
+
+            // 获取坐标
+            GoogleCoordinateDTO googleCoordinateDTO = googleGeocoding.getGeometry().getLocation();
+            if (googleCoordinateDTO != null) {
+                CoordinateDTO coordinateDTO = coordinateDtoConverter.convert(googleCoordinateDTO);
+                geocodingDTO.setCoordinate(coordinateDTO);
+            }
+
+            return R.success(geocodingDTO);
+        }
     }
 
     @Override
-    public R<List<GeocodingDTO>> reverseGeocoding(ReverseGeocodingQO qo) {
+    public R<ReverseGeocodingDTO> reverseGeocoding(CoordinateDTO coordinate) {
 
-        String uri = UriSplicedUtils.spliceToString(qo);
-        GeocodingWrapper response = googleApiTemplate.getForObject(uri, GeocodingWrapper.class);
 
-        // 如果未能请求到结果，那么返回错误信息
-        if (response == null) {
-            return R.failure();
-        }
 
-        ReverseGeocodingStatusEnum status = ReverseGeocodingStatusEnum.valueOf(response.getStatus());
-        if (status.equals(ReverseGeocodingStatusEnum.OK)) {
-            return R.success(response.getResults());
-        } else {
-            return R.failure(status.name());
-        }
 
+        return null;
     }
 
 }
