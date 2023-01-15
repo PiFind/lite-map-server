@@ -1,16 +1,6 @@
 server:
   port: 8081
 
-spring:
-  datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://120.79.38.99:3306/pifind
-    username: root
-    password: xxxxxx
-  messages:
-    basename: i18n.PlaceService
-    encoding: utf-8
-
 # 配置 Google API
 map-3rd:
   google-api-key: "XXXXXX"

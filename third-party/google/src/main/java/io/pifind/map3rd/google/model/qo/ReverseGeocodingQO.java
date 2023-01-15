@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.annotation.JSONField;
 import io.pifind.common.annotation.QueryObject;
 import lombok.Data;
 
-import static io.pifind.map3rd.google.api.GoogleGeocodingAPI.REVERSE_GEOCODING_API;
+import static io.pifind.map3rd.google.support.GoogleGeocodingAPI.REVERSE_GEOCODING_API;
 
 /**
  * 反向地理编码查询实体类

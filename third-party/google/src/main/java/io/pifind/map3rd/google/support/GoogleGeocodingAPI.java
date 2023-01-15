@@ -1,4 +1,4 @@
-package io.pifind.map3rd.google.api;
+package io.pifind.map3rd.google.support;
 
 public interface GoogleGeocodingAPI {
 

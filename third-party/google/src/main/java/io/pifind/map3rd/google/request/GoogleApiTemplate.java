@@ -34,6 +34,7 @@ public class GoogleApiTemplate extends RestTemplate {
 
             // 继续往下执行
             return execution.execute(newRequest,body);
+
         });
     }
 

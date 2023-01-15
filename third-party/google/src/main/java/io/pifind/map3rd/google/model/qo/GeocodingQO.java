@@ -3,7 +3,7 @@ package io.pifind.map3rd.google.model.qo;
 import io.pifind.common.annotation.QueryObject;
 import lombok.Data;
 
-import static io.pifind.map3rd.google.api.GoogleGeocodingAPI.GEOCODING_API;
+import static io.pifind.map3rd.google.support.GoogleGeocodingAPI.GEOCODING_API;
 
 /**
  * 地理编码查询实体类

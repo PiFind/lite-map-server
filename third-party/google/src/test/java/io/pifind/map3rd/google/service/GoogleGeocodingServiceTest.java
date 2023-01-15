@@ -1,10 +1,9 @@
-package io.pifind.mapserver.service;
+package io.pifind.map3rd.google.service;
 
 import io.pifind.common.response.R;
+import io.pifind.map3rd.google.ApplicationTest;
 import io.pifind.map3rd.google.model.dto.GoogleGeocodingDTO;
 import io.pifind.map3rd.google.model.qo.ReverseGeocodingQO;
-import io.pifind.map3rd.google.service.IGoogleGeocodingService;
-import io.pifind.mapserver.PlaceApplicationTest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 @Slf4j
-@SpringBootTest(classes = {PlaceApplicationTest.class})
+@SpringBootTest(classes = {ApplicationTest.class})
 public class GoogleGeocodingServiceTest {
 
     @Autowired
