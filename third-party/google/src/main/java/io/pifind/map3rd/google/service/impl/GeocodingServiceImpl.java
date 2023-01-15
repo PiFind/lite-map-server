@@ -15,10 +15,12 @@ import io.pifind.map3rd.google.model.qo.ReverseGeocodingQO;
 import io.pifind.map3rd.google.service.IGoogleGeocodingService;
 import io.pifind.map3rd.model.GeocodingDTO;
 import io.pifind.map3rd.model.ReverseGeocodingDTO;
+import io.pifind.map3rd.model.SingleDistrictDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static io.pifind.map3rd.google.GoogleConstants.PLATFORM_NAME;
@@ -101,12 +103,38 @@ public class GeocodingServiceImpl implements IGeocodingService {
         // 创建一个反向编码实体
         ReverseGeocodingDTO reverseGeocodingDTO = new ReverseGeocodingDTO();
         reverseGeocodingDTO.setFullName(googleGeocoding.getFormattedAddress());
+
+        // 对区划进行标准化
+        List<SingleDistrictDTO> districts = new ArrayList<>();
         for (GoogleGeocodingDTO.AddressComponent addressComponent : googleGeocoding.getAddressComponents()) {
-            // TODO 进行注入
 
+            SingleDistrictDTO district = new SingleDistrictDTO();
 
+            // 取地址组件全名为区域名
+            district.setName(addressComponent.getLongName());
 
+            // 根据返回的类型判断是国家还是行政区，并设置等级
+            List<String> types = addressComponent.getTypes();
+            if (types.contains("country")) {
+                district.setLevel(0);
+            } else {
+                // 查找行政区
+                for (String type : types) {
+                    if (type.matches("^administrative_area_level_[1-7]$")) {
+                        district.setLevel( (type.charAt(27)) - '0');
+                        break;
+                    }
+                }
+            }
+
+            // 判断是否获取行政区了，如果获取了那么就记录下来
+            if (district.getLevel() != null) {
+                districts.add(district);
+            }
         }
+        districts.sort(ReverseGeocodingDTO.DISTRICT_COMPARATOR);
+        reverseGeocodingDTO.setDistricts(districts);
+
         return R.success(reverseGeocodingDTO);
     }
 

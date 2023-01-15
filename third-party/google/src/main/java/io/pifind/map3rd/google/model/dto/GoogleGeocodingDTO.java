@@ -66,7 +66,7 @@ public class GoogleGeocodingDTO {
     public static class AddressComponent {
 
         /**
-         * 表示地址组成部分的类型。请参阅支持的类型列表。
+         * 表示地址组成部分的类型。请参阅<a href="https://developers.google.com/maps/documentation/places/web-service/supported_types">支持的类型</a>列表。
          */
         private List<String> types;
 
@@ -74,7 +74,7 @@ public class GoogleGeocodingDTO {
          * 是地理编码器返回的地址组成部分的完整文本说明或名称。
          */
         @JSONField(name = "long_name")
-        private String lastName;
+        private String longName;
 
         /**
          * 是地址组成部分的缩写文本名称（如果有）。例如，阿拉斯加州的地址组成部分可能包含

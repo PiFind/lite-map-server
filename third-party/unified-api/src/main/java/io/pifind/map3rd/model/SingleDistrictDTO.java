@@ -1,5 +1,11 @@
 package io.pifind.map3rd.model;
 
+import lombok.Data;
+
+/**
+ * 标准单个行政区实体类
+ */
+@Data
 public class SingleDistrictDTO {
 
     /**
@@ -16,6 +22,6 @@ public class SingleDistrictDTO {
      *     <li>...</li>
      * </ol>
      */
-    private int level;
+    private Integer level;
 
 }
