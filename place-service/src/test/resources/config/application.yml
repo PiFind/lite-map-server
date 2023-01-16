@@ -11,5 +11,7 @@ spring:
     basename: i18n.PlaceService
     encoding: utf-8
 
+# 配置 Google API
 map-3rd:
-  google-api-key: "XXXXXXX"
+  google:
+    key: "xxxxxxx"

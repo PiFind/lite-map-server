@@ -16,9 +16,9 @@ import java.io.IOException;
 import static io.pifind.map3rd.MapApiConstants.PROPERTIES_NAME;
 
 @Configuration
-public class GoogleMapTemplateConfiguration {
+public class GoogleApiTemplateConfiguration {
 
-    public static final String GOOGLE_API_KEY = PROPERTIES_NAME + ".google-api-key";
+    public static final String GOOGLE_API_KEY = PROPERTIES_NAME + ".google.key";
 
     @Autowired
     private Environment environment;

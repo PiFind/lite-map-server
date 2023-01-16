@@ -2,6 +2,7 @@ package io.pifind.mapserver.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.pifind.common.response.R;
+import io.pifind.common.response.StandardCode;
 import io.pifind.map.model.CoordinateDTO;
 import io.pifind.map3rd.api.IGeocodingService;
 import io.pifind.map3rd.model.ReverseGeocodingDTO;
@@ -151,8 +152,14 @@ public class PositioningServiceImpl implements IPositioningService {
         R<ReverseGeocodingDTO> result =
                 geocodingService.reverseGeocoding(coordinate,Locale.ENGLISH.getLanguage());
 
+        if (result.getCode() != StandardCode.SUCCESS) {
+            // 做错误日志
+            log.error("{}",result.getCode());
+            return null;
+        }
+
         // 根据返回结果定位到行政区的 AdministrativeAreaID
-        ReverseGeocodingDTO reverseGeocoding =  result.getData();
+        ReverseGeocodingDTO reverseGeocoding = result.getData();
 
         // 先检查有没有中国的特别行政区的代码
         String countryCode = reverseGeocoding.getCountryCode();

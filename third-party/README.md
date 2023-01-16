@@ -8,4 +8,5 @@
 
 ### 第三方对接的接口
     
-* [**Google :**](google/README.md) 对接的 Google Map API 模块
+* [**Google Map**](google/README.md) - 对接的 Google Map API 模块
+* [**高德地图**](gaode/README.md) - 对接的高德地图 API 模块

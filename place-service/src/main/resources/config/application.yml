@@ -11,6 +11,14 @@ spring:
     basename: i18n.PlaceService
     encoding: utf-8
 
-# 配置 Google API
+# 地图第三方服务
 map-3rd:
-  google-api-key: "XXXXXX"
+  # 配置 Google API
+  google:
+    key: "xxxxxxx"
+  # 配置高德地图 API
+  amap:
+    key: "xxxxxxx"
+    sign:
+      open: true
+      key: "xxxxxxx"

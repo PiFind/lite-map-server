@@ -3,4 +3,5 @@ server:
 
 # 配置 Google API
 map-3rd:
-  google-api-key: "XXXXXX"
+  google:
+    key: "xxxxxxx"
