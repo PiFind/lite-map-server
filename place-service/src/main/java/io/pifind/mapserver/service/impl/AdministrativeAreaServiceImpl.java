@@ -77,12 +77,13 @@ public class AdministrativeAreaServiceImpl implements IAdministrativeAreaService
                 address.insert(0,areaPO.getNameEN());
             }
 
-            areaPO =  administrativeAreaMapper.selectById(areaPO.getSuperior());
             if (areaPO.getSuperior().equals(0L)) {
                 break;
             } else {
                 address.insert(0,separator);
             }
+
+            areaPO =  administrativeAreaMapper.selectById(areaPO.getSuperior());
 
         }
 
