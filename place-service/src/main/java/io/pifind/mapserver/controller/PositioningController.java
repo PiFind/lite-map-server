@@ -19,6 +19,11 @@ public class PositioningController {
     @Autowired
     private IPositioningService positioningService;
 
+    /**
+     * 根据IP进行定位
+     * @param ip ip地址字符串
+     * @return
+     */
     @GetMapping("/ip")
     public R<LocationDTO> getLocationByIP(
             @RequestParam("ip") String ip
@@ -26,22 +31,29 @@ public class PositioningController {
         return positioningService.getLocationByIP(ip);
     }
 
+
     @GetMapping("/coordinate")
     R<LocationDTO> getLocationByCoordinate(
-            @RequestParam("longitude") Double longitude,
-            @RequestParam("latitude") Double latitude,
+            @RequestParam("lng") Double lng,
+            @RequestParam("lat") Double lat,
             @RequestParam(value = "system",defaultValue = "WGS84",required = false) String system
     ) {
+
+        // 将传入的格式转换为枚举
         GeographicCoordinateSystemEnum systemEnum =
                 GeographicCoordinateSystemEnum.parse(system.toUpperCase());
 
+        // 如果不支持，那么就返回 UNSUPPORTED_COORDINATE_SYSTEM 错误
         if (systemEnum == null) {
-            return R.failure(PlaceCodeEnum.UNRESOLVED_COORDINATE_SYSTEM);
+            return R.failure(PlaceCodeEnum.UNSUPPORTED_COORDINATE_SYSTEM);
         }
+
+        // 创建一个坐标系对象
         CoordinateDTO coordinateDTO = new CoordinateDTO();
-        coordinateDTO.setLongitude(longitude);
-        coordinateDTO.setLatitude(latitude);
+        coordinateDTO.setLongitude(lng);
+        coordinateDTO.setLatitude(lat);
         coordinateDTO.setSystem(systemEnum);
+
         return positioningService.getLocationByCoordinate(coordinateDTO);
     }
 

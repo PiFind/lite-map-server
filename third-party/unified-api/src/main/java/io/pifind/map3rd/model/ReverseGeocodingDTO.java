@@ -17,6 +17,11 @@ public class ReverseGeocodingDTO {
     private String fullName;
 
     /**
+     * 国家代码
+     */
+    private String countryCode;
+
+    /**
      * 行政区划
      * <p>
      *     按照 level 从小到大进行排序

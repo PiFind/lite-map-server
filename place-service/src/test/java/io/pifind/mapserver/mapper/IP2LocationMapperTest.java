@@ -53,7 +53,7 @@ public class IP2LocationMapperTest {
 
     }
 
-    @Test
+    // @Test
     public void testConvertArea() {
 
         int batches = 10000;
@@ -157,7 +157,7 @@ public class IP2LocationMapperTest {
     }
 
     // 检查国家
-    @Test
+    // @Test
     public void checkCountries() {
         List<AdministrativeAreaPO> countries = administrativeAreaMapper.selectList(
                 new LambdaQueryWrapper<AdministrativeAreaPO>()

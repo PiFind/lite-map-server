@@ -36,11 +36,33 @@
             <artifactId>place-api</artifactId>
             <version>${io.pifind.map.api}</version>
         </dependency>
+
         <dependency>
             <groupId>io.pifind.map3rd</groupId>
             <artifactId>google</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>io.pifind.map3rd</groupId>
+            <artifactId>unified-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.pifind.mapserver</groupId>
+            <artifactId>map-base</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- TODO https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.15</version>
+        </dependency>
+
     </dependencies>
 </project>

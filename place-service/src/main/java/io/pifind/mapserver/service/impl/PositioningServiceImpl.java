@@ -3,25 +3,34 @@ package io.pifind.mapserver.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.pifind.common.response.R;
 import io.pifind.map.model.CoordinateDTO;
+import io.pifind.map3rd.api.IGeocodingService;
+import io.pifind.map3rd.model.ReverseGeocodingDTO;
+import io.pifind.map3rd.model.SingleDistrictDTO;
 import io.pifind.mapserver.converter.dto.LocationDtoConverter;
 import io.pifind.mapserver.error.PlaceCodeEnum;
 import io.pifind.mapserver.mapper.AdministrativeAreaMapper;
+import io.pifind.mapserver.mapper.CountryMapper;
 import io.pifind.mapserver.mapper.IP2LocationMapper;
 import io.pifind.mapserver.model.po.AdministrativeAreaPO;
+import io.pifind.mapserver.model.po.CountryPO;
 import io.pifind.mapserver.model.po.IP2LocationPO;
+import io.pifind.mapserver.util.ChinaSpecialCityUtils;
 import io.pifind.mapserver.util.IPv4Utils;
 import io.pifind.place.api.IPositioningService;
 import io.pifind.place.model.LocationDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Locale;
 
+@Slf4j
 @Service
 public class PositioningServiceImpl implements IPositioningService {
 
@@ -32,11 +41,22 @@ public class PositioningServiceImpl implements IPositioningService {
     private AdministrativeAreaMapper administrativeAreaMapper;
 
     @Autowired
+    private CountryMapper countryMapper;
+
+    @Autowired
     private LocationDtoConverter locationDtoConverter;
-    
+
+    /** Google 的地理编码服务 */
+    @Resource(name = "Google-GeocodingService")
+    private IGeocodingService geocodingService;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public R<LocationDTO> getLocationByIP(@NotEmpty String ip) {
+
+        if (!IPv4Utils.isIPv4Address(ip)) {
+            return R.failure(PlaceCodeEnum.WRONG_IPV4_ADDRESS);
+        }
 
         // 将IP转换为int类型的地址
         int ipAddress = IPv4Utils.stringToInt(ip);
@@ -53,11 +73,12 @@ public class PositioningServiceImpl implements IPositioningService {
 
         LocationDTO locationDTO = locationDtoConverter.convert(ip2LocationPO);
 
-        // 如果为获取的地域ID为0，那么就通过谷歌地图API进行查询
+        // 如果为获取的地域ID为0，那么就通过第三方地图API进行查询
         // 并将结果写入数据库
         if (locationDTO.getAdministrativeAreaId() == 0) {
+
             // 先去从 location 去匹配一下
-            // 如果不能匹配到就再调用 google API
+            // 如果不能匹配到就再调用第三方
             Long areaId = getAdministrativeAreaIdByIP2Location(
                     ip2LocationPO
             );
@@ -100,11 +121,10 @@ public class PositioningServiceImpl implements IPositioningService {
         }
 
         // 将行政区划对象和坐标组合为标准地址
-
         LocationDTO locationDTO = new LocationDTO();
 
         Locale lang = LocaleContextHolder.getLocale();
-        if (lang.equals(Locale.CHINESE)) {
+        if (lang.equals(Locale.CHINA)) {
             locationDTO.setName(areaPO.getNameCN());
         } else {
             locationDTO.setName(areaPO.getNameEN());
@@ -114,17 +134,65 @@ public class PositioningServiceImpl implements IPositioningService {
         locationDTO.setMissingCoordinate(false);
         locationDTO.setCoordinate(coordinate);
 
+        // 设置行政区划ID
+        locationDTO.setAdministrativeAreaId(areaId);
+
         return R.success(locationDTO);
     }
 
     /**
-     * 调用 google API 进行查询地址
+     * 调用第三方进行查询地址
      * @param coordinate 需要查询的目标坐标
      * @return 定位的 AreaID
      */
     private Long getAdministrativeAreaIdByCoordinate(@NotNull CoordinateDTO coordinate) {
 
-        return null;
+        // 由于数据库中只记录了中文和英文的行政区划名，为了定位的准确性这里就返回英语
+        R<ReverseGeocodingDTO> result =
+                geocodingService.reverseGeocoding(coordinate,Locale.ENGLISH.getLanguage());
+
+        // 根据返回结果定位到行政区的 AdministrativeAreaID
+        ReverseGeocodingDTO reverseGeocoding =  result.getData();
+
+        // 先检查有没有中国的特别行政区的代码
+        String countryCode = reverseGeocoding.getCountryCode();
+        if(ChinaSpecialCityUtils.check(countryCode)) {
+            return ChinaSpecialCityUtils.getAdministrativeAreaId(countryCode);
+        }
+
+        // 获取国家代码对应的国家
+        CountryPO countryPO = countryMapper.selectOne(
+                new LambdaQueryWrapper<CountryPO>().eq(CountryPO::getISO2,countryCode)
+        );
+        if(countryPO == null) {
+            return null;
+        }
+
+        Long areaId = null;
+        Long superior = 0L;
+
+        // 根据返回的区划进行遍历
+        for (SingleDistrictDTO district : reverseGeocoding.getDistricts()) {
+
+            List<AdministrativeAreaPO> areas =  administrativeAreaMapper.selectList(
+                    new LambdaQueryWrapper<AdministrativeAreaPO>()
+                            .likeLeft(AdministrativeAreaPO::getNameEN,district.getName().trim())
+                            .eq(AdministrativeAreaPO::getLevel,district.getLevel())
+                            // 因为是按照level的从小到大（从0开始）的顺序排的，所以可以直接将上级行政区ID作为搜索条件
+                            .eq(AdministrativeAreaPO::getSuperior,superior)
+            );
+
+            // 如果能找到，那么就会继续往下找
+            if (!areas.isEmpty()) {
+                AdministrativeAreaPO area = areas.get(0);
+                superior = area.getId();
+                areaId = area.getId();
+            } else {
+                break;
+            }
+        }
+
+        return areaId;
     }
 
     /**
@@ -138,11 +206,33 @@ public class PositioningServiceImpl implements IPositioningService {
      * </p>
      */
     private Long getAdministrativeAreaIdByIP2Location(IP2LocationPO ip2LocationPO) {
+
+        // 检查中国行政区
+        String countryCode = ip2LocationPO.getCountryCode();
+        if (ChinaSpecialCityUtils.check(countryCode)) {
+            return ChinaSpecialCityUtils.getAdministrativeAreaId(countryCode);
+        }
+
+        // 通过国家表查询国家
+        CountryPO countryPO = countryMapper.selectOne(
+                new LambdaQueryWrapper<CountryPO>()
+                        .eq(CountryPO::getISO2,countryCode)
+        );
+
+        // 如果没找到国家直接返回 null
+        if (countryPO == null) {
+            return null;
+        }
+
         AdministrativeAreaPO country = administrativeAreaMapper.selectOne(
                 new LambdaQueryWrapper<AdministrativeAreaPO>()
-                        .eq(AdministrativeAreaPO::getNameEN,ip2LocationPO.getCountryName())
-                        .le(AdministrativeAreaPO::getId,500)
+                        .eq(AdministrativeAreaPO::getId,countryPO.getId())
         );
+
+        /* 下面是一个查找行政区的算法
+         * 在能定位到国家的情况下，如果能查找到一级行政区，那么就继续找下一级行政区
+         * 如果找不到，就返回上一级行政区的值，如果国家都定位不到就返回 null
+         */
 
         if (country != null) {
             AdministrativeAreaPO region = administrativeAreaMapper.selectOne(
@@ -180,6 +270,5 @@ public class PositioningServiceImpl implements IPositioningService {
         }
         return null;
     }
-
 
 }

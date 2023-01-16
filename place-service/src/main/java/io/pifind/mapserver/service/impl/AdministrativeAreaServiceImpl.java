@@ -95,11 +95,9 @@ public class AdministrativeAreaServiceImpl implements IAdministrativeAreaService
 
     /**
      * 创建一个行政区树
+     * <p>本质上等价于</p>
      * <p>
-     *     本质上等价于
-     *     <p>
-     *         {@code createAdministrativeAreaTree(rootId,0,maxHeight);}
-     *     </p>
+     *     {@code createAdministrativeAreaTree(rootId,0,maxHeight);}
      * </p>
      * @param rootId 根节点行政区的ID
      * @param maxHeight 最大的树高度

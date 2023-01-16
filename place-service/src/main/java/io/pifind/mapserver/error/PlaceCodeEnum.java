@@ -14,15 +14,19 @@ public enum PlaceCodeEnum {
     /**
      * 未找到行政区
      */
-    ADMINISTRATIVE_AREA_NOT_FOUND(0x1001,"Place.AdministrativeAreaNotFounds"),
+    ADMINISTRATIVE_AREA_NOT_FOUND(0x100001,"Place.AdministrativeAreaNotFound"),
     /**
      * 未能定位到行政区
      */
-    FAILED_TO_LOCATE_TO_ADMINISTRATIVE_AREA(0x1A01,"Place.FailedToLocateToAdministrativeArea"),
+    FAILED_TO_LOCATE_TO_ADMINISTRATIVE_AREA(0x110002,"Place.FailedToLocateToAdministrativeArea"),
     /**
-     * 无法解析的坐标系
+     * 不支持的的坐标系
      */
-    UNRESOLVED_COORDINATE_SYSTEM(0x1A02,"Place.UnresolvedCoordinateSystem"),
+    UNSUPPORTED_COORDINATE_SYSTEM(0x110003,"Place.UnresolvedCoordinateSystem"),
+    /**
+     * 错误的 IPv4 地址
+     */
+    WRONG_IPV4_ADDRESS(0x110004,"Place.WrongIPv4Address"),
     ;
 
     private final int code;

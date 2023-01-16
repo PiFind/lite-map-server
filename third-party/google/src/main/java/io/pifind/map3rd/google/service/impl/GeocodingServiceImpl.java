@@ -99,13 +99,21 @@ public class GeocodingServiceImpl implements IGeocodingService {
         // 只获取第一个
         List<GoogleGeocodingDTO> googleGeocodingData = result.getData();
         GoogleGeocodingDTO googleGeocoding = googleGeocodingData.get(0);
+        System.out.println(googleGeocoding);
 
         // 创建一个反向编码实体
         ReverseGeocodingDTO reverseGeocodingDTO = new ReverseGeocodingDTO();
         reverseGeocodingDTO.setFullName(googleGeocoding.getFormattedAddress());
 
-        // 对区划进行标准化
-        List<SingleDistrictDTO> districts = new ArrayList<>();
+        /*
+         * 下面是收集返回的结果的过程
+         */
+
+        SingleDistrictDTO country = null;
+        List<SingleDistrictDTO> administrativeAreas = new ArrayList<>();
+        SingleDistrictDTO locality = null;
+        List<SingleDistrictDTO> subLocalities = new ArrayList<>();
+
         for (GoogleGeocodingDTO.AddressComponent addressComponent : googleGeocoding.getAddressComponents()) {
 
             SingleDistrictDTO district = new SingleDistrictDTO();
@@ -115,23 +123,64 @@ public class GeocodingServiceImpl implements IGeocodingService {
 
             // 根据返回的类型判断是国家还是行政区，并设置等级
             List<String> types = addressComponent.getTypes();
-            if (types.contains("country")) {
-                district.setLevel(0);
-            } else {
-                // 查找行政区
-                for (String type : types) {
-                    if (type.matches("^administrative_area_level_[1-7]$")) {
-                        district.setLevel( (type.charAt(27)) - '0');
-                        break;
-                    }
+
+            // 查找行政区
+            for (String type : types) {
+                String typeLowerCase = type.toLowerCase();
+                if (typeLowerCase.matches("^administrative_area_level_[1-7]$")) {
+                    // 行政区
+                    district.setLevel(Integer.valueOf(typeLowerCase.substring(26)));
+                    administrativeAreas.add(district);
+                    break;
+                } else if (typeLowerCase.matches("^sublocality_level_[1-5]$")) {
+                    // 市级行政区下的区划
+                    district.setLevel(Integer.valueOf(typeLowerCase.substring(18)));
+                    subLocalities.add(district);
+                    break;
+                } else if (typeLowerCase.equals("country")) {
+                    // 国家
+                    country = district;
+                    district.setLevel(0);
+                    // 如果是国家的话，那么其简称就是 ISO 3166-1 规定的国家代码
+                    reverseGeocodingDTO.setCountryCode(addressComponent.getShortName());
+                    break;
+                } else if (typeLowerCase.equals("locality")) {
+                    // 市级行政区
+                    locality = district;
+                    break;
                 }
             }
+        }
 
-            // 判断是否获取行政区了，如果获取了那么就记录下来
-            if (district.getLevel() != null) {
-                districts.add(district);
+        /*
+         * 下面是对上面收集的结果进行标准化的过程
+         */
+
+        List<SingleDistrictDTO> districts = new ArrayList<>();
+        if (country != null) {
+
+            // 添加国家
+            districts.add(country);
+
+            // 添加国家下的行政区
+            districts.addAll(administrativeAreas);
+
+            if (locality != null) {
+                // 计算市级行政区开始等级
+                int startLevel = administrativeAreas.size() + 1;
+                // 添加市级行政区
+                locality.setLevel(startLevel);
+                districts.add(locality);
+                // 更新市下面的区的等级
+                for (SingleDistrictDTO subLocality : subLocalities) {
+                    subLocality.setLevel(startLevel + subLocality.getLevel());
+                }
+                // 添加市级行政区下的区划
+                districts.addAll(subLocalities);
             }
         }
+
+        // 根据等级进行排序
         districts.sort(ReverseGeocodingDTO.DISTRICT_COMPARATOR);
         reverseGeocodingDTO.setDistricts(districts);
 
