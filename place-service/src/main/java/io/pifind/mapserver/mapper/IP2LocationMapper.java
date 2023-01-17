@@ -1,7 +1,7 @@
 package io.pifind.mapserver.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import io.pifind.mapserver.model.po.IP2LocationPO;
+import io.pifind.mapserver.model.IP2LocationPO;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

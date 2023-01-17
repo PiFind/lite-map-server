@@ -1,16 +1,14 @@
 package io.pifind.mapserver.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.pifind.mapserver.PlaceApplicationTest;
-import io.pifind.mapserver.model.po.AdministrativeAreaPO;
-import io.pifind.mapserver.model.po.IP2LocationPO;
+import io.pifind.mapserver.model.AdministrativeAreaPO;
+import io.pifind.mapserver.model.IP2LocationPO;
 import io.pifind.mapserver.util.IPv4Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 
 import java.math.BigDecimal;
 import java.util.List;

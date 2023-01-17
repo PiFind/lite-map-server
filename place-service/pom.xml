@@ -37,19 +37,21 @@
             <version>${io.pifind.map.api}</version>
         </dependency>
 
+        <!-- 下面是导入的第三方处理包 -->
         <dependency>
             <groupId>io.pifind.map3rd</groupId>
             <artifactId>google</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
-
         <dependency>
             <groupId>io.pifind.map3rd</groupId>
             <artifactId>unified-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+
+        <!-- 这个是开发的基础包 -->
         <dependency>
             <groupId>io.pifind.mapserver</groupId>
             <artifactId>map-base</artifactId>
@@ -57,7 +59,7 @@
             <scope>compile</scope>
         </dependency>
 
-        <!-- TODO https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+        <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>

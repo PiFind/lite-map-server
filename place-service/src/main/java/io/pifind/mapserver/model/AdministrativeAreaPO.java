@@ -1,4 +1,4 @@
-package io.pifind.mapserver.model.po;
+package io.pifind.mapserver.model;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -14,6 +14,11 @@ public class AdministrativeAreaPO {
      */
     @TableId
     private Long id;
+
+    /**
+     * 用该国家使用的官方语言命名的行政区名
+     */
+    private String name;
 
     /**
      * 中文名

@@ -1,9 +1,9 @@
-package io.pifind.mapserver.converter.dto;
+package io.pifind.mapserver.converter;
 
 import io.pifind.map.constant.GeographicCoordinateSystemEnum;
 import io.pifind.map.model.CoordinateDTO;
 
-import io.pifind.mapserver.model.po.IP2LocationPO;
+import io.pifind.mapserver.model.IP2LocationPO;
 import io.pifind.place.model.LocationDTO;
 import org.mapstruct.Mapper;
 

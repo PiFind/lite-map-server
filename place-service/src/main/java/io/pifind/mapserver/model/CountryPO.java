@@ -1,4 +1,4 @@
-package io.pifind.mapserver.model.po;
+package io.pifind.mapserver.model;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;

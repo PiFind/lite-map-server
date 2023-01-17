@@ -1,6 +1,6 @@
-package io.pifind.mapserver.converter.dto;
+package io.pifind.mapserver.converter;
 
-import io.pifind.mapserver.model.po.AdministrativeAreaPO;
+import io.pifind.mapserver.model.AdministrativeAreaPO;
 import io.pifind.place.model.AdministrativeAreaDTO;
 import org.jetbrains.annotations.NotNull;
 import org.mapstruct.Mapper;
