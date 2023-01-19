@@ -1,5 +1,6 @@
 package io.pifind.map3rd.amap.model.wrapper;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import io.pifind.map3rd.amap.model.constant.InfoCodeEnum;
 import io.pifind.map3rd.amap.model.constant.ResponseStatusEnum;
@@ -16,6 +17,7 @@ public class AmapResponseWrapper<T> {
      * <p>返回值为 0 或 1，0 表示请求失败；1 表示请求成功。</p>
      * @see ResponseStatusEnum
      */
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String status;
 
     /**
@@ -23,6 +25,7 @@ public class AmapResponseWrapper<T> {
      * <p>当 status 为 0 时，info 会返回具体错误原因，否则返回“OK”。</p>
      * @see InfoCodeEnum
      */
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String info;
 
     /**

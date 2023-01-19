@@ -1,13 +1,11 @@
 package io.pifind.map3rd.amap.config;
 
 import io.pifind.map3rd.amap.request.AmapApiTemplate;
+import io.pifind.map3rd.amap.request.AmapWrapperConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-
-import javax.annotation.Resource;
 
 import static io.pifind.map3rd.MapApiConstants.PROPERTIES_NAME;
 
@@ -21,8 +19,8 @@ public class AmapApiTemplateConfiguration {
     @Autowired
     private Environment environment;
 
-    @Resource(name = "Amap-MappingJackson2HttpMessageConverter")
-    private MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter;
+    @Autowired
+    private AmapWrapperConverter amapWrapperConverter;
 
     @Bean
     public AmapApiTemplate amapTemplate() {
@@ -54,7 +52,7 @@ public class AmapApiTemplateConfiguration {
         AmapApiTemplate amapTemplate = new AmapApiTemplate(key,signKey,needSign);
 
         // 设置自定义的信息转换器
-        amapTemplate.getMessageConverters().set(0,mappingJackson2HttpMessageConverter);
+        amapTemplate.getMessageConverters().set(0,amapWrapperConverter);
 
         // 返回模板
         return amapTemplate;

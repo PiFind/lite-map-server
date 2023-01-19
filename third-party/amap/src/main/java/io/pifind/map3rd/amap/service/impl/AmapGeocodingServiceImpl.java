@@ -6,6 +6,7 @@ import io.pifind.map3rd.amap.model.dto.AmapGeocodingDTO;
 import io.pifind.map3rd.amap.model.dto.AmapReverseGeocodingDTO;
 import io.pifind.map3rd.amap.model.qo.GeocodingQO;
 import io.pifind.map3rd.amap.model.qo.ReverseGeocodingQO;
+import io.pifind.map3rd.amap.model.wrapper.AmapGeocodingWrapper;
 import io.pifind.map3rd.amap.request.AmapApiTemplate;
 import io.pifind.map3rd.amap.service.IAmapGeocodingService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,9 +23,11 @@ public class AmapGeocodingServiceImpl implements IAmapGeocodingService {
     @Override
     public R<AmapGeocodingDTO> geocoding(GeocodingQO qo) {
         String uri = UriSplicedUtils.spliceToString(qo);
+        AmapGeocodingWrapper wrapper = amapApiTemplate.getForObject(uri,AmapGeocodingWrapper.class);
 
 
-        return null;
+
+        return R.success(wrapper.getResult());
     }
 
     @Override
