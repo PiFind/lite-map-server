@@ -216,8 +216,8 @@ public class CountryMapperTest {
                         "  `publisher` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '上传者',\n" +
                         "  `reliability` int NOT NULL COMMENT '可信度（0 - 100，100为完全可靠）',\n" +
                         "  `score` double NOT NULL COMMENT '评分( 0 - 5 )',\n" +
-                        "  `latitude` double(12, 8) NOT NULL COMMENT '经度',\n" +
-                        "  `longitude` double(12, 8) NOT NULL COMMENT '维度',\n" +
+                        "  `trusted_location` point NOT NULL COMMENT '可信定位点',\n" +
+                        "  `conjectured_location` point NOT NULL COMMENT '推测定位点',\n" +
                         "  `hash` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '唯一编码哈希值',\n" +
                         "  `status` tinyint NOT NULL COMMENT '状态',\n" +
                         "  `plus_code` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'Plus Code',\n" +

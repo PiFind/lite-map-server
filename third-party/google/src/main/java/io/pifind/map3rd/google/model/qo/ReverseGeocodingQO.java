@@ -14,12 +14,13 @@ import static io.pifind.map3rd.google.support.GoogleGeocodingAPI.REVERSE_GEOCODI
 public class ReverseGeocodingQO {
 
     /**
-     * 用于指定希望获取的距离最近且直观易懂的地址的纬度和经度值。
+     * <b>[必填]</b> - 用于指定希望获取的距离最近且直观易懂的地址的纬度和经度值。
      */
     private String latlng;
 
     /**
-     * 返回结果时所使用的语言。
+     * <b>[可选]</b> - 返回结果时所使用的语言。
+     * <p>默认：使用 {@code Accept-Language} 标头中指定的首选语言</p>
      * <ul>
      *     <li>
      *         请参阅<a href="https://developers.google.com/maps/faq#languagesupport">支持的语言列表</a>。
@@ -47,10 +48,12 @@ public class ReverseGeocodingQO {
     private String language;
 
     /**
+     * <b>[可选]</b> - 返回结果过滤类型
+     * <p>
      * 一个或多个地址类型的过滤条件，以竖线字符 (|) 分隔。如果参数包含多个地址类型，则 API 将返回与任意类型匹配的所有地址。
      * 关于处理的说明：result_type 参数不会限制搜索特定的地址类型。而是 result_type 充当搜索后过滤器：API 会提取指定
      * latlng 的所有结果，然后舍弃与指定地址类型不匹配的结果。支持以下值：
-     *
+     * </p>
      * <ul>
      *     <li>
      *         {@code street_address} 表示精确的街道地址。
@@ -142,24 +145,27 @@ public class ReverseGeocodingQO {
     private String resultType;
 
     /**
-     *  一个或多个位置类型的过滤条件，用竖线 (|) 分隔。如果参数包含多个位置类型，则 API 将返回与任意类型匹配的所有地址。
-     *  关于处理的说明：{@code location_type} 参数不会限制搜索特定的位置类型。而是 {@code location_type} 充当
-     *  搜索后过滤器：API 会提取指定 {@code latlng} 的所有结果，然后舍弃与指定位置类型不匹配的结果。支持以下值：
-     *  <ul>
-     *      <li>
-     *         {@code "ROOFTOP"} 仅返回 Google 的位置信息（精确到街道地址精确度）的地址。
-     *      </li>
-     *      <li>
-     *          {@code "RANGE_INTERPOLATED"} 仅返回反映两个精确点（例如十字路口）之间用插值得出的近似地址（通常在道路上）
-     *          的地址。插值范围通常表示某个街道地址的屋顶地理编码不可用。
-     *      </li>
-     *      <li>
-     *          {@code "GEOMETRIC_CENTER"} 仅返回营业地点的几何图形中心，如多段线（例如街道）或多边形（区域）。
-     *      </li>
-     *      <li>
-     *          {@code "APPROXIMATE"} 仅返回特征为近似地址的地址。
-     *      </li>
-     *  </ul>
+     * <b>[可选]</b> - 位置类型的过滤条件
+     * <p>
+     * 一个或多个位置类型的过滤条件，用竖线 (|) 分隔。如果参数包含多个位置类型，则 API 将返回与任意类型匹配的所有地址。
+     * 关于处理的说明：{@code location_type} 参数不会限制搜索特定的位置类型。而是 {@code location_type} 充当
+     * 搜索后过滤器：API 会提取指定 {@code latlng} 的所有结果，然后舍弃与指定位置类型不匹配的结果。支持以下值：
+     * </p>
+     * <ul>
+     *     <li>
+     *        {@code "ROOFTOP"} 仅返回 Google 的位置信息（精确到街道地址精确度）的地址。
+     *     </li>
+     *     <li>
+     *         {@code "RANGE_INTERPOLATED"} 仅返回反映两个精确点（例如十字路口）之间用插值得出的近似地址（通常在道路上）
+     *         的地址。插值范围通常表示某个街道地址的屋顶地理编码不可用。
+     *     </li>
+     *     <li>
+     *         {@code "GEOMETRIC_CENTER"} 仅返回营业地点的几何图形中心，如多段线（例如街道）或多边形（区域）。
+     *     </li>
+     *     <li>
+     *         {@code "APPROXIMATE"} 仅返回特征为近似地址的地址。
+     *     </li>
+     * </ul>
      * 如果同时存在 {@code result_type} 和 {@code location_type} 过滤条件，则 API 仅返回同时与 {@code result_type}
      * 和 {@code location_type}值匹配的结果。如果所有过滤条件值都不可接受，则 API 会返回 {@code ZERO_RESULTS}。
      */

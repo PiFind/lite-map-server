@@ -13,10 +13,14 @@ import static io.pifind.map3rd.google.support.GoogleGeocodingAPI.GEOCODING_API;
 public class GeocodingQO {
 
     /**
+     * <b>[必填]</b> - 地理地址
+     *
+     * <p>
      * 要进行地理编码的街道地址或 <a href="https://plus.codes/">Plus Code</a> 。
      * 请按照相关国家/地区的邮政服务所使用的地址格式指定地址。应避免使用额外的地址元素，
      * 例如商家名称和单元、房间号或楼层号。街道地址元素应以空格分隔（此处显示为网址转义为
      * {@code %20}）：
+     * </p>
      * <p>
      *     {@code address=24%20Sussex%20Drive%20Ottawa%20ON}
      * </p>
@@ -37,13 +41,17 @@ public class GeocodingQO {
     private String address;
 
     /**
+     * <b>[可选]</b> - 视口边界
+     * <p>
      * 视口的边界框，可在其中更明显地对地理编码结果进行偏向。此参数只会影响，而不会完全限制地理编码器中的结果。
      * （如需了解详情，请参阅下文的<a href="https://developers.google.com/maps/documentation/geocoding/requests-geocoding#Viewports">视口自定义调整</a>。）
+     * </p>
      */
     private String bounds;
 
     /**
-     * 返回结果时所使用的语言。
+     * <b>[可选]</b> - 地理地址返回结果时所使用的语言。
+     * <p>默认：使用 {@code Accept-Language} 标头中指定的首选语言</p>
      * <ul>
      *     <li>
      *         请参阅<a href="https://developers.google.com/maps/faq#languagesupport">支持的语言列表</a>。
@@ -71,17 +79,20 @@ public class GeocodingQO {
     private String language;
 
     /**
-     * 地区代码，指定为 ccTLD（“顶级域名”）双字符值。此参数只会影响，而不会完全限制地理编码器中的结果。（
+     * <b>[可选]</b> - 地区代码，指定为 ccTLD（“顶级域名”）双字符值。此参数只会影响，而不会完全限制地理编码器中的结果。（
      * 如需了解详情，请参阅下文的
      * <a href="https://developers.google.com/maps/documentation/geocoding/requests-geocoding#RegionCodes">区域自定义调整</a>）。
      */
     private String region;
 
     /**
+     *  <b>[可选]</b> - 过滤组件
+     *  <p>
      *  包含以竖线 (|) 分隔元素的组件过滤条件。如果提供 {@code address}，则组件过滤条件也可用作可选参数。
      *  组件过滤条件中的每个元素都包含一个 {@code component:value} 对，并完全限制了地理编码器中的结果。
      *  如需了解详情，请参阅
      *  <a href="https://developers.google.com/maps/documentation/geocoding/requests-geocoding#component-filtering">组件过滤</a>。
+     *  </p>
      */
     private String components;
 

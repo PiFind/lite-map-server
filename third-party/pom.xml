@@ -15,8 +15,8 @@
 
     <modules>
         <module>unified-api</module>
+        <module>amap</module>
         <module>google</module>
-        <module>gaode</module>
     </modules>
 
     <properties>
