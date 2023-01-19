@@ -1,6 +1,6 @@
 package io.pifind.map3rd.amap;
 
-public class AmapConstants {
+public interface AmapConstants {
 
     /**
      * 平台名称

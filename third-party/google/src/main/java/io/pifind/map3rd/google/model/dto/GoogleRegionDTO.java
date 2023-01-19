@@ -8,8 +8,14 @@ import lombok.Data;
 @Data
 public class GoogleRegionDTO {
 
+    /**
+     * 西南角坐标
+     */
     private GoogleCoordinateDTO southwest;
 
+    /**
+     * 东北角坐标
+     */
     private GoogleCoordinateDTO northeast;
 
 }

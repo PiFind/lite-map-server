@@ -2,9 +2,19 @@ package io.pifind.map3rd.amap.model.qo;
 
 import io.pifind.common.annotation.QueryObject;
 import io.pifind.map3rd.amap.support.AmapGeocodingAPI;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
+/**
+ * 地理编码查询实体类
+ * <p>
+ * <a href="https://lbs.amap.com/api/webservice/guide/api/georegeo#geo">
+ * 高德地图开放平台-地理编码
+ * </a>
+ * </p>
+ */
 @Data
+@AllArgsConstructor
 @QueryObject(AmapGeocodingAPI.GEOCODING_API)
 public class GeocodingQO {
 
@@ -43,5 +53,17 @@ public class GeocodingQO {
      * </p>
      */
     private String callback;
+
+    /*
+     * 下面是根据“必填”标签进行创建实体类的构造方法
+     */
+
+    /**
+     * 根据地理地址地理编码查询实体类
+     * @param address 地理地址
+     */
+    public GeocodingQO(String address) {
+        this.address = address;
+    }
 
 }

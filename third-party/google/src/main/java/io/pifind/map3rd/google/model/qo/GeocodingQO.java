@@ -7,6 +7,9 @@ import static io.pifind.map3rd.google.support.GoogleGeocodingAPI.GEOCODING_API;
 
 /**
  * 地理编码查询实体类
+ * <p>
+ * <a href="https://developers.google.com/maps/documentation/geocoding/requests-geocoding">Google API 地理编码</a>
+ * </p>
  */
 @Data
 @QueryObject(GEOCODING_API)
@@ -95,5 +98,17 @@ public class GeocodingQO {
      *  </p>
      */
     private String components;
+
+    /*
+     * 下面是根据“必填”标签进行创建实体类的构造方法
+     */
+
+    /**
+     * 根据地理地址地理编码查询实体类
+     * @param address 地理地址
+     */
+    public GeocodingQO(String address) {
+        this.address = address;
+    }
 
 }

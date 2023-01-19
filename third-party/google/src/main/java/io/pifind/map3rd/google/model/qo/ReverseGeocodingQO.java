@@ -1,6 +1,6 @@
 package io.pifind.map3rd.google.model.qo;
 
-import com.alibaba.fastjson2.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.pifind.common.annotation.QueryObject;
 import lombok.Data;
 
@@ -8,6 +8,9 @@ import static io.pifind.map3rd.google.support.GoogleGeocodingAPI.REVERSE_GEOCODI
 
 /**
  * 反向地理编码查询实体类
+ * <p>
+ * <a href="https://developers.google.com/maps/documentation/geocoding/requests-reverse-geocoding">Google API 反向地理编码</a>
+ * </p>
  */
 @Data
 @QueryObject(REVERSE_GEOCODING_API)
@@ -141,7 +144,7 @@ public class ReverseGeocodingQO {
      *     </li>
      * </ul>
      */
-    @JSONField(name = "result_type")
+    @JsonProperty("result_type")
     private String resultType;
 
     /**
@@ -169,7 +172,30 @@ public class ReverseGeocodingQO {
      * 如果同时存在 {@code result_type} 和 {@code location_type} 过滤条件，则 API 仅返回同时与 {@code result_type}
      * 和 {@code location_type}值匹配的结果。如果所有过滤条件值都不可接受，则 API 会返回 {@code ZERO_RESULTS}。
      */
-    @JSONField(name = "location_type")
+    @JsonProperty("location_type")
     private String locationType;
+
+    /*
+     * 下面是根据“必填”标签进行创建实体类的构造方法
+     */
+
+
+    /**
+     * 根据格式化的经纬度字符串创建反向地理编码查询对象，格式化方案如下：
+     * <p> {@code String latlng = String.format("%f,%f",lat,lng); } </p>
+     * @param latlng 格式化的经纬度字符串
+     */
+    public ReverseGeocodingQO(String latlng) {
+        this.latlng = latlng;
+    }
+
+    /**
+     * 根据经纬度创建反向地理编码查询对象
+     * @param lat 纬度
+     * @param lng 经度
+     */
+    public ReverseGeocodingQO(double lat,double lng) {
+        this.latlng = String.format("%f,%f",lat,lng);
+    }
 
 }

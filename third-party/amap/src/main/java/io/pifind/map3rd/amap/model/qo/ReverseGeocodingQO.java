@@ -1,11 +1,23 @@
 package io.pifind.map3rd.amap.model.qo;
 
-import com.alibaba.fastjson2.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.pifind.common.annotation.QueryObject;
 import io.pifind.map3rd.amap.support.AmapGeocodingAPI;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
+
+/**
+ * 反向地理编码（逆地理编码）查询实体类
+ * <p>
+ * <a href="https://lbs.amap.com/api/webservice/guide/api/georegeo#regeo">
+ * 高德地图开放平台-逆地理编码
+ * </a>
+ * </p>
+ */
 @Data
+@AllArgsConstructor
 @QueryObject(AmapGeocodingAPI.REVERSE_GEOCODING_API)
 public class ReverseGeocodingQO {
 
@@ -23,7 +35,7 @@ public class ReverseGeocodingQO {
      * 要求。参数仅支持传入POI TYPECODE，可以传入多个POI TYPECODE，相互之间用“|”分隔。获取
      * POI TYPECODE 可以参考POI分类码表
      */
-    @JSONField(name = "poitype")
+    @JsonProperty("poitype")
     private String poiType;
 
     /**
@@ -54,7 +66,7 @@ public class ReverseGeocodingQO {
      *     <li>过滤非主干道路，仅输出主干道路数据 </li>
      * </ol>
      */
-    @JSONField(name = "roadlevel")
+    @JsonProperty("roadlevel")
     private String roadLevel;
 
     /**
@@ -86,7 +98,29 @@ public class ReverseGeocodingQO {
      *     <li>综合大数据分析将公司相关的 POI 内容优先返回，即优化返回结果中 pois 字段的poi顺序。</li>
      * </ol>
      */
-    @JSONField(name = "homeorcorp")
+    @JsonProperty("homeorcorp")
     private Integer homeOrCorp;
+
+    /*
+     * 下面是根据“必填”标签进行创建实体类的构造方法
+     */
+
+    /**
+     * 根据格式化的经纬度字符串创建反向地理编码查询对象，格式化方案如下：
+     * <p> {@code String location = String.format("%.6f,%.6f",lng,lat); } </p>
+     * @param location 格式化的经纬度字符串
+     */
+    public ReverseGeocodingQO(@NotEmpty String location) {
+        this.location = location;
+    }
+
+    /**
+     * 根据经纬度创建反向地理编码（逆地理编码）查询对象
+     * @param lng 经度
+     * @param lat 纬度
+     */
+    public ReverseGeocodingQO(double lng,double lat) {
+        this.location = String.format("%.6f,%.6f",lng,lat);
+    }
 
 }

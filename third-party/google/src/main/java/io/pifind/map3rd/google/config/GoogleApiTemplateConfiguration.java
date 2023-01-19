@@ -1,6 +1,5 @@
 package io.pifind.map3rd.google.config;
 
-import com.alibaba.fastjson2.support.spring.http.converter.FastJsonHttpMessageConverter;
 import io.pifind.map3rd.error.MapApiCode;
 import io.pifind.map3rd.error.ThirdPartMapServiceException;
 import io.pifind.map3rd.google.request.GoogleApiTemplate;
@@ -28,11 +27,7 @@ public class GoogleApiTemplateConfiguration {
         if (environment.containsProperty(GOOGLE_API_KEY)) {
             String key = environment.getProperty(GOOGLE_API_KEY);
             GoogleApiTemplate googleApiTemplate = new GoogleApiTemplate(key);
-            // 配置FastJson消息转换器
-            googleApiTemplate.getMessageConverters().add(
-                    0,
-                    new FastJsonHttpMessageConverter()
-            );
+
             // 设置异常处理器
             googleApiTemplate.setErrorHandler(new ResponseErrorHandler() {
                 @Override

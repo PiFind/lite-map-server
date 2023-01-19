@@ -16,9 +16,9 @@ import java.util.stream.Stream;
 
 public class AmapApiTemplate extends RestTemplate {
 
-    private String key;
-    private String signKey;
-    private boolean needSign;
+    private final String key;
+    private final String signKey;
+    private final boolean needSign;
 
     public AmapApiTemplate(String key) {
         this(key,null,false);

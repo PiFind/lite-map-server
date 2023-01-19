@@ -1,13 +1,13 @@
 package io.pifind.map3rd.google.model.wrapper;
 
-import com.alibaba.fastjson2.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.List;
 
 /**
- * 谷歌响应包装类
- * @param <T> 返回的数据类型
+ * Google API 响应包装类
+ * @param <T> 被包装的返回值数据类型
  */
 @Data
 public class GoogleResponseWrapper<T> {
@@ -26,7 +26,7 @@ public class GoogleResponseWrapper<T> {
      * 当地理编码器返回的状态代码不是 {@code OK} 时，地理编码响应对象中可能会包含一个
      * 额外的 {@code error_message} 字段。此字段更详细地说明了给定状态代码背后的原因。
      */
-    @JSONField(name = "error_message")
+    @JsonProperty("error_message")
     private String errorMessage;
 
 }

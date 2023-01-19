@@ -6,6 +6,7 @@ public enum ResponseStatusEnum {
     FAILURE("0");
 
     private String code;
+
     ResponseStatusEnum(String code) {
         this.code = code;
     }

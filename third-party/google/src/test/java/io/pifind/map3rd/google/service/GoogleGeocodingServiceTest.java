@@ -20,8 +20,7 @@ public class GoogleGeocodingServiceTest {
 
     @Test
     public void test() {
-        ReverseGeocodingQO qo = new ReverseGeocodingQO();
-        qo.setLatlng("40.714224,-73.961452");
+        ReverseGeocodingQO qo = new ReverseGeocodingQO(40.714224,-73.961452);
         R<List<GoogleGeocodingDTO>> result = googleGeocodingService.reverseGeocoding(qo);
         if (result != null) {
             log.info("{}",result);

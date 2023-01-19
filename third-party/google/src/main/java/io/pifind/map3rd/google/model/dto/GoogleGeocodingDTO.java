@@ -1,12 +1,12 @@
 package io.pifind.map3rd.google.model.dto;
 
-import com.alibaba.fastjson2.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.List;
 
 /**
- * 地理编码/反向地理编码返回值实体类
+ * Google 地理编码/反向地理编码返回值实体类
  */
 @Data
 public class GoogleGeocodingDTO {
@@ -32,7 +32,7 @@ public class GoogleGeocodingDTO {
      *     还包含这些组成部分。
      * </p>
      */
-    @JSONField(name = "formatted_address")
+    @JsonProperty("formatted_address")
     private String formattedAddress;
 
     /**
@@ -59,7 +59,7 @@ public class GoogleGeocodingDTO {
      *     </li>
      * </ul>
      */
-    @JSONField(name = "address_components")
+    @JsonProperty("address_components")
     private AddressComponent[] addressComponents;
 
     @Data
@@ -73,7 +73,7 @@ public class GoogleGeocodingDTO {
         /**
          * 是地理编码器返回的地址组成部分的完整文本说明或名称。
          */
-        @JSONField(name = "long_name")
+        @JsonProperty("long_name")
         private String longName;
 
         /**
@@ -81,7 +81,7 @@ public class GoogleGeocodingDTO {
          * {@code long_name} “Alaska”和 {@code short_name}“AK”（使用 2 个字母
          * 的邮编缩写）。
          */
-        @JSONField(name = "short_name")
+        @JsonProperty("short_name")
         private String shortName;
 
     }
@@ -89,7 +89,7 @@ public class GoogleGeocodingDTO {
     /**
      * 表示邮政编码中包含的所有市行政区。仅当结果是包含多个市行政区的邮政编码时，此字段才会显示。
      */
-    @JSONField(name = "postcode_localities")
+    @JsonProperty("postcode_localities")
     private List<String> postcodeLocalities;
 
     private Geometry geometry;
@@ -122,7 +122,7 @@ public class GoogleGeocodingDTO {
          *     </li>
          * </ul>
          */
-        @JSONField(name = "location_type")
+        @JsonProperty("location_type")
         private String locationType;
 
         /**
@@ -156,8 +156,25 @@ public class GoogleGeocodingDTO {
      * </ul>
      * 通常情况下，系统会返回全局代码和混合代码。但是，如果结果是在偏远位置（例如海洋或沙漠），系统可能只会返回全局代码。
      */
-    @JSONField(name ="plus_code")
-    private String plusCode;
+    @JsonProperty("plus_code")
+    private PlusCode plusCode;
+
+    @Data
+    public static class PlusCode {
+
+        /**
+         *  4 个字符的区号和 6 个字符或更长的本地代码 (849VCWC8+R9)。
+         */
+        @JsonProperty("compound_code")
+        private String compoundCode;
+
+        /**
+         * 至少包含 6 个字符的区域代码，具有明确的位置信息（CWC8+R9, Mountain View, CA, USA）。
+         */
+        @JsonProperty("global_code")
+        private String globalCode;
+
+    }
 
     /**
      * 表示地理编码器无法返回与原始请求完全匹配的结果，但能够匹配所请求地址的一部分。建议您检查一下原始请求中是否存在拼写错误
@@ -169,7 +186,7 @@ public class GoogleGeocodingDTO {
      * 为部分匹配。
      * </p>
      */
-    @JSONField(name = "partial_match ")
+    @JsonProperty("partial_match ")
     private String partialMatch;
 
     /**

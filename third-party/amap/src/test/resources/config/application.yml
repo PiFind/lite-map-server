@@ -1,0 +1,10 @@
+server:
+  port: 8081
+
+# 配置高德地图 API
+map-3rd:
+  amap:
+    key: "xxxxxx"
+    sign:
+      open: true
+      key: "xxxxxx"

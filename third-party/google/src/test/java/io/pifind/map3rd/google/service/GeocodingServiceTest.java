@@ -25,8 +25,8 @@ public class GeocodingServiceTest {
     @Test
     public void testGeocoding() {
         R<GeocodingDTO> result =
-               // geocodingService.geocoding("China Henan Puyang 华龙区 万达广场", Locale.CHINA.getLanguage());
-               geocodingService.geocoding("Japan Osaka-shi Osakajo, ３−1 大阪城ホール前 噴水広場",Locale.JAPAN.getLanguage());
+               geocodingService.geocoding("China,Henan,puyang,华龙区,大庆中路与任丘路交叉口", Locale.CHINA.getLanguage());
+               // geocodingService.geocoding("Japan Osaka-shi Osakajo, ３−1 大阪城ホール前 噴水広場",Locale.JAPAN.getLanguage());
 
         if (result.getCode() == StandardCode.SUCCESS) {
             log.info("{}",result.getData());

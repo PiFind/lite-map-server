@@ -42,8 +42,7 @@ public class GeocodingServiceImpl implements IGeocodingService {
     public R<GeocodingDTO> geocoding(String address,String language) {
 
         // 创建一个查询对象
-        GeocodingQO qo = new GeocodingQO();
-        qo.setAddress(address);
+        GeocodingQO qo = new GeocodingQO(address);
         if (language != null) {
             qo.setLanguage(language);
         } else {
@@ -86,8 +85,10 @@ public class GeocodingServiceImpl implements IGeocodingService {
         }
 
         // 创建查询对象
-        ReverseGeocodingQO qo = new ReverseGeocodingQO();
-        qo.setLatlng(String.format("%f,%f",coordinate.getLatitude(),coordinate.getLongitude()));
+        ReverseGeocodingQO qo = new ReverseGeocodingQO(
+                coordinate.getLatitude(),
+                coordinate.getLongitude()
+        );
         qo.setLanguage(language);
 
         // 进行查询
@@ -106,7 +107,7 @@ public class GeocodingServiceImpl implements IGeocodingService {
         reverseGeocodingDTO.setFullName(googleGeocoding.getFormattedAddress());
 
         /*
-         * 下面是收集返回的结果的过程
+         * (1) 下面是收集返回的结果的过程
          */
 
         SingleDistrictDTO country = null;
@@ -153,7 +154,7 @@ public class GeocodingServiceImpl implements IGeocodingService {
         }
 
         /*
-         * 下面是对上面收集的结果进行标准化的过程
+         * (2) 下面是对(1)过程收集的结果进行标准化的过程
          */
 
         List<SingleDistrictDTO> districts = new ArrayList<>();
