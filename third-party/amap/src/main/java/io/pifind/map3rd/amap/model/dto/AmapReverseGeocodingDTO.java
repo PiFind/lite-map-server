@@ -16,7 +16,7 @@ public class AmapReverseGeocodingDTO {
      * 逆地理编码列表
      */
     @JsonProperty("regeocodes")
-    private List<ReverseGeocode> reverseGeocodes;
+    private ReverseGeocode reverseGeocode;
 
     @Data
     public static class ReverseGeocode {

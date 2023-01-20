@@ -18,6 +18,7 @@ import io.pifind.map3rd.model.GeocodingDTO;
 import io.pifind.map3rd.model.component.GeographicalTargetDTO;
 import io.pifind.map3rd.model.ReverseGeocodingDTO;
 import io.pifind.map3rd.model.component.SingleDistrictDTO;
+import io.pifind.mapserver.util.GeoCoordinateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
@@ -74,23 +75,19 @@ public class GeocodingServiceImpl implements IGeocodingService {
             geographicalTargetDto.setCoordinate(coordinate);
 
             // 然后获取地址名
-            StringBuilder fullNameBuilder = new StringBuilder(geocode.getCountry());
+            StringBuilder fullNameBuilder = new StringBuilder();
+            String[] administrativeAreaNames = new String[] {
+                    geocode.getCountry(),
+                    geocode.getProvince(), // 省份
+                    geocode.getCity(), // 城市
+                    geocode.getDistrict(), // 区
+                    geocode.getStreet(), // 街道
+            };
 
-            // 省份
-            if (geocode.getProvince() != null) {
-                fullNameBuilder.append(geocode.getProvince());
-            }
-            // 城市
-            if (geocode.getCity() != null) {
-                fullNameBuilder.append(geocode.getCity());
-            }
-            // 区
-            if (geocode.getDistrict() != null) {
-                fullNameBuilder.append(geocode.getDistrict());
-            }
-            // 街道
-            if (geocode.getStreet() != null) {
-                fullNameBuilder.append(geocode.getStreet());
+            for (String administrativeAreaName : administrativeAreaNames) {
+                if (administrativeAreaName != null) {
+                    fullNameBuilder.append(administrativeAreaName);
+                }
             }
 
             geographicalTargetDto.setName(fullNameBuilder.toString());
@@ -119,12 +116,30 @@ public class GeocodingServiceImpl implements IGeocodingService {
             throw new ThirdPartMapServiceException(MapApiCode.UNSUPPORTED_SERVICE_ERROR,"高德地图的国内服务不支持中文以外语言的返回");
         }
 
+        // 检查坐标系是否为 GCJ02 ，因为高德地图只支持 GCJ02 坐标系
+        CoordinateDTO gcj02Coordinate;
         if (! coordinate.getSystem().equals(GeographicCoordinateSystemEnum.GCJ02)) {
-            throw new ThirdPartMapServiceException(MapApiCode.UNSUPPORTED_SERVICE_ERROR,
-                    "高德地图的国内服务不支持 " + coordinate.getSystem() + " 坐标系");
+            // 如果不是 GCJ02 ， 检查是否为 WGS84 坐标系，如果是那么就将经纬度转换为 GCJ02 坐标系
+            if (coordinate.getSystem().equals(GeographicCoordinateSystemEnum.WGS84)) {
+                double[] newPositions =
+                        GeoCoordinateUtils.WGS84ToGCJ02(coordinate.getLatitude(), coordinate.getLongitude());
+                // 创建新的坐标
+                gcj02Coordinate = new CoordinateDTO(newPositions[1],newPositions[0]);
+                gcj02Coordinate.setSystem(GeographicCoordinateSystemEnum.GCJ02);
+            } else {
+                throw new ThirdPartMapServiceException(MapApiCode.UNSUPPORTED_SERVICE_ERROR,
+                        "高德地图的国内服务不支持 " + coordinate.getSystem() + " 坐标系");
+            }
+        } else {
+            gcj02Coordinate = coordinate;
         }
 
-        ReverseGeocodingQO qo = new ReverseGeocodingQO(coordinate.getLongitude(),coordinate.getLatitude());
+        /*
+         * 获取从高德地图开放平台的反向地理编码返回对象
+         */
+
+        // 构建查询对象并进行查询
+        ReverseGeocodingQO qo = new ReverseGeocodingQO(gcj02Coordinate.getLongitude(),gcj02Coordinate.getLatitude());
         R<AmapReverseGeocodingDTO> result =  amapGeocodingService.reverseGeocoding(qo);
 
         if (result.getCode() != StandardCode.SUCCESS) {
@@ -132,9 +147,12 @@ public class GeocodingServiceImpl implements IGeocodingService {
         }
 
         AmapReverseGeocodingDTO amapReverseGeocoding =  result.getData();
-        AmapReverseGeocodingDTO.ReverseGeocode reverseGeocode = amapReverseGeocoding.getReverseGeocodes().get(0);
+        AmapReverseGeocodingDTO.ReverseGeocode reverseGeocode = amapReverseGeocoding.getReverseGeocode();
 
-        // 构建
+        /*
+         * 构建标准反向地理编码对象
+         */
+
         ReverseGeocodingDTO reverseGeocoding = new ReverseGeocodingDTO();
         reverseGeocoding.setFullName(reverseGeocode.getFormattedAddress());
         reverseGeocoding.setCountryCode("CN");
@@ -143,52 +161,27 @@ public class GeocodingServiceImpl implements IGeocodingService {
         List<SingleDistrictDTO> districts = new ArrayList<>();
         AmapAddressDTO amapAddress = reverseGeocode.getAddressComponent();
 
+        String[] administrativeAreaNames = new String[] {
+                "中国",
+                amapAddress.getProvince(), // 省份
+                amapAddress.getCity(), // 城市
+                amapAddress.getDistrict(), // 区
+                amapAddress.getStreetNumber().getStreet(), // 街道
+        };
+
+        // 添加行政区
         int level = 0;
-        // 国家
-        SingleDistrictDTO countryDto = new SingleDistrictDTO();
-        countryDto.setName("中国");
-        countryDto.setLevel(level);
-        districts.add(countryDto);
-        level ++;
-
-        // 省份
-        if (amapAddress.getProvince() != null) {
-            SingleDistrictDTO provinceDto = new SingleDistrictDTO();
-            provinceDto.setLevel(level);
-            provinceDto.setName(amapAddress.getProvince());
-            districts.add(provinceDto);
-            level ++;
-        }
-
-        // 城市
-        if (amapAddress.getCity() != null) {
-            SingleDistrictDTO cityDto = new SingleDistrictDTO();
-            cityDto.setLevel(level);
-            cityDto.setName(amapAddress.getCity());
-            districts.add(cityDto);
-            level++;
-        }
-
-        // 区
-        if (amapAddress.getDistrict() != null) {
-            SingleDistrictDTO districtDto = new SingleDistrictDTO();
-            districtDto.setLevel(level);
-            districtDto.setName(amapAddress.getDistrict());
-            districts.add(districtDto);
-            level++;
-        }
-
-        // 街道
-        if (amapAddress.getStreetNumber() != null) {
-            SingleDistrictDTO streetDto = new SingleDistrictDTO();
-            streetDto.setLevel(level);
-            streetDto.setName(amapAddress.getStreetNumber().getStreet());
-            districts.add(streetDto);
-            level++;
+        for (String administrativeAreaName : administrativeAreaNames) {
+            if (administrativeAreaName != null) {
+                SingleDistrictDTO areaDto = new SingleDistrictDTO();
+                areaDto.setLevel(level);
+                areaDto.setName(administrativeAreaName);
+                districts.add(areaDto);
+                level ++;
+            }
         }
 
         reverseGeocoding.setDistricts(districts);
-
         return R.success(reverseGeocoding);
     }
 
