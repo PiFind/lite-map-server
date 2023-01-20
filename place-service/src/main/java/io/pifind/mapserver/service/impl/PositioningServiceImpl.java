@@ -49,7 +49,12 @@ public class PositioningServiceImpl implements IPositioningService {
 
     /** Google 的地理编码服务 */
     @Resource(name = "Google-GeocodingService")
-    private IGeocodingService geocodingService;
+    private IGeocodingService globalGeocodingService;
+
+    // 下面的注释是为使用的高德的 地理编码服务，如果只做中国区的服务，
+    // 那么使用高德将更加精确
+    // @Resource(name = "Amap-GeocodingService")
+    // private IGeocodingService chinaGeocodingService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -150,7 +155,7 @@ public class PositioningServiceImpl implements IPositioningService {
 
         // 由于数据库中只记录了中文和英文的行政区划名，为了定位的准确性这里就返回英语
         R<ReverseGeocodingDTO> result =
-                geocodingService.reverseGeocoding(coordinate,Locale.ENGLISH.getLanguage());
+                globalGeocodingService.reverseGeocoding(coordinate,Locale.ENGLISH.getLanguage());
 
         if (result.getCode() != StandardCode.SUCCESS) {
             // 做错误日志
