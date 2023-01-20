@@ -22,6 +22,11 @@ public class AmapAddressDTO {
     private String province;
 
     /**
+     * 坐标点所在城市名称
+     */
+    private String city;
+
+    /**
      * 城市编码
      */
     @JsonProperty("citycode")

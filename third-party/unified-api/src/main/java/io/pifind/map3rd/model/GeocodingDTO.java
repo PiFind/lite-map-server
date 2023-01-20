@@ -1,22 +1,21 @@
 package io.pifind.map3rd.model;
 
-import io.pifind.map.model.CoordinateDTO;
+import io.pifind.map3rd.model.component.GeographicalTargetDTO;
 import lombok.Data;
 
-/**
- * 标准地理编码实体类
- */
+import java.util.List;
+
 @Data
 public class GeocodingDTO {
 
     /**
-     * 目标名
+     * 目标的数量
      */
-    private String name;
+    private Integer count;
 
     /**
-     * 目标位置的坐标
+     * 找到的目标
      */
-    private CoordinateDTO coordinate;
+    private List<GeographicalTargetDTO> targets;
 
 }

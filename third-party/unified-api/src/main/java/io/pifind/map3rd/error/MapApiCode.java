@@ -42,7 +42,7 @@ public interface MapApiCode {
     int CONNECTION_ERROR = THIRD_PART_SERVICE_EXCEPTION | 0xB400;
 
     /**
-     * 服务器拒绝错误
+     * 服务器拒绝服务错误
      */
     int SERVER_REJECT_ERROR = THIRD_PART_SERVICE_EXCEPTION | 0xB500;
 

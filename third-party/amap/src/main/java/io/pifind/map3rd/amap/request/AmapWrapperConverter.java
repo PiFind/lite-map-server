@@ -52,4 +52,5 @@ public class AmapWrapperConverter extends AbstractJackson2HttpMessageConverter {
         return super.read(type,contextClass,httpInputMessage);
 
     }
+
 }

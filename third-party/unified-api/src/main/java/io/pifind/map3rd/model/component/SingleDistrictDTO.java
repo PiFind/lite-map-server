@@ -1,4 +1,4 @@
-package io.pifind.map3rd.model;
+package io.pifind.map3rd.model.component;
 
 import lombok.Data;
 

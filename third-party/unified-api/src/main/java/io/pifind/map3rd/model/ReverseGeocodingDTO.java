@@ -1,5 +1,6 @@
 package io.pifind.map3rd.model;
 
+import io.pifind.map3rd.model.component.SingleDistrictDTO;
 import lombok.Data;
 
 import java.util.Comparator;

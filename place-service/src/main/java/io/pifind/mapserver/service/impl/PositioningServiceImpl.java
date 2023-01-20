@@ -6,7 +6,7 @@ import io.pifind.common.response.StandardCode;
 import io.pifind.map.model.CoordinateDTO;
 import io.pifind.map3rd.api.IGeocodingService;
 import io.pifind.map3rd.model.ReverseGeocodingDTO;
-import io.pifind.map3rd.model.SingleDistrictDTO;
+import io.pifind.map3rd.model.component.SingleDistrictDTO;
 import io.pifind.mapserver.converter.LocationDtoConverter;
 import io.pifind.mapserver.error.PlaceCodeEnum;
 import io.pifind.mapserver.mapper.AdministrativeAreaMapper;

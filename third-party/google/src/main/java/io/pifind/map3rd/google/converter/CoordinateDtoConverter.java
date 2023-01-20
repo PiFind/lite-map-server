@@ -6,6 +6,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
+import javax.validation.constraints.NotNull;
+
 @Mapper(componentModel = "spring")
 public interface CoordinateDtoConverter {
 
@@ -14,6 +16,6 @@ public interface CoordinateDtoConverter {
             @Mapping(target = "longitude",source = "lng"),
             @Mapping(target = "system",constant = "WGS84")
     })
-    CoordinateDTO convert(GoogleCoordinateDTO googleCoordinate);
+    CoordinateDTO convert(@NotNull GoogleCoordinateDTO googleCoordinate);
 
 }

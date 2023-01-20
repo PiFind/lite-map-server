@@ -7,12 +7,14 @@ import io.pifind.map.model.CoordinateDTO;
 import io.pifind.map3rd.api.IGeocodingService;
 import io.pifind.map3rd.google.ApplicationTest;
 import io.pifind.map3rd.model.GeocodingDTO;
+import io.pifind.map3rd.model.component.GeographicalTargetDTO;
 import io.pifind.map3rd.model.ReverseGeocodingDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Locale;
 
 @Slf4j

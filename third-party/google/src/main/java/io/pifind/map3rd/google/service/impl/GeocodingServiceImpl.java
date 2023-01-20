@@ -14,8 +14,9 @@ import io.pifind.map3rd.google.model.qo.GeocodingQO;
 import io.pifind.map3rd.google.model.qo.ReverseGeocodingQO;
 import io.pifind.map3rd.google.service.IGoogleGeocodingService;
 import io.pifind.map3rd.model.GeocodingDTO;
+import io.pifind.map3rd.model.component.GeographicalTargetDTO;
 import io.pifind.map3rd.model.ReverseGeocodingDTO;
-import io.pifind.map3rd.model.SingleDistrictDTO;
+import io.pifind.map3rd.model.component.SingleDistrictDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,7 @@ public class GeocodingServiceImpl implements IGeocodingService {
     private CoordinateDtoConverter coordinateDtoConverter;
 
     @Override
-    public R<GeocodingDTO> geocoding(String address,String language) {
+    public R<GeocodingDTO> geocoding(String address, String language) {
 
         // 创建一个查询对象
         GeocodingQO qo = new GeocodingQO(address);
@@ -55,22 +56,30 @@ public class GeocodingServiceImpl implements IGeocodingService {
             return R.failure(result.getCode(),result.getMessage());
         }
 
-        // 只获取第一个
-        List<GoogleGeocodingDTO> googleGeocodingData = result.getData();
-        GoogleGeocodingDTO googleGeocoding = googleGeocodingData.get(0);
+        // 构建标准地理编码结果列表
+        List<GeographicalTargetDTO> targetList = new ArrayList<>();
+        for (GoogleGeocodingDTO googleGeocoding: result.getData()) {
 
-        // 创建一个地理编码实体
-        GeocodingDTO geocodingDTO = new GeocodingDTO();
-        geocodingDTO.setName(googleGeocoding.getFormattedAddress());
+            // 创建一个地理编码实体
+            GeographicalTargetDTO geographicalTargetDto = new GeographicalTargetDTO();
+            geographicalTargetDto.setName(googleGeocoding.getFormattedAddress());
 
-        // 获取坐标
-        GoogleCoordinateDTO googleCoordinateDTO = googleGeocoding.getGeometry().getLocation();
-        if (googleCoordinateDTO != null) {
-            CoordinateDTO coordinateDTO = coordinateDtoConverter.convert(googleCoordinateDTO);
-            geocodingDTO.setCoordinate(coordinateDTO);
+            // 获取坐标
+            GoogleCoordinateDTO googleCoordinateDTO = googleGeocoding.getGeometry().getLocation();
+            if (googleCoordinateDTO != null) {
+                CoordinateDTO coordinateDTO = coordinateDtoConverter.convert(googleCoordinateDTO);
+                geographicalTargetDto.setCoordinate(coordinateDTO);
+            }
+
+            targetList.add(geographicalTargetDto);
+
         }
 
-        return R.success(geocodingDTO);
+        GeocodingDTO geocoding = new GeocodingDTO();
+        geocoding.setCount(targetList.size());
+        geocoding.setTargets(targetList);
+
+        return R.success(geocoding);
     }
 
     @Override
@@ -89,7 +98,11 @@ public class GeocodingServiceImpl implements IGeocodingService {
                 coordinate.getLatitude(),
                 coordinate.getLongitude()
         );
-        qo.setLanguage(language);
+        if (language != null) {
+            qo.setLanguage(language);
+        } else {
+            qo.setLanguage(LocaleContextHolder.getLocale().getLanguage());
+        }
 
         // 进行查询
         R<List<GoogleGeocodingDTO>> result = googleGeocodingService.reverseGeocoding(qo);
@@ -100,7 +113,6 @@ public class GeocodingServiceImpl implements IGeocodingService {
         // 只获取第一个
         List<GoogleGeocodingDTO> googleGeocodingData = result.getData();
         GoogleGeocodingDTO googleGeocoding = googleGeocodingData.get(0);
-        System.out.println(googleGeocoding);
 
         // 创建一个反向编码实体
         ReverseGeocodingDTO reverseGeocodingDTO = new ReverseGeocodingDTO();

@@ -11,6 +11,7 @@ public class AmapWrapperConverterConfiguration {
     @Bean
     public AmapWrapperConverter amapWrapperConverter() {
         AmapWrapperConverter amapWrapperConverter = new AmapWrapperConverter();
+        // 开启允许空数组为空对象
         amapWrapperConverter.getObjectMapper().enable(
                 DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT,
                 DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT
