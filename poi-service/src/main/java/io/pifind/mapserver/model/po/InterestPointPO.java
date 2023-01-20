@@ -3,7 +3,6 @@ package io.pifind.mapserver.model.po;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.pifind.mapserver.geo.Point;
 import io.pifind.mapserver.model.constant.InterestPointStatusEnum;
 import io.pifind.mapserver.mp.PoiStringListTypeHandler;
 import lombok.Data;

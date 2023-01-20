@@ -37,12 +37,6 @@
             <artifactId>commons-io</artifactId>
             <version>2.11.0</version>
         </dependency>
-        <dependency>
-            <groupId>io.pifind.mapserver</groupId>
-            <artifactId>map-base</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
 
     </dependencies>
 
