@@ -49,6 +49,7 @@
         <org.projectlombok.version>1.18.24</org.projectlombok.version>
         <io.pifind.common>0.0.2-snapshot</io.pifind.common>
         <io.pifind.map.api>0.0.1-snapshot</io.pifind.map.api>
+        <io.pifind.map.geocommon>0.0.1-snapshot</io.pifind.map.geocommon>
     </properties>
 
     <dependencies>
@@ -114,6 +115,13 @@
             <groupId>io.pifind</groupId>
             <artifactId>common</artifactId>
             <version>${io.pifind.common}</version>
+        </dependency>
+
+        <!-- PiFind 地理公共库 -->
+        <dependency>
+            <groupId>io.pifind.map</groupId>
+            <artifactId>geo-common</artifactId>
+            <version>${io.pifind.map.geocommon}</version>
         </dependency>
 
         <!-- 地图服务公共库 -->

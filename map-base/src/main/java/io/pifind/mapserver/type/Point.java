@@ -1,4 +1,4 @@
-package io.pifind.mapserver.geo;
+package io.pifind.mapserver.type;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
