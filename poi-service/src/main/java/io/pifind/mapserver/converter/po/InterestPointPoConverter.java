@@ -1,11 +1,14 @@
 package io.pifind.mapserver.converter.po;
 
+import io.pifind.map.OpenLocationCode;
+import io.pifind.map.model.CoordinateDTO;
 import io.pifind.mapserver.model.constant.BusinessStatusEnum;
 import io.pifind.mapserver.model.constant.InterestPointStatusEnum;
 import io.pifind.mapserver.model.constant.WeekEnum;
 import io.pifind.mapserver.model.po.InterestPointPO;
 import io.pifind.mapserver.model.po.component.TimeIntervalPO;
 import io.pifind.mapserver.model.po.component.TimeIntervalSet;
+import io.pifind.mapserver.type.Point;
 import io.pifind.poi.constant.PoiStatusEnum;
 import io.pifind.poi.model.InterestPointDTO;
 import io.pifind.poi.model.component.BusinessTimeDTO;
@@ -21,6 +24,11 @@ import java.util.Map;
 @Mapper(componentModel = "spring")
 public interface InterestPointPoConverter {
 
+    /**
+     * 将兴趣点DTO对象转换为兴趣点PO对象
+     * @param dto {@link InterestPointDTO 兴趣点DTO对象}
+     * @return 转换后的 {@link InterestPointPO 兴趣点PO对象}
+     */
     default InterestPointPO convert(InterestPointDTO dto) {
 
         InterestPointPO interestPointPO = liteConvert(dto);
@@ -158,6 +166,28 @@ public interface InterestPointPoConverter {
                         }
                     }
             }
+        }
+
+        /*
+         * 坐标转换
+         */
+
+        CoordinateDTO coordinate = dto.getCoordinate();
+        if (coordinate != null) {
+
+            // 定位坐标
+            Point location = new Point();
+            location.setLatitude(coordinate.getLatitude());
+            location.setLongitude(coordinate.getLongitude());
+            interestPointPO.setLocation(location);
+
+            // Plus Code
+            OpenLocationCode plusCode = new OpenLocationCode(
+                    coordinate.getLatitude(),
+                    coordinate.getLongitude(),
+                    12);
+            interestPointPO.setPlusCode(plusCode.getCode());
+
         }
 
         return interestPointPO;

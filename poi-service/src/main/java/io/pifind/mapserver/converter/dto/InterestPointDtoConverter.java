@@ -1,10 +1,12 @@
 package io.pifind.mapserver.converter.dto;
 
 
+import io.pifind.map.model.CoordinateDTO;
 import io.pifind.mapserver.model.constant.InterestPointStatusEnum;
 import io.pifind.mapserver.model.po.InterestPointPO;
 import io.pifind.mapserver.model.po.component.TimeIntervalPO;
 import io.pifind.mapserver.model.po.component.TimeIntervalSet;
+import io.pifind.mapserver.type.Point;
 import io.pifind.poi.constant.BusinessStatusEnum;
 import io.pifind.poi.constant.PoiStatusEnum;
 import io.pifind.poi.constant.WeekEnum;
@@ -23,6 +25,11 @@ import java.util.Map;
 public interface InterestPointDtoConverter {
 
 
+    /**
+     * 将兴趣点PO对象转换为兴趣点DTO对象
+     * @param po {@link InterestPointPO 兴趣点PO对象}
+     * @return 转换后的 {@link InterestPointDTO 兴趣点DTO对象}
+     */
     default InterestPointDTO convert(InterestPointPO po) {
         InterestPointDTO dto = liteConvert(po);
 
@@ -146,6 +153,16 @@ public interface InterestPointDtoConverter {
                         }
                     }
             }
+        }
+
+        /*
+         * 坐标转换
+         */
+        Point location = po.getLocation();
+        if (location != null) {
+            CoordinateDTO coordinate =
+                    new CoordinateDTO(location.getLongitude(),location.getLatitude());
+            dto.setCoordinate(coordinate);
         }
 
         return dto;

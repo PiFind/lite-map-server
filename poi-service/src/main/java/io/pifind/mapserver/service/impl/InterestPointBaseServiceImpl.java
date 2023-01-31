@@ -29,8 +29,6 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
         // 将 DTO 对象转换成 PO 对象
         InterestPointPO po = interestPointPoConverter.convert(interestPoint);
 
-
-
         // 加入到数据库中
         interestPointMapper.insert(po);
 
