@@ -118,11 +118,6 @@ public class InterestPointPO {
     private List<String> images;
 
     /**
-     * 简介
-     */
-    private String introduction;
-
-    /**
      * [必填]人均消费
      */
     @TableField("consumption_per_person")

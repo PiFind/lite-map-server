@@ -7,6 +7,20 @@ import com.baomidou.mybatisplus.annotation.EnumValue;
  */
 public enum InterestPointStatusEnum {
 
+    /**
+     * 未验证
+     */
+    UNVERIFIED(0),
+
+    /**
+     * 已验证
+     */
+    VERIFIED(1),
+
+    /**
+     * 无效
+     */
+    INVALID(2),
 
     ;
 
