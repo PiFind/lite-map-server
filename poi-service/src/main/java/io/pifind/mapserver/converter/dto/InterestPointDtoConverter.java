@@ -101,23 +101,25 @@ public interface InterestPointDtoConverter {
          */
 
         io.pifind.mapserver.model.constant.BusinessStatusEnum businessStatus = po.getBusinessStatus();
-        switch (businessStatus) {
-            case NORMAL:
-                dto.setBusinessStatus(BusinessStatusEnum.NORMAL);
-                break;
-            case CLOSE:
-                dto.setBusinessStatus(BusinessStatusEnum.CLOSE);
-                break;
-            case BANKRUPT:
-                dto.setBusinessStatus(BusinessStatusEnum.BANKRUPT);
-                break;
-            default:
-                for (BusinessStatusEnum status : BusinessStatusEnum.values()) {
-                    if (status.name().equals(businessStatus.name())) {
-                        dto.setBusinessStatus(status);
-                        break;
+        if (businessStatus != null) {
+            switch (businessStatus) {
+                case NORMAL:
+                    dto.setBusinessStatus(BusinessStatusEnum.NORMAL);
+                    break;
+                case CLOSE:
+                    dto.setBusinessStatus(BusinessStatusEnum.CLOSE);
+                    break;
+                case BANKRUPT:
+                    dto.setBusinessStatus(BusinessStatusEnum.BANKRUPT);
+                    break;
+                default:
+                    for (BusinessStatusEnum status : BusinessStatusEnum.values()) {
+                        if (status.name().equals(businessStatus.name())) {
+                            dto.setBusinessStatus(status);
+                            break;
+                        }
                     }
-                }
+            }
         }
 
         /*
@@ -125,23 +127,25 @@ public interface InterestPointDtoConverter {
          */
 
         InterestPointStatusEnum interestPointStatus = po.getPoiStatus();
-        switch (interestPointStatus) {
-            case VERIFIED:
-                dto.setStatus(PoiStatusEnum.VERIFIED);
-                break;
-            case INVALID:
-                dto.setStatus(PoiStatusEnum.INVALID);
-                break;
-            case UNVERIFIED:
-                dto.setStatus(PoiStatusEnum.UNVERIFIED);
-                break;
-            default:
-                for (PoiStatusEnum status : PoiStatusEnum.values()) {
-                    if (status.name().equals(interestPointStatus.name())) {
-                        dto.setStatus(status);
-                        break;
+        if (interestPointStatus != null) {
+            switch (interestPointStatus) {
+                case VERIFIED:
+                    dto.setPoiStatus(PoiStatusEnum.VERIFIED);
+                    break;
+                case INVALID:
+                    dto.setPoiStatus(PoiStatusEnum.INVALID);
+                    break;
+                case UNVERIFIED:
+                    dto.setPoiStatus(PoiStatusEnum.UNVERIFIED);
+                    break;
+                default:
+                    for (PoiStatusEnum status : PoiStatusEnum.values()) {
+                        if (status.name().equals(interestPointStatus.name())) {
+                            dto.setPoiStatus(status);
+                            break;
+                        }
                     }
-                }
+            }
         }
 
         return dto;

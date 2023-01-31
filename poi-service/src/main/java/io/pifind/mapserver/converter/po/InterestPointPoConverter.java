@@ -138,7 +138,7 @@ public interface InterestPointPoConverter {
          * POI状态转换
          */
 
-        PoiStatusEnum poiStatus = dto.getStatus();
+        PoiStatusEnum poiStatus = dto.getPoiStatus();
         if (poiStatus != null) {
             switch (poiStatus) {
                 case INVALID:
