@@ -27,7 +27,7 @@ public class InterestPointPO {
     /**
      * 主键
      */
-    private String id ;
+    private Long id ;
 
     /**
      * [必填]本地语言的名字
@@ -187,12 +187,16 @@ public class InterestPointPO {
     private Integer collections;
 
     /**
-     * [可选]顾客评分( 0 - 500 ，实际展示为 0 - 5 )
-     * <p>
-     *     默认为350，即实际显示为3.5
-     * </p>
+     * 评价总分
      */
-    private Integer score;
+    @TableField("total_score")
+    private Integer totalScore;
+
+    /**
+     * 参与评价的人数
+     */
+    @TableField("total_participant")
+    private Integer totalParticipants;
 
     /**
      * [可选] 隐藏分

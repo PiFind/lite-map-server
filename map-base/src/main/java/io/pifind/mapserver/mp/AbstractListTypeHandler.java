@@ -53,6 +53,9 @@ public abstract class AbstractListTypeHandler<T> implements TypeHandler<List<T>>
         // 将分割后的数据进行转换
         List<T> data = new ArrayList<>();
         for (String item : items) {
+            if(item.trim().isEmpty()) {
+                continue;
+            }
             data.add(convert(item));
         }
         return data;

@@ -158,12 +158,26 @@ public interface InterestPointDtoConverter {
         /*
          * 坐标转换
          */
+
         Point location = po.getLocation();
         if (location != null) {
             CoordinateDTO coordinate =
                     new CoordinateDTO(location.getLongitude(),location.getLatitude());
             dto.setCoordinate(coordinate);
         }
+
+        /*
+         * 评分转换
+         */
+
+        // 实际分数为 正常分数 + 隐藏分数
+        int realScore = po.getTotalScore() + po.getHiddenScore();
+        double score = realScore/(double)po.getTotalParticipants();
+        if (score > 5.0) {
+            score = 5;
+        }
+        // 展示出保留一位小数的分数
+        dto.setScore(Double.parseDouble(String.format("%.1f",score)));
 
         return dto;
     }
@@ -198,7 +212,6 @@ public interface InterestPointDtoConverter {
             @Mapping(target = "hash",source = "hash"),
             @Mapping(target = "pageviews",source = "pageviews"),
             @Mapping(target = "collections",source = "collections"),
-            @Mapping(target = "score",source = "score"),
             @Mapping(target = "createTime",source = "createTime"),
             @Mapping(target = "updateTime",source = "updateTime"),
     })

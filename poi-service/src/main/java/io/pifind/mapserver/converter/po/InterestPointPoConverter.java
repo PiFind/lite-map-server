@@ -220,10 +220,8 @@ public interface InterestPointPoConverter {
             @Mapping(target = "supportedCurrencies",source = "supportedCurrencies"),
             @Mapping(target = "tags",source = "tags"),
             @Mapping(target = "publisher",source = "publisher"),
-            @Mapping(target = "hash",source = "hash"),
             @Mapping(target = "pageviews",source = "pageviews"),
             @Mapping(target = "collections",source = "collections"),
-            @Mapping(target = "score",source = "score"),
             @Mapping(target = "createTime",source = "createTime"),
             @Mapping(target = "updateTime",source = "updateTime"),
     })

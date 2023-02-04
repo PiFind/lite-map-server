@@ -18,6 +18,15 @@
     </properties>
 
     <dependencies>
+
+        <!-- 基础服务 -->
+        <dependency>
+            <groupId>io.pifind.mapserver</groupId>
+            <artifactId>map-base</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- 地点服务标准API -->
         <dependency>
             <groupId>io.pifind.map</groupId>
@@ -25,28 +34,29 @@
             <version>${io.pifind.map.api}</version>
         </dependency>
 
+        <!-- 数据库相关 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatis-plus.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
             <scope>runtime</scope>
         </dependency>
+
+        <!-- Redis 相关 -->
         <dependency>
-            <groupId>io.pifind.mapserver</groupId>
-            <artifactId>map-base</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>2.7.8</version>
         </dependency>
+
 
     </dependencies>
 </project>
