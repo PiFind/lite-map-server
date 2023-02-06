@@ -7,6 +7,17 @@ import java.util.List;
 public interface InterestPointSocialRedisService {
 
     /**
+     * 是否包含兴趣点ID
+     * @param id 兴趣点ID
+     * @return 返回类型为 boolean
+     * <ul>
+     *     <li><b>包含兴趣点ID</b> - 返回 {@code true}</li>
+     *     <li><b>不包含兴趣点ID</b> - 返回 {@code false}</li>
+     * </ul>
+     */
+    boolean containsId(Long id);
+
+    /**
      * 清零兴趣点社交相关的数据（直接在 Redis 中删除）
      * @param id 兴趣点ID
      * @return 返回类型为 boolean

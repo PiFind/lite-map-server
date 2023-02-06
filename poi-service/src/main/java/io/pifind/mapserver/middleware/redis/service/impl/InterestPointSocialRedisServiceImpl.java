@@ -18,9 +18,14 @@ public class InterestPointSocialRedisServiceImpl implements InterestPointSocialR
 
     private static final FormattedStringKeyGenerator KEY_GENERATOR = FormattedStringKeyGenerator.create("PoiSocial@%d");
 
-    // TODO
-    @Resource(name = "")
+    @Resource(name = "InterestPointSocialRedisTemplate")
     private RedisTemplate<String, InterestPointSocialDTO> redisTemplate;
+
+    @Override
+    public boolean containsId(Long id) {
+        String key = KEY_GENERATOR.generate(id);
+        return Boolean.TRUE.equals(redisTemplate.hasKey(key));
+    }
 
     @Override
     public boolean deleteById(Long id) {
@@ -148,8 +153,10 @@ public class InterestPointSocialRedisServiceImpl implements InterestPointSocialR
         List<InterestPointSocialDTO> res = redisTemplate.execute(new SessionCallback<List<InterestPointSocialDTO>>() {
             @Override
             public <K, V> List<InterestPointSocialDTO> execute(RedisOperations<K, V> operations) throws DataAccessException {
+
                 operations.multi();
                 List<InterestPointSocialDTO> dtoList = new ArrayList<>(count);
+
                 for (int i = 0; i < count ; i ++) {
                     K key = operations.randomKey();
 
