@@ -4,5 +4,6 @@ public interface IKeyGenerator<T,S> {
 
     S generate(T...t);
 
-    boolean matches(S s);
+    boolean isMatched(S s);
+
 }

@@ -1,6 +1,6 @@
 package io.pifind.mapserver.redis;
 
-import io.pifind.mapserver.utils.StringFormatUtils;
+import io.pifind.common.util.StringFormatUtils;
 
 /**
  * 格式化字符串键生成器
@@ -27,8 +27,8 @@ public class FormattedStringKeyGenerator implements IStringKeyGenerator<Object>{
     }
 
     @Override
-    public boolean matches(String s) {
-        return s.matches(regularExpression);
+    public boolean isMatched(String s) {
+        return !s.matches(regularExpression);
     }
 
     /**
@@ -48,4 +48,5 @@ public class FormattedStringKeyGenerator implements IStringKeyGenerator<Object>{
     public static FormattedStringKeyGenerator create(String formatExpression,String regularExpression) {
         return new FormattedStringKeyGenerator(formatExpression,regularExpression);
     }
+
 }

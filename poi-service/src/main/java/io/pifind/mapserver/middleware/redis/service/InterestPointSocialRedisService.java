@@ -90,4 +90,26 @@ public interface InterestPointSocialRedisService {
      */
     List<InterestPointSocialDTO> randomInterestPointSocialDtoList(int count);
 
+    /**
+     * 根据失效条件随机删除一些兴趣点社交DTO
+     * @param count 随机数量总数
+     * @param condition 无效条件
+     * @return 被移除兴趣点社交DTO数据
+     */
+    List<InterestPointSocialDTO> randomDeleteInterestPointSocialByCondition(int count,InvalidCondition condition);
+
+    /**
+     * 无效条件接口
+     * <p>
+     *     配合 {@link InterestPointSocialRedisService#randomDeleteInterestPointSocialByCondition(int count,InvalidCondition condition)} 使用
+     *     用于定义兴趣点社交记录失效的情况
+     * </p>
+     */
+    @FunctionalInterface
+    interface InvalidCondition {
+
+        boolean isInvalid(InterestPointSocialDTO dto);
+
+    }
+
 }

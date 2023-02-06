@@ -88,17 +88,13 @@ public class InterestPointSocialServiceImpl implements InterestPointSocialServic
         // 当前时间到创建时间 > 3天
         if (System.currentTimeMillis() - dto.getCreateTimestamp() > 259200000L) {
             // 访问次数 < 1000 次，就认为是低频访问
-            if (dto.getTimes() < 1000) {
-                return true;
-            }
+            return dto.getTimes() < 1000;
         } else {
             // 如果大于 3 天，就认为它在三天内访问到了 1000
             // 检查其日访问量是否能达到 1000 ，如果不能那就认为是低频访问
             int dt = (int) ((System.currentTimeMillis() - dto.getCreateTimestamp()) / 86400000L);
             if (dt >= 1) {
-                if (dto.getTimes()/dt >= 1000) {
-                    return true;
-                }
+                return dto.getTimes() / dt >= 1000;
             }
         }
         return false;
@@ -109,11 +105,9 @@ public class InterestPointSocialServiceImpl implements InterestPointSocialServic
      */
     @Scheduled(fixedDelay = 60000)
     private void optimizeRedisTimingTask() {
-        List<InterestPointSocialDTO> batch =
-                interestPointSocialRedisService.randomInterestPointSocialDtoList(BATCH_COUNT);
-        for (InterestPointSocialDTO dto : batch) {
-            checkLowFrequency(dto);
-        }
+        interestPointSocialRedisService.randomDeleteInterestPointSocialByCondition(
+                BATCH_COUNT,
+                this::checkLowFrequency);
     }
 
 }

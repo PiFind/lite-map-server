@@ -114,13 +114,75 @@ public class InterestPointSocialRedisServiceImpl implements InterestPointSocialR
                 operations.multi();
                 List<InterestPointSocialDTO> dtoList = new ArrayList<>(count);
                 for (int i = 0; i < count ; i ++) {
-                    String key = (String) operations.randomKey();
-                    // 检查是否匹配 key 的构造方法
-                    if (key == null || !KEY_GENERATOR.matches(key)) {
+                    K key = operations.randomKey();
+
+                    // 检查数据是否为 null，如果为 null，则认为Redis中已经没有数据了
+                    if (key == null) {
+                        break;
+                    }
+
+                    if (key instanceof String) {
+                        String keyStr = (String) key;
+                        // 检查是否匹配 key 的构造方法
+                        if (KEY_GENERATOR.isMatched(keyStr)) {
+                            continue;
+                        }
+                    } else {
                         continue;
                     }
+
                     // 添加到列表里
                     dtoList.add((InterestPointSocialDTO) operations.opsForValue().get(key));
+                }
+                operations.exec();
+                return dtoList;
+            }
+        });
+
+        return res;
+    }
+
+    @Override
+    public List<InterestPointSocialDTO> randomDeleteInterestPointSocialByCondition(int count, InvalidCondition condition) {
+
+        List<InterestPointSocialDTO> res = redisTemplate.execute(new SessionCallback<List<InterestPointSocialDTO>>() {
+            @Override
+            public <K, V> List<InterestPointSocialDTO> execute(RedisOperations<K, V> operations) throws DataAccessException {
+                operations.multi();
+                List<InterestPointSocialDTO> dtoList = new ArrayList<>(count);
+                for (int i = 0; i < count ; i ++) {
+                    K key = operations.randomKey();
+
+                    // 检查数据是否为 null，如果为 null，则认为Redis中已经没有数据了
+                    if (key == null) {
+                        break;
+                    }
+
+                    if (key instanceof String) {
+                        String keyStr = (String) key;
+                        // 检查是否匹配 key 的构造方法
+                        if (KEY_GENERATOR.isMatched(keyStr)) {
+                            continue;
+                        }
+                    } else {
+                        continue;
+                    }
+
+                    InterestPointSocialDTO dto = (InterestPointSocialDTO) operations.opsForValue().get(key);
+
+                    // 如果满足失效条件
+                    if (condition.isInvalid(dto)) {
+                        if (Boolean.TRUE.equals(operations.hasKey(key))) {
+
+                            // 移除数据
+                            operations.delete(key);
+
+                            // 将删除的数据加入列表中
+                            dtoList.add((InterestPointSocialDTO) operations.opsForValue().get(key));
+
+                        }
+                    }
+
                 }
                 operations.exec();
                 return dtoList;
