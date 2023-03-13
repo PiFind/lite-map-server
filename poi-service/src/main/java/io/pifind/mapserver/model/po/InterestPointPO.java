@@ -1,6 +1,7 @@
 package io.pifind.mapserver.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.pifind.mapserver.model.constant.BusinessStatusEnum;
@@ -27,6 +28,7 @@ public class InterestPointPO {
     /**
      * 主键
      */
+    @TableId
     private Long id ;
 
     /**

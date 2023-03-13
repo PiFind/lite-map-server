@@ -21,6 +21,7 @@ public interface LocationDtoConverter {
         LocationDTO dto = new LocationDTO();
 
         dto.setName(po.getCityName());
+        dto.setCountry(po.getCountryCode());
 
         // 构建坐标系
         CoordinateDTO coordinate = new CoordinateDTO();

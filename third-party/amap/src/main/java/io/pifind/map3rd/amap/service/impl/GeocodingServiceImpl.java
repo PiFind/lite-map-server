@@ -79,9 +79,9 @@ public class GeocodingServiceImpl implements IGeocodingService {
             String[] administrativeAreaNames = new String[] {
                     geocode.getCountry(),
                     geocode.getProvince(), // 省份
-                    geocode.getCity(), // 城市
+                    geocode.getCity(),     // 城市
                     geocode.getDistrict(), // 区
-                    geocode.getStreet(), // 街道
+                    geocode.getStreet(),   // 街道
             };
 
             for (String administrativeAreaName : administrativeAreaNames) {

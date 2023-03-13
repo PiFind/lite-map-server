@@ -122,6 +122,11 @@ public class PositioningServiceImpl implements IPositioningService {
 
         // 通过行政区划ID查找行政区划对象
         AdministrativeAreaPO areaPO = administrativeAreaMapper.selectById(areaId);
+        // 获取对应的国家
+        CountryPO countryPO = countryMapper.selectById(
+                Integer.valueOf(String.valueOf(areaId).substring(0,3))
+        );
+
         if (areaPO == null) {
             return R.failure(PlaceCodeEnum.ADMINISTRATIVE_AREA_NOT_FOUND);
         }
@@ -135,6 +140,9 @@ public class PositioningServiceImpl implements IPositioningService {
         } else {
             locationDTO.setName(areaPO.getNameEN());
         }
+
+        // 设置国家
+        locationDTO.setCountry(countryPO.getISO2());
 
         // 设置坐标
         locationDTO.setMissingCoordinate(false);

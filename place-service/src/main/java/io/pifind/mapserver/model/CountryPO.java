@@ -1,6 +1,7 @@
 package io.pifind.mapserver.model;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.pifind.mapserver.mp.AreaCodeTypeHandler;
 import lombok.Data;
@@ -14,6 +15,7 @@ public class CountryPO {
     /**
      * 主键
      */
+    @TableId
     private Long id;
 
     /**

@@ -20,9 +20,14 @@ public class InterestPointSocialServiceImpl implements InterestPointSocialServic
     public static final int BATCH_COUNT = 1000;
 
     /**
-     * 豁免时间,单位：秒
+     * 单位时间,单位：秒
      */
-    public static final int RELEASED_TIME = 600; // 10 分钟
+    public static final int UNIT_TIME = 600; // 10 分钟
+
+    /**
+     * 单位时间内最少的访问量
+     */
+    public static final int UNIT_TIME_MIN_VISITS = 300;
 
     @Autowired
     private InterestPointSocialRedisService interestPointSocialRedisService;
@@ -133,19 +138,15 @@ public class InterestPointSocialServiceImpl implements InterestPointSocialServic
         int dt = (int)((System.currentTimeMillis() - dto.getCreateTimestamp()) / 1000L);
 
         // 如果是删除豁免时间，这段时间内不执行删除
-        if ( dt < RELEASED_TIME ) {
+        if ( dt < UNIT_TIME) {
             return false;
         } else {
-
-            // 如果大于豁免时间，那么就检测其日均访问量
-            // 如果日均访问小于 1000，就认为是低频访问
-            if ((dt / 86400) >= 1) {
-                return dto.getTimes() / dt < 1000;
-            }
-
+            // 如果大于豁免时间，那么就检测其单位时间的访问量
+            // 如果单位时间的访问量小于最小限制，就认为是低频访问
+            int unitTimes = dt / UNIT_TIME;
+            return dto.getTimes() / unitTimes < UNIT_TIME_MIN_VISITS;
         }
 
-        return false;
     }
 
 }
