@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.NotNull;
 
 @RestController
-@RequestMapping("/area")
+@RequestMapping("/v1/area")
 public class AdministrativeAreaController {
 
     @Autowired

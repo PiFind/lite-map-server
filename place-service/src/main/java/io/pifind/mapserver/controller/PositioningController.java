@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/positioning")
+@RequestMapping("/v1/positioning")
 public class PositioningController {
 
     @Autowired
@@ -22,7 +22,7 @@ public class PositioningController {
     /**
      * 根据IP进行定位
      * @param ip ip地址字符串
-     * @return
+     * @return 定位实体类对象
      */
     @GetMapping("/ip")
     public R<LocationDTO> getLocationByIP(

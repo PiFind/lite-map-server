@@ -7,6 +7,7 @@ import org.mapstruct.Mapper;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -42,4 +43,11 @@ public interface AdministrativeAreaDtoConverter {
         return dto;
     }
 
+    default List<AdministrativeAreaDTO> convert(@NotNull List<AdministrativeAreaPO> pos) {
+        List<AdministrativeAreaDTO> dtoList = new ArrayList<>();
+        for (AdministrativeAreaPO po : pos) {
+            dtoList.add(convert(po));
+        }
+        return dtoList;
+    }
 }

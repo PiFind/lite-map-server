@@ -41,6 +41,32 @@ public class AdministrativeAreaServiceImpl implements IAdministrativeAreaService
     @Override
     public R<AdministrativeAreaDTO> getAdministrativeAreaById(@NotNull Long id,@NotNull Integer layerLevel) {
 
+        // 如果 ID = 0 说明获取的是国家
+        if (id == 0L) {
+            List<AdministrativeAreaPO> countries = administrativeAreaMapper.selectList(
+                    new LambdaQueryWrapper<AdministrativeAreaPO>()
+                            .eq(AdministrativeAreaPO::getSuperior,0)
+            );
+
+            AdministrativeAreaDTO administrativeAreaDTO = new AdministrativeAreaDTO();
+            administrativeAreaDTO.setId(0L);
+
+            // 行政区名字本地化设置
+            Locale lang = LocaleContextHolder.getLocale();
+            if (lang.equals(Locale.CHINA)) {
+                administrativeAreaDTO.setName("世界");
+            } else {
+                // 当前没有其他本地化方案当检测到非中国区的就直接返回英文
+                administrativeAreaDTO.setName("World");
+            }
+            administrativeAreaDTO.setLevel(-1);
+            administrativeAreaDTO.setSuperior(0L);
+            administrativeAreaDTO.setAreas(
+                    administrativeAreaDtoConverter.convert(countries)
+            );
+            return R.success(administrativeAreaDTO);
+        }
+
         // 创建行政区树的根节点
         AdministrativeAreaDTO tree = createAdministrativeAreaTree(id,layerLevel);
 
