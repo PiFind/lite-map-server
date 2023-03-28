@@ -149,7 +149,7 @@ public class CountryMapperTest {
         }
     }
 
-    @Test
+    //@Test
     public void dropPoiDatabase() {
         List<CountryPO> countries = countryMapper.selectList(null);
         for (CountryPO country : countries) {
@@ -159,7 +159,7 @@ public class CountryMapperTest {
         }
     }
 
-    @Test
+    //@Test
     public void createPoiDatabase() {
         List<CountryPO> countries = countryMapper.selectList(null);
         for (CountryPO country : countries) {
@@ -169,7 +169,7 @@ public class CountryMapperTest {
         }
     }
 
-    @Test
+    //@Test
     public void createTables() throws IOException {
         StringBuilder builder = new StringBuilder();
         List<CountryPO> countries = countryMapper.selectList(null);

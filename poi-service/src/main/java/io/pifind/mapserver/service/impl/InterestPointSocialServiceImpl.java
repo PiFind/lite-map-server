@@ -63,12 +63,12 @@ public class InterestPointSocialServiceImpl implements InterestPointSocialServic
         // 检查是否为低频率数据
         if (checkLowFrequency(interestPointSocialDTO)) {
 
-            // 删除 redis 中的数据
-            interestPointSocialRedisService.deleteById(id);
-
             // 同步到数据库
             ((InterestPointSocialServiceImpl)AopContext.currentProxy()).
                     synchronizeDataToDatabase(interestPointSocialDTO);
+
+            // 删除 redis 中的数据
+            interestPointSocialRedisService.deleteById(id);
 
         }
 
@@ -81,7 +81,8 @@ public class InterestPointSocialServiceImpl implements InterestPointSocialServic
     private void optimizeRedisTimingTask() {
         interestPointSocialRedisService.randomDeleteInterestPointSocialByCondition(
                 BATCH_COUNT,
-                this::checkLowFrequencyAndSynchronizeData);
+                this::checkLowFrequencyAndSynchronizeData
+        );
     }
 
     /**

@@ -22,7 +22,7 @@ import java.util.Map;
  * 兴趣点
  */
 @Data
-@TableName("interest_point")
+@TableName(value = "interest_point",autoResultMap = true)
 public class InterestPointPO {
 
     /**

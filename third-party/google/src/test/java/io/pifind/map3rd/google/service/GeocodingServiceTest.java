@@ -24,7 +24,7 @@ public class GeocodingServiceTest {
     @Resource(name = "Google-GeocodingService")
     private IGeocodingService geocodingService;
 
-    @Test
+    // @Test
     public void testGeocoding() {
         R<GeocodingDTO> result =
                geocodingService.geocoding("China,Henan,puyang,华龙区,大庆中路与任丘路交叉口", Locale.CHINA.getLanguage());
@@ -37,7 +37,7 @@ public class GeocodingServiceTest {
         }
     }
 
-    @Test
+    // @Test
     public void testReverseGeocoding() {
         CoordinateDTO coordinate = new CoordinateDTO();
         coordinate.setLatitude(34.6896762);

@@ -2,6 +2,7 @@ package io.pifind.mapserver.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.pifind.mapserver.mp.LocalizedNameTypeHandler;
 import lombok.Data;
 
@@ -9,6 +10,7 @@ import java.util.Locale;
 import java.util.Map;
 
 @Data
+@TableName(value = "category",autoResultMap = true)
 public class CategoryPO {
 
     @TableId

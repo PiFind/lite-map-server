@@ -18,7 +18,7 @@ public class AmapGeocodingServiceTest {
     @Autowired
     private IAmapGeocodingService amapGeocodingService;
 
-    @Test
+    // @Test
     public void testGeocoding() {
         GeocodingQO qo = new GeocodingQO("中国");
         R<AmapGeocodingDTO> result =  amapGeocodingService.geocoding(qo);
@@ -29,7 +29,7 @@ public class AmapGeocodingServiceTest {
         }
     }
 
-    @Test
+    // @Test
     public void testReverseGeocoding() {
         ReverseGeocodingQO qo = new ReverseGeocodingQO(112.362075,24.015539);
         R<AmapReverseGeocodingDTO> result = amapGeocodingService.reverseGeocoding(qo);

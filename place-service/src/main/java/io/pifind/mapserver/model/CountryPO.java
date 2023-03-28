@@ -9,7 +9,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@TableName("country")
+@TableName(value = "country",autoResultMap = true)
 public class CountryPO {
 
     /**

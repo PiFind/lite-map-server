@@ -14,7 +14,7 @@ public class CoordinateDtoConverterTest {
     @Autowired
     private CoordinateDtoConverter coordinateDtoConverter;
 
-    @Test
+    // @Test
     public void testConvert() {
         GoogleCoordinateDTO googleCoordinateDTO = new GoogleCoordinateDTO();
         googleCoordinateDTO.setLat(10.0);

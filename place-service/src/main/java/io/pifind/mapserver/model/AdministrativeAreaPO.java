@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 @Data
-@TableName("administrative_area")
+@TableName(value = "administrative_area",autoResultMap = true)
 public class AdministrativeAreaPO {
 
     /**

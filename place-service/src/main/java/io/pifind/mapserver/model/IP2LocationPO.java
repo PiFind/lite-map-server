@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-@TableName("ip2location_db11")
+@TableName(value = "ip2location_db11",autoResultMap = true)
 public class IP2LocationPO {
 
     /**

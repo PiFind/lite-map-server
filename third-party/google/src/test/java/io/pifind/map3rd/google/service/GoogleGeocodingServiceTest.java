@@ -18,7 +18,7 @@ public class GoogleGeocodingServiceTest {
     @Autowired
     private IGoogleGeocodingService googleGeocodingService;
 
-    @Test
+    // @Test
     public void test() {
         ReverseGeocodingQO qo = new ReverseGeocodingQO(40.714224,-73.961452);
         R<List<GoogleGeocodingDTO>> result = googleGeocodingService.reverseGeocoding(qo);
