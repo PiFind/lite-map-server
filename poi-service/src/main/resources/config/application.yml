@@ -1,0 +1,16 @@
+server:
+  port: 9005
+
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://120.79.38.99:3306/poibase
+    username: root
+    password: zm19971205
+
+  messages:
+    basename: i18n.PlaceService
+    encoding: utf-8
+
+map-service:
+  url: http://127.0.0.1:9003/v1
