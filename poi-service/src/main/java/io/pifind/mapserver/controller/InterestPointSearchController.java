@@ -2,13 +2,16 @@ package io.pifind.mapserver.controller;
 
 import io.pifind.common.response.Page;
 import io.pifind.common.response.R;
+import io.pifind.place.model.AdministrativeAreaDTO;
 import io.pifind.poi.api.InterestPointSearchService;
 import io.pifind.poi.constant.SortOrderEnum;
 import io.pifind.poi.constant.SortReferenceEnum;
+import io.pifind.poi.model.dto.CategoryDTO;
 import io.pifind.poi.model.vo.InterestPointVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
@@ -20,15 +23,29 @@ public class InterestPointSearchController {
     @Autowired
     private InterestPointSearchService interestPointSearchService ;
 
+    /**
+     * 通过地区、类别和关键字搜索兴趣点（模糊搜索）
+     * @param pageSize 页大小（一页最多存放多少条数据）
+     * @param currentPage 当前页
+     * @param areaId 搜索的区域的ID (参考 : {@link AdministrativeAreaDTO})
+     * @param categoryId 搜索的类别的ID (参考 : {@link CategoryDTO})
+     * @param keyword 关键词
+     * @param sortOrder 排序模式
+     * @param reference 排序参考字段
+     * @return {@link Page } ，如果没有搜索到结果 {@link Page#getTotal() } 将为 0
+     * @see AdministrativeAreaDTO
+     * @see CategoryDTO
+     */
     @GetMapping("/condition")
-    public R<Page<InterestPointVO>> searchPointsByAreaAndCategoryAndKeywords(
-            @NotNull Integer pageSize,
-            @NotNull Integer currentPage,
-            @NotNull Long areaId,
-            Long categoryId,
-            String keyword,
-            @NotNull SortOrderEnum sortOrder,
-            @NotNull SortReferenceEnum reference) {
+    public R<Page<InterestPointVO>> searchPoints(
+            @RequestParam("pageSize") Integer pageSize,
+            @RequestParam("currentSize") Integer currentPage,
+            @RequestParam("areaId") Long areaId,
+            @RequestParam("categoryId") Long categoryId,
+            @RequestParam("keyword") String keyword,
+            @RequestParam("sortOrder") SortOrderEnum sortOrder,
+            @RequestParam("reference") SortReferenceEnum reference
+    ) {
         return interestPointSearchService.searchPoints(
                 pageSize,
                 currentPage,

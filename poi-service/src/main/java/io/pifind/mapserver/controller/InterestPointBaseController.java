@@ -48,7 +48,7 @@ public class InterestPointBaseController {
      * </ul>
      */
     @PostMapping("/modify")
-    public R<Void> modifyInterestPoint(@RequestParam InterestPointDTO modifiedInterestPoint) {
+    public R<Void> modifyInterestPoint(@RequestBody InterestPointDTO modifiedInterestPoint) {
         return interestPointBaseService.modifyInterestPoint(modifiedInterestPoint);
     }
 

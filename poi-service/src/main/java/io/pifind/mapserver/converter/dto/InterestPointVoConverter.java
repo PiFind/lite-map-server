@@ -38,7 +38,6 @@ public interface InterestPointVoConverter extends AdvancedConverter<InterestPoin
         BusinessTimeDTO businessTime = new BusinessTimeDTO();
 
         // 提取营业日
-
         Map<io.pifind.mapserver.model.constant.WeekEnum,Boolean> weekMap = po.getBusinessDay();
         if (weekMap != null) {
             List<WeekEnum> weekList = new ArrayList<>();
