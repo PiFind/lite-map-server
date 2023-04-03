@@ -39,7 +39,7 @@ public class InterestPointSearchServiceImpl implements InterestPointSearchServic
     private IAdministrativeAreaService administrativeAreaService;
 
     @Override
-    public R<Page<InterestPointVO>> searchPointsByAreaAndCategoryAndKeywords(
+    public R<Page<InterestPointVO>> searchPoints(
             @NotNull  Integer pageSize,
             @NotNull  Integer currentPage,
             @NotNull  Long areaId,
