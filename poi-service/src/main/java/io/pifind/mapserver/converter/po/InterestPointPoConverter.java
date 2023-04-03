@@ -1,15 +1,11 @@
 package io.pifind.mapserver.converter.po;
 
-import io.pifind.map.OpenLocationCode;
-import io.pifind.map.model.CoordinateDTO;
+import io.pifind.mapserver.converter.AdvancedConverter;
 import io.pifind.mapserver.model.constant.BusinessStatusEnum;
-import io.pifind.mapserver.model.constant.InterestPointStatusEnum;
 import io.pifind.mapserver.model.constant.WeekEnum;
 import io.pifind.mapserver.model.po.InterestPointPO;
 import io.pifind.mapserver.model.po.component.TimeIntervalPO;
 import io.pifind.mapserver.model.po.component.TimeIntervalSet;
-import io.pifind.mapserver.type.Point;
-import io.pifind.poi.constant.PoiStatusEnum;
 import io.pifind.poi.model.component.BusinessTimeDTO;
 import io.pifind.poi.model.component.TimeIntervalDTO;
 import io.pifind.poi.model.dto.InterestPointDTO;
@@ -22,13 +18,15 @@ import java.util.List;
 import java.util.Map;
 
 @Mapper(componentModel = "spring")
-public interface InterestPointPoConverter {
+public interface InterestPointPoConverter extends
+        AdvancedConverter<InterestPointDTO, InterestPointPO> {
 
     /**
      * 将兴趣点DTO对象转换为兴趣点PO对象
      * @param dto {@link InterestPointDTO 兴趣点DTO对象}
      * @return 转换后的 {@link InterestPointPO 兴趣点PO对象}
      */
+    @Override
     default InterestPointPO convert(InterestPointDTO dto) {
 
         InterestPointPO interestPointPO = liteConvert(dto);
@@ -172,10 +170,6 @@ public interface InterestPointPoConverter {
             @Mapping(target = "supportedCurrencies",source = "supportedCurrencies"),
             @Mapping(target = "tags",source = "tags"),
             @Mapping(target = "publisher",source = "publisher"),
-            @Mapping(target = "pageviews",source = "pageviews"),
-            @Mapping(target = "collections",source = "collections"),
-            @Mapping(target = "createTime",source = "createTime"),
-            @Mapping(target = "updateTime",source = "updateTime"),
     })
     InterestPointPO liteConvert(InterestPointDTO dto);
 

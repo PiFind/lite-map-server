@@ -1,4 +1,6 @@
-package io.pifind.mapserver.mp;
+package io.pifind.mapserver.mp.type;
+
+import io.pifind.mapserver.mp.StringListTypeHandler;
 
 public class PoiStringListTypeHandler extends StringListTypeHandler {
 

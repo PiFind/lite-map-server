@@ -3,7 +3,7 @@ package io.pifind.mapserver.model.po;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.pifind.mapserver.mp.LocalizedNameTypeHandler;
+import io.pifind.mapserver.mp.type.LocalizedNameTypeHandler;
 import lombok.Data;
 
 import java.util.Locale;

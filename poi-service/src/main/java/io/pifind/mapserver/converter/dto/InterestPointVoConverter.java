@@ -1,5 +1,6 @@
 package io.pifind.mapserver.converter.dto;
 
+import io.pifind.mapserver.converter.AdvancedConverter;
 import io.pifind.mapserver.model.constant.InterestPointStatusEnum;
 import io.pifind.mapserver.model.po.InterestPointPO;
 import io.pifind.mapserver.model.po.component.TimeIntervalPO;
@@ -9,7 +10,6 @@ import io.pifind.poi.constant.PoiStatusEnum;
 import io.pifind.poi.constant.WeekEnum;
 import io.pifind.poi.model.component.BusinessTimeDTO;
 import io.pifind.poi.model.component.TimeIntervalDTO;
-import io.pifind.poi.model.dto.InterestPointDTO;
 import io.pifind.poi.model.vo.InterestPointVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -20,14 +20,14 @@ import java.util.List;
 import java.util.Map;
 
 @Mapper(componentModel = "spring")
-public interface InterestPointDtoConverter {
-
+public interface InterestPointVoConverter extends AdvancedConverter<InterestPointPO,InterestPointVO> {
 
     /**
-     * 将兴趣点PO对象转换为兴趣点DTO对象
+     * 将兴趣点PO对象转换为兴趣点VO对象
      * @param po {@link InterestPointPO 兴趣点PO对象}
-     * @return 转换后的 {@link InterestPointDTO 兴趣点DTO对象}
+     * @return 转换后的 {@link InterestPointVO 兴趣点DTO对象}
      */
+    @Override
     default InterestPointVO convert(InterestPointPO po) {
         InterestPointVO vo = liteConvert(po);
 
@@ -173,12 +173,12 @@ public interface InterestPointDtoConverter {
      * 不推荐使用轻转换器
      * <p>
      *     这其实是在内部实现的轻转换器，其并不能实现DTO对象对PO对象的完全转换，请使用
-     *     {@link InterestPointDtoConverter#convert(InterestPointPO)}进行
+     *     {@link InterestPointVoConverter#convert(InterestPointPO)}进行
      *     完全的转换
      * </p>
      * @param po {@link InterestPointPO 兴趣点PO对象}
-     * @return 转换后的 {@link InterestPointDTO 兴趣点DTO对象}
-     * @see InterestPointDtoConverter#convert(InterestPointPO)
+     * @return 转换后的 {@link InterestPointVO 兴趣点DTO对象}
+     * @see InterestPointVoConverter#convert(InterestPointPO)
      */
     @Deprecated
     @Mappings({

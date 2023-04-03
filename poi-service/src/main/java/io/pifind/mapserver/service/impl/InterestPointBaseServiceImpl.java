@@ -2,7 +2,7 @@ package io.pifind.mapserver.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.pifind.common.response.R;
-import io.pifind.mapserver.converter.dto.InterestPointDtoConverter;
+import io.pifind.mapserver.converter.dto.InterestPointVoConverter;
 import io.pifind.mapserver.converter.po.InterestPointPoConverter;
 import io.pifind.mapserver.error.PoiCodeEnum;
 import io.pifind.mapserver.mapper.InterestPointMapper;
@@ -23,7 +23,7 @@ import javax.validation.constraints.NotNull;
 public class InterestPointBaseServiceImpl implements InterestPointBaseService {
 
     @Autowired
-    private InterestPointDtoConverter interestPointDtoConverter;
+    private InterestPointVoConverter interestPointVoConverter;
 
     @Autowired
     private InterestPointPoConverter interestPointPoConverter;
@@ -64,7 +64,7 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
         if (po == null) {
             return R.failure(PoiCodeEnum.POI_DATA_NOT_FOUND);
         }
-        InterestPointVO vo = interestPointDtoConverter.convert(po);
+        InterestPointVO vo = interestPointVoConverter.convert(po);
 
         /*
          * 通过 redis 获取当前真正的浏览量、收藏量、评分等

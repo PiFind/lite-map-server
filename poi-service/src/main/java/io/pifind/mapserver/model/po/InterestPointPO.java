@@ -5,10 +5,9 @@ import io.pifind.mapserver.model.constant.BusinessStatusEnum;
 import io.pifind.mapserver.model.constant.InterestPointStatusEnum;
 import io.pifind.mapserver.model.constant.WeekEnum;
 import io.pifind.mapserver.model.po.component.TimeIntervalSet;
-import io.pifind.mapserver.mp.BusinessDayTypeHandler;
-import io.pifind.mapserver.mp.BusinessHoursTypeHandler;
-import io.pifind.mapserver.mp.PoiStringListTypeHandler;
-import io.pifind.mapserver.type.Point;
+import io.pifind.mapserver.mp.type.BusinessDayTypeHandler;
+import io.pifind.mapserver.mp.type.BusinessHoursTypeHandler;
+import io.pifind.mapserver.mp.type.PoiStringListTypeHandler;
 import lombok.Data;
 
 import java.util.Date;

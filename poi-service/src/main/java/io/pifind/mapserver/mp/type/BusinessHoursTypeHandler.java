@@ -1,4 +1,4 @@
-package io.pifind.mapserver.mp;
+package io.pifind.mapserver.mp.type;
 
 import io.pifind.mapserver.model.po.component.TimeIntervalPO;
 import io.pifind.mapserver.model.po.component.TimeIntervalSet;
