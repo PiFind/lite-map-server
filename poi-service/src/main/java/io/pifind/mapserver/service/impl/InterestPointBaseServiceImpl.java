@@ -9,7 +9,8 @@ import io.pifind.mapserver.mapper.InterestPointMapper;
 import io.pifind.mapserver.middleware.redis.service.InterestPointSocialRedisService;
 import io.pifind.mapserver.model.po.InterestPointPO;
 import io.pifind.poi.api.InterestPointBaseService;
-import io.pifind.poi.model.InterestPointDTO;
+import io.pifind.poi.model.dto.InterestPointDTO;
+import io.pifind.poi.model.vo.InterestPointVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,13 +58,13 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
     }
 
     @Override
-    public R<InterestPointDTO> getInterestPointById(@NotNull Long id) {
+    public R<InterestPointVO> getInterestPointById(@NotNull Long id) {
 
         InterestPointPO po = interestPointMapper.selectById(id);
         if (po == null) {
             return R.failure(PoiCodeEnum.POI_DATA_NOT_FOUND);
         }
-        InterestPointDTO dto = interestPointDtoConverter.convert(po);
+        InterestPointVO vo = interestPointDtoConverter.convert(po);
 
         /*
          * 通过 redis 获取当前真正的浏览量、收藏量、评分等
@@ -71,11 +72,11 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
 
         // 浏览量
         int pageviewsInc = interestPointSocialRedisService.getPageviewsIncrementById(id);
-        dto.setPageviews(pageviewsInc + dto.getPageviews());
+        vo.setPageviews(pageviewsInc + vo.getPageviews());
 
         // 收藏量
         int collectionsInc = interestPointSocialRedisService.getCollectionsIncrementById(id);
-        dto.setCollections(collectionsInc + dto.getPageviews());
+        vo.setCollections(collectionsInc + vo.getPageviews());
 
         // 评分
         int scoreInc = interestPointSocialRedisService.getScoreIncrementById(id);
@@ -86,9 +87,9 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
         if (score > 5.0) {
             score = 5;
         }
-        dto.setScore(Double.parseDouble(String.format("%.1f",score)));
+        vo.setScore(Double.parseDouble(String.format("%.1f",score)));
 
-        return R.success(dto);
+        return R.success(vo);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -155,7 +156,7 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
      * @return Hash值字符串
      */
     private String hash(InterestPointPO po) {
-        String plainText = po.getName() + po.getAddress() + po.getPlusCode();
+        String plainText = po.getName() + po.getAddress();
         return DigestUtils.md5DigestAsHex(plainText.getBytes());
     }
 

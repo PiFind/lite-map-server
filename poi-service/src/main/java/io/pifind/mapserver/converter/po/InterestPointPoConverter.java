@@ -10,9 +10,9 @@ import io.pifind.mapserver.model.po.component.TimeIntervalPO;
 import io.pifind.mapserver.model.po.component.TimeIntervalSet;
 import io.pifind.mapserver.type.Point;
 import io.pifind.poi.constant.PoiStatusEnum;
-import io.pifind.poi.model.InterestPointDTO;
 import io.pifind.poi.model.component.BusinessTimeDTO;
 import io.pifind.poi.model.component.TimeIntervalDTO;
+import io.pifind.poi.model.dto.InterestPointDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -140,54 +140,6 @@ public interface InterestPointPoConverter {
                         }
                     }
             }
-        }
-
-        /*
-         * POI状态转换
-         */
-
-        PoiStatusEnum poiStatus = dto.getPoiStatus();
-        if (poiStatus != null) {
-            switch (poiStatus) {
-                case INVALID:
-                    interestPointPO.setPoiStatus(InterestPointStatusEnum.INVALID);
-                    break;
-                case VERIFIED:
-                    interestPointPO.setPoiStatus(InterestPointStatusEnum.VERIFIED);
-                    break;
-                case UNVERIFIED:
-                    interestPointPO.setPoiStatus(InterestPointStatusEnum.UNVERIFIED);
-                    break;
-                default:
-                    for (InterestPointStatusEnum status : InterestPointStatusEnum.values()) {
-                        if (status.name().equals(poiStatus.name())) {
-                            interestPointPO.setPoiStatus(status);
-                            break;
-                        }
-                    }
-            }
-        }
-
-        /*
-         * 坐标转换
-         */
-
-        CoordinateDTO coordinate = dto.getCoordinate();
-        if (coordinate != null) {
-
-            // 定位坐标
-            Point location = new Point();
-            location.setLatitude(coordinate.getLatitude());
-            location.setLongitude(coordinate.getLongitude());
-            interestPointPO.setLocation(location);
-
-            // Plus Code
-            OpenLocationCode plusCode = new OpenLocationCode(
-                    coordinate.getLatitude(),
-                    coordinate.getLongitude(),
-                    12);
-            interestPointPO.setPlusCode(plusCode.getCode());
-
         }
 
         return interestPointPO;

@@ -1,18 +1,16 @@
 package io.pifind.mapserver.converter.dto;
 
-
-import io.pifind.map.model.CoordinateDTO;
 import io.pifind.mapserver.model.constant.InterestPointStatusEnum;
 import io.pifind.mapserver.model.po.InterestPointPO;
 import io.pifind.mapserver.model.po.component.TimeIntervalPO;
 import io.pifind.mapserver.model.po.component.TimeIntervalSet;
-import io.pifind.mapserver.type.Point;
 import io.pifind.poi.constant.BusinessStatusEnum;
 import io.pifind.poi.constant.PoiStatusEnum;
 import io.pifind.poi.constant.WeekEnum;
-import io.pifind.poi.model.InterestPointDTO;
 import io.pifind.poi.model.component.BusinessTimeDTO;
 import io.pifind.poi.model.component.TimeIntervalDTO;
+import io.pifind.poi.model.dto.InterestPointDTO;
+import io.pifind.poi.model.vo.InterestPointVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -30,8 +28,8 @@ public interface InterestPointDtoConverter {
      * @param po {@link InterestPointPO 兴趣点PO对象}
      * @return 转换后的 {@link InterestPointDTO 兴趣点DTO对象}
      */
-    default InterestPointDTO convert(InterestPointPO po) {
-        InterestPointDTO dto = liteConvert(po);
+    default InterestPointVO convert(InterestPointPO po) {
+        InterestPointVO vo = liteConvert(po);
 
         /*
          * 设置营业时间
@@ -101,7 +99,7 @@ public interface InterestPointDtoConverter {
         businessTime.setVacationStartTime(po.getVacationStartTime());
         businessTime.setVacationEndTime(po.getVacationEndTime());
 
-        dto.setBusinessTime(businessTime);
+        vo.setBusinessTime(businessTime);
 
         /*
          * 营业状态转换
@@ -111,18 +109,18 @@ public interface InterestPointDtoConverter {
         if (businessStatus != null) {
             switch (businessStatus) {
                 case NORMAL:
-                    dto.setBusinessStatus(BusinessStatusEnum.NORMAL);
+                    vo.setBusinessStatus(BusinessStatusEnum.NORMAL);
                     break;
                 case CLOSE:
-                    dto.setBusinessStatus(BusinessStatusEnum.CLOSE);
+                    vo.setBusinessStatus(BusinessStatusEnum.CLOSE);
                     break;
                 case BANKRUPT:
-                    dto.setBusinessStatus(BusinessStatusEnum.BANKRUPT);
+                    vo.setBusinessStatus(BusinessStatusEnum.BANKRUPT);
                     break;
                 default:
                     for (BusinessStatusEnum status : BusinessStatusEnum.values()) {
                         if (status.name().equals(businessStatus.name())) {
-                            dto.setBusinessStatus(status);
+                            vo.setBusinessStatus(status);
                             break;
                         }
                     }
@@ -137,33 +135,22 @@ public interface InterestPointDtoConverter {
         if (interestPointStatus != null) {
             switch (interestPointStatus) {
                 case VERIFIED:
-                    dto.setPoiStatus(PoiStatusEnum.VERIFIED);
+                    vo.setPoiStatus(PoiStatusEnum.VERIFIED);
                     break;
                 case INVALID:
-                    dto.setPoiStatus(PoiStatusEnum.INVALID);
+                    vo.setPoiStatus(PoiStatusEnum.INVALID);
                     break;
                 case UNVERIFIED:
-                    dto.setPoiStatus(PoiStatusEnum.UNVERIFIED);
+                    vo.setPoiStatus(PoiStatusEnum.UNVERIFIED);
                     break;
                 default:
                     for (PoiStatusEnum status : PoiStatusEnum.values()) {
                         if (status.name().equals(interestPointStatus.name())) {
-                            dto.setPoiStatus(status);
+                            vo.setPoiStatus(status);
                             break;
                         }
                     }
             }
-        }
-
-        /*
-         * 坐标转换
-         */
-
-        Point location = po.getLocation();
-        if (location != null) {
-            CoordinateDTO coordinate =
-                    new CoordinateDTO(location.getLongitude(),location.getLatitude());
-            dto.setCoordinate(coordinate);
         }
 
         /*
@@ -177,9 +164,9 @@ public interface InterestPointDtoConverter {
             score = 5;
         }
         // 展示出保留一位小数的分数
-        dto.setScore(Double.parseDouble(String.format("%.1f",score)));
+        vo.setScore(Double.parseDouble(String.format("%.1f",score)));
 
-        return dto;
+        return vo;
     }
 
     /**
@@ -215,6 +202,6 @@ public interface InterestPointDtoConverter {
             @Mapping(target = "createTime",source = "createTime"),
             @Mapping(target = "updateTime",source = "updateTime"),
     })
-    InterestPointDTO liteConvert(InterestPointPO po);
+    InterestPointVO liteConvert(InterestPointPO po);
 
 }

@@ -1,9 +1,6 @@
 package io.pifind.mapserver.model.po;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import io.pifind.mapserver.model.constant.BusinessStatusEnum;
 import io.pifind.mapserver.model.constant.InterestPointStatusEnum;
 import io.pifind.mapserver.model.constant.WeekEnum;
@@ -28,7 +25,7 @@ public class InterestPointPO {
     /**
      * 主键
      */
-    @TableId
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id ;
 
     /**
@@ -155,17 +152,6 @@ public class InterestPointPO {
      * </p>
      */
     private Integer reliability;
-
-    /**
-     * [必填]定位点
-     */
-    private Point location;
-
-    /**
-     * [必填]Plus Code
-     */
-    @TableField("plus_code")
-    private String plusCode;
 
     /**
      * [必填]哈希值

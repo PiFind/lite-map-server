@@ -2,7 +2,8 @@ package io.pifind.mapserver.controller;
 
 import io.pifind.common.response.R;
 import io.pifind.poi.api.InterestPointBaseService;
-import io.pifind.poi.model.InterestPointDTO;
+import io.pifind.poi.model.dto.InterestPointDTO;
+import io.pifind.poi.model.vo.InterestPointVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,7 @@ public class InterestPointBaseController {
      * @return 兴趣点实体类
      */
     @GetMapping("/{id}")
-    public R<InterestPointDTO> getInterestPointById(@PathVariable Long id) {
+    public R<InterestPointVO> getInterestPointById(@PathVariable Long id) {
         return interestPointBaseService.getInterestPointById(id);
     }
 
