@@ -1,4 +1,4 @@
-package io.pifind.mapserver.map;
+package io.pifind.mapserver.mapservice.request;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,11 +6,13 @@ import io.pifind.common.response.Page;
 import io.pifind.common.response.R;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-public class MapTemplate extends RestTemplate {
+@Component
+public class MapServiceTemplate extends RestTemplate {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 

@@ -25,6 +25,9 @@ import java.util.List;
 @Service
 public class InterestPointSearchServiceImpl implements InterestPointSearchService {
 
+
+    public static final int MIN_RELIABILITY = 60;
+
     @Autowired
     private InterestPointVoConverter interestPointVoConverter;
 
@@ -55,18 +58,23 @@ public class InterestPointSearchServiceImpl implements InterestPointSearchServic
 
         LambdaQueryWrapper<InterestPointPO> queryWrapper =
                 new LambdaQueryWrapper<InterestPointPO>();
+
         // (1) 加入查找行政区的条件
         queryWrapper = findAreasQueryWrapper(queryWrapper,areaId);
+
         // (2) 加入查找分类的条件
         if (categoryId != null) {
             queryWrapper = queryWrapper.eq(InterestPointPO::getCategoryId,categoryId);
         }
+
         // (3) 加入关键词的条件
         if (keyword != null) {
             queryWrapper = keywordQueryWrapper(queryWrapper,keyword);
         }
+
         // (4) 加入可信度条件(可信度需要大于等于60分)
-        queryWrapper = queryWrapper.ge(InterestPointPO::getReliability,60);
+        queryWrapper = queryWrapper.ge(InterestPointPO::getReliability,MIN_RELIABILITY);
+
         // (5) 加入排序的条件
         queryWrapper = sortQueryWrapper(queryWrapper,sortOrder,reference);
 

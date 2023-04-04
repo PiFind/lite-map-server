@@ -1,7 +1,8 @@
-package io.pifind.mapserver.map;
+package io.pifind.mapserver.mapservice;
 
 import io.pifind.common.response.R;
 import io.pifind.common.util.UriSplicedUtils;
+import io.pifind.mapserver.mapservice.request.MapServiceTemplate;
 import io.pifind.place.api.IAdministrativeAreaService;
 import io.pifind.place.model.AdministrativeAreaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import javax.validation.constraints.NotNull;
 public class AdministrativeAreaService implements IAdministrativeAreaService {
 
     @Autowired
-    private MapTemplate mapTemplate;
+    private MapServiceTemplate mapServiceTemplate;
 
     @Value("map-service.url")
     private String url;
@@ -31,7 +32,7 @@ public class AdministrativeAreaService implements IAdministrativeAreaService {
     public R<Boolean> existAdministrativeAreaById(@NotNull Long id) {
         MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
         params.add("id",id.toString());
-        return mapTemplate.getForStandardResponse(
+        return mapServiceTemplate.getForStandardResponse(
                 UriSplicedUtils.spliceToString(url,params),
                 Boolean.class
         );
@@ -53,7 +54,7 @@ public class AdministrativeAreaService implements IAdministrativeAreaService {
         MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
         params.add("id",id.toString());
         params.add("deep",deep.toString());
-        return mapTemplate.getForStandardResponse(
+        return mapServiceTemplate.getForStandardResponse(
                 UriSplicedUtils.spliceToString(url,params),
                 AdministrativeAreaDTO.class
         );
@@ -70,7 +71,7 @@ public class AdministrativeAreaService implements IAdministrativeAreaService {
         MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
         params.add("id",id.toString());
         params.add("separator",separator);
-        return mapTemplate.getForStandardResponse(
+        return mapServiceTemplate.getForStandardResponse(
                 UriSplicedUtils.spliceToString(url,params),
                 String.class
         );
