@@ -1,8 +1,8 @@
-package io.pifind.mapserver.mapservice;
+package io.pifind.mapserver.remote;
 
 import io.pifind.common.response.R;
 import io.pifind.common.util.UriSplicedUtils;
-import io.pifind.mapserver.mapservice.request.MapServiceTemplate;
+import io.pifind.mapserver.remote.request.MapServiceTemplate;
 import io.pifind.place.api.IAdministrativeAreaService;
 import io.pifind.place.model.AdministrativeAreaDTO;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package io.pifind.mapserver.mapservice.request;
+package io.pifind.mapserver.remote.request;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
