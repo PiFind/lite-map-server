@@ -32,7 +32,7 @@ public class AdministrativeAreaService implements IAdministrativeAreaService {
         MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
         params.add("id",id.toString());
         return mapServiceTemplate.getForStandardResponse(
-                UriSplicedUtils.spliceToString(url,params),
+                UriSplicedUtils.spliceToString(url + "area/exist",params),
                 Boolean.class
         );
     }
@@ -54,7 +54,7 @@ public class AdministrativeAreaService implements IAdministrativeAreaService {
         params.add("id",id.toString());
         params.add("deep",deep.toString());
         return mapServiceTemplate.getForStandardResponse(
-                UriSplicedUtils.spliceToString(url,params),
+                UriSplicedUtils.spliceToString(url + "area/get",params),
                 AdministrativeAreaDTO.class
         );
     }
@@ -71,7 +71,7 @@ public class AdministrativeAreaService implements IAdministrativeAreaService {
         params.add("id",id.toString());
         params.add("separator",separator);
         return mapServiceTemplate.getForStandardResponse(
-                UriSplicedUtils.spliceToString(url,params),
+                UriSplicedUtils.spliceToString(url + "area/detail",params),
                 String.class
         );
     }
