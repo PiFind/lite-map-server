@@ -12,7 +12,8 @@ public interface CategoryPoConverter extends AdvancedConverter<CategoryEditDTO,C
     default CategoryPO convert(CategoryEditDTO source) {
         CategoryPO categoryPO = new CategoryPO();
         categoryPO.setId(source.getId());
-
+        categoryPO.setSuperior(source.getSuperior());
+        categoryPO.setNameEN(source.getNameEN());
         return categoryPO;
     }
 

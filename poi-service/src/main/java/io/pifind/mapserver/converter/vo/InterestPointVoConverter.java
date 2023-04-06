@@ -181,6 +181,7 @@ public interface InterestPointVoConverter extends AdvancedConverter<InterestPoin
      */
     @Deprecated
     @Mappings({
+            @Mapping(target = "id",source = "id"),
             @Mapping(target = "name",source = "name"),
             @Mapping(target = "nameEN",source = "nameEN"),
             @Mapping(target = "address",source = "address"),
