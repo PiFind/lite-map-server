@@ -6,7 +6,7 @@ import io.pifind.place.model.AdministrativeAreaDTO;
 import io.pifind.poi.api.InterestPointSearchService;
 import io.pifind.poi.constant.SortOrderEnum;
 import io.pifind.poi.constant.SortReferenceEnum;
-import io.pifind.poi.model.dto.CategoryDTO;
+import io.pifind.poi.model.vo.CategoryVO;
 import io.pifind.poi.model.vo.InterestPointVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,13 +28,13 @@ public class InterestPointSearchController {
      * @param pageSize 页大小（一页最多存放多少条数据）
      * @param currentPage 当前页
      * @param areaId 搜索的区域的ID (参考 : {@link AdministrativeAreaDTO})
-     * @param categoryId 搜索的类别的ID (参考 : {@link CategoryDTO})
+     * @param categoryId 搜索的类别的ID (参考 : {@link CategoryVO})
      * @param keyword 关键词
      * @param sortOrder 排序模式
      * @param reference 排序参考字段
      * @return {@link Page } ，如果没有搜索到结果 {@link Page#getTotal() } 将为 0
      * @see AdministrativeAreaDTO
-     * @see CategoryDTO
+     * @see CategoryVO
      */
     @GetMapping("/condition")
     public R<Page<InterestPointVO>> searchPoints(
