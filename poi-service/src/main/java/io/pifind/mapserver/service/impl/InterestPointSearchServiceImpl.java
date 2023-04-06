@@ -13,6 +13,7 @@ import io.pifind.place.model.AdministrativeAreaDTO;
 import io.pifind.poi.api.InterestPointSearchService;
 import io.pifind.poi.constant.SortOrderEnum;
 import io.pifind.poi.constant.SortReferenceEnum;
+import io.pifind.poi.model.dto.CategoryEditDTO;
 import io.pifind.poi.model.vo.InterestPointVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
@@ -22,10 +23,17 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 兴趣点搜索服务实现类
+ * @see io.pifind.poi.api.InterestPointSearchService
+ */
 @Service
 public class InterestPointSearchServiceImpl implements InterestPointSearchService {
 
 
+    /**
+     * 最小可信度
+     */
     public static final int MIN_RELIABILITY = 60;
 
     @Autowired
@@ -41,6 +49,17 @@ public class InterestPointSearchServiceImpl implements InterestPointSearchServic
     @Autowired
     private IAdministrativeAreaService administrativeAreaService;
 
+    /**
+     * 搜索兴趣点
+     * @param pageSize 页大小（一页最多存放多少条数据）
+     * @param currentPage 当前页
+     * @param areaId 搜索的区域的ID (参考 : {@link AdministrativeAreaDTO})
+     * @param categoryId 搜索的类别的ID (参考 : {@link CategoryEditDTO})
+     * @param keyword 关键词
+     * @param sortOrder 排序模式
+     * @param reference 排序参考字段
+     * @return 搜索结果
+     */
     @Override
     public R<Page<InterestPointVO>> searchPoints(
             @NotNull  Integer pageSize,

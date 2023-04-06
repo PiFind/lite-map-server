@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * 地理编码
+ */
 @Data
 public class GeocodingDTO {
 

@@ -19,6 +19,10 @@ import org.springframework.util.DigestUtils;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * 兴趣点基础服务实现类
+ * @see io.pifind.poi.api.InterestPointBaseService
+ */
 @Service
 public class InterestPointBaseServiceImpl implements InterestPointBaseService {
 
@@ -35,6 +39,11 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
     private InterestPointSocialRedisService interestPointSocialRedisService;
 
 
+    /**
+     * 添加兴趣点
+     * @param interestPoint {@link InterestPointDTO 兴趣点实体对象}
+     * @return 无
+     */
     @Override
     public R<Void> addInterestPoint(@NotNull InterestPointDTO interestPoint) {
 
@@ -57,6 +66,11 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
 
     }
 
+    /**
+     * 根据兴趣点ID获取兴趣点信息
+     * @param id 兴趣点ID
+     * @return {@link InterestPointVO 兴趣点实体对象}
+     */
     @Override
     public R<InterestPointVO> getInterestPointById(@NotNull Long id) {
 
@@ -83,6 +97,7 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
         int participantsInc = interestPointSocialRedisService.getParticipantsIncrementById(id);
         int realScore = po.getTotalScore() + po.getHiddenScore() + scoreInc;
         int realParticipants = po.getTotalParticipants() + participantsInc;
+        // 计算平均分
         double score = realScore/(double)realParticipants;
         if (score > 5.0) {
             score = 5;
@@ -92,6 +107,11 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
         return R.success(vo);
     }
 
+    /**
+     * 根据兴趣点ID删除兴趣点
+     * @param modifiedInterestPoint 修改过兴趣点信息后的{@link InterestPointDTO 兴趣点实体对象}
+     * @return 无
+     */
     @Transactional(rollbackFor = Exception.class)
     @Override
     public R<Void> modifyInterestPoint(@NotNull InterestPointDTO modifiedInterestPoint) {
@@ -135,6 +155,11 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
         return R.success();
     }
 
+    /**
+     * 根据兴趣点ID删除兴趣点
+     * @param id 兴趣点ID
+     * @return 无
+     */
     @Override
     public R<Void> removeInterestPointById(@NotNull Long id) {
 

@@ -42,6 +42,12 @@ public class GeocodingServiceImpl implements IGeocodingService {
     @Autowired
     private CoordinateDtoConverter coordinateDtoConverter;
 
+    /**
+     * 地理编码
+     * @param address 地址
+     * @param language 使用的语言，如果为 {@code null}，那么将自动选择本地语言
+     * @return 地理编码查询结果
+     */
     @Override
     public R<GeocodingDTO> geocoding(String address, String language) {
 
@@ -103,6 +109,12 @@ public class GeocodingServiceImpl implements IGeocodingService {
         return R.success(geocoding);
     }
 
+    /**
+     * 逆地理编码
+     * @param coordinate 坐标
+     * @param language 使用的语言，如果为 {@code null}，那么将自动选择本地语言
+     * @return 逆地理编码查询结果
+     */
     @Override
     public R<ReverseGeocodingDTO> reverseGeocoding(CoordinateDTO coordinate, String language) {
 

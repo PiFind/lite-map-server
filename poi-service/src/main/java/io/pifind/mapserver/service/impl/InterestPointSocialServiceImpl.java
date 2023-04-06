@@ -14,9 +14,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * 兴趣点社交服务实现类
+ * @see io.pifind.poi.api.InterestPointSocialService
+ */
 @Service
 public class InterestPointSocialServiceImpl implements InterestPointSocialService {
 
+    /**
+     * 批量更新的数量
+     */
     public static final int BATCH_COUNT = 1000;
 
     /**
@@ -35,6 +42,11 @@ public class InterestPointSocialServiceImpl implements InterestPointSocialServic
     @Autowired
     private InterestPointMapper interestPointMapper;
 
+    /**
+     * 浏览兴趣点
+     * @param id 兴趣点ID
+     * @return 无
+     */
     @Override
     public R<Void> browse(@NotNull Long id) {
         interestPointSocialRedisService.increasePageviewsById(id,1);
@@ -42,6 +54,11 @@ public class InterestPointSocialServiceImpl implements InterestPointSocialServic
         return R.success();
     }
 
+    /**
+     * 收藏兴趣点
+     * @param id 兴趣点ID
+     * @return 无
+     */
     @Override
     public R<Void> collect(@NotNull Long id) {
         interestPointSocialRedisService.increaseCollectionsById(id,1);
@@ -49,6 +66,12 @@ public class InterestPointSocialServiceImpl implements InterestPointSocialServic
         return R.success();
     }
 
+    /**
+     * 评价兴趣点
+     * @param id 兴趣点ID
+     * @param score 用户的评分
+     * @return 无
+     */
     @Override
     public R<Void> evaluate(@NotNull Long id, @NotNull Double score) {
         interestPointSocialRedisService.increaseScoreById(id,(int)(score + 0.5),1);
@@ -56,6 +79,10 @@ public class InterestPointSocialServiceImpl implements InterestPointSocialServic
         return R.success();
     }
 
+    /**
+     * 优化 Redis 存储
+     * @param id 兴趣点ID
+     */
     private void optimizeRedisStorage(Long id) {
 
         InterestPointSocialDTO interestPointSocialDTO = interestPointSocialRedisService.getInterestPointSocialById(id);

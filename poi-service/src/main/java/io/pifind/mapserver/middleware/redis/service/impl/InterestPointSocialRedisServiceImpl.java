@@ -19,6 +19,9 @@ import java.util.List;
 @Service
 public class InterestPointSocialRedisServiceImpl implements InterestPointSocialRedisService {
 
+    /**
+     * 兴趣点社交信息Redis键生成器
+     */
     private static final FormattedStringKeyGenerator KEY_GENERATOR = FormattedStringKeyGenerator.create("PoiSocial@%d");
 
     @Resource(name = "InterestPointSocialRedisTemplate")

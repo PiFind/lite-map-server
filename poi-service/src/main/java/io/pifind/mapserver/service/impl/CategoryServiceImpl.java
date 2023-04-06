@@ -21,6 +21,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * 类别服务实现类
+ * @see io.pifind.poi.api.ICategoryService
+ */
 @Service
 public class CategoryServiceImpl implements ICategoryService {
 
@@ -33,6 +37,11 @@ public class CategoryServiceImpl implements ICategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
 
+    /**
+     * 添加类别
+     * @param category {@link CategoryEditDTO 类别实体对象}
+     * @return 无
+     */
     @Override
     public R<Void> addCategory(@NotNull CategoryEditDTO category) {
 
@@ -58,6 +67,11 @@ public class CategoryServiceImpl implements ICategoryService {
         return R.success();
     }
 
+    /**
+     * 获取类别
+     * @param id 类别ID
+     * @return 类别
+     */
     @Override
     public R<CategoryVO> getCategoryById(@NotNull Long id) {
 
@@ -77,6 +91,11 @@ public class CategoryServiceImpl implements ICategoryService {
 
     }
 
+    /**
+     * 获取所有类别
+     * @param modifiedCategory 修改过后的{@link CategoryEditDTO 类别实体对象}
+     * @return 是否成功
+     */
     @Override
     public R<Void> modifyCategory(@NotNull CategoryEditDTO modifiedCategory) {
 
@@ -100,6 +119,11 @@ public class CategoryServiceImpl implements ICategoryService {
 
     }
 
+    /**
+     * 获取所有类别
+     * @param id 类别ID
+     * @return 是否成功
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public R<Void> removeCategoryById(@NotNull Long id) {
@@ -146,6 +170,11 @@ public class CategoryServiceImpl implements ICategoryService {
 
     }
 
+    /**
+     * 添加本地化命名
+     * @param name {@link LocalizedNameDTO 本地化命名实体对象 }
+     * @return 是否成功
+     */
     @Override
     public R<Void> addLocalizedName(LocalizedNameDTO name) {
 
@@ -163,12 +192,19 @@ public class CategoryServiceImpl implements ICategoryService {
                 Locale.forLanguageTag(name.getLanguage()),name.getName()
         );
         modifiedCategory.setNames(localeNameMap);
+
+        // (3) 更新数据库
         categoryMapper.updateById(categoryPO);
 
         return R.success();
 
     }
 
+    /**
+     * 添加本地化命名组
+     * @param nameGroup {@link LocalizedNameGroupDTO 本地化命名组实体对象 }
+     * @return 是否成功
+     */
     @Override
     public R<Void> addLocalizedNameGroup(LocalizedNameGroupDTO nameGroup) {
 
@@ -189,11 +225,18 @@ public class CategoryServiceImpl implements ICategoryService {
             );
         }
         modifiedCategory.setNames(localeNameMap);
+
+        // (3) 更新数据库
         categoryMapper.updateById(categoryPO);
 
         return R.success();
     }
 
+    /**
+     * 修改本地化命名
+     * @param name {@link LocalizedNameDTO 本地化命名实体对象 }
+     * @return 无
+     */
     @Override
     public R<Void> modifyLocalizedName(LocalizedNameDTO name) {
         /*
@@ -202,6 +245,12 @@ public class CategoryServiceImpl implements ICategoryService {
         return addLocalizedName(name);
     }
 
+    /**
+     * 删除本地化命名
+     * @param id 类别ID
+     * @param language 语言代码
+     * @return 无
+     */
     @Override
     public R<Void> removeLocalizedName(Long id, String language) {
 
@@ -217,13 +266,21 @@ public class CategoryServiceImpl implements ICategoryService {
         modifiedCategory.setId(categoryPO.getId());
         localeNameMap.remove(Locale.forLanguageTag(language));
         modifiedCategory.setNames(localeNameMap);
+
+        // (3) 更新数据库
         categoryMapper.updateById(categoryPO);
 
         return R.success();
     }
 
+    /**
+     * 删除所有本地化命名
+     * @param id 类别ID
+     * @return 无
+     */
     @Override
     public R<Void> removeAllLocalizedNames(Long id) {
+
         // (1) 从数据库中找到当前的分类
         CategoryPO categoryPO = categoryMapper.selectById(id);
         if (categoryPO == null) {
@@ -234,6 +291,8 @@ public class CategoryServiceImpl implements ICategoryService {
         CategoryPO modifiedCategory = new CategoryPO();
         modifiedCategory.setId(categoryPO.getId());
         modifiedCategory.setNames(new HashMap<>());
+
+        // (3) 更新数据库
         categoryMapper.updateById(categoryPO);
 
         return R.success();

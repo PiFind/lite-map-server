@@ -16,10 +16,19 @@ import java.util.*;
  */
 public class LocalizedNameTypeHandler implements TypeHandler<Map<Locale,String>> {
 
+    /**
+     * 语言映射表
+     */
     private static final Map<String,Locale> LANGUAGE_MAP;
 
+    /**
+     * JSON对象映射器
+     */
     private static final ObjectMapper OBJECT_MAPPER;
 
+    /**
+     * 键比较器
+     */
     private static final Comparator<String> KEY_COMPARATOR = new Comparator<String>() {
         @Override
         public int compare(String o1, String o2) {

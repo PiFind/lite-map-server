@@ -25,6 +25,11 @@ public class AmapGeocodingServiceImpl implements IAmapGeocodingService {
     @Autowired
     private AmapApiTemplate amapApiTemplate;
 
+    /**
+     * 地理编码，参考：<a href="https://lbs.amap.com/api/webservice/guide/api/georegeo#geo">高德地图开放平台-地理编码</a>
+     * @param qo {@link AmapGeocodingDTO 地理编码实体对象}
+     * @return 地理编码查询结果
+     */
     @Override
     public R<AmapGeocodingDTO> geocoding(GeocodingQO qo) {
         String uri = UriSplicedUtils.spliceToString(qo);
@@ -42,6 +47,11 @@ public class AmapGeocodingServiceImpl implements IAmapGeocodingService {
 
     }
 
+    /**
+     * 反向地理编码，参考：<a href="https://lbs.amap.com/api/webservice/guide/api/georegeo#regeo">高德地图开放平台-逆地理编码</a>
+     * @param qo {@link AmapGeocodingDTO 反向地理编码实体对象}
+     * @return 反向地理编码查询结果
+     */
     @Override
     public R<AmapReverseGeocodingDTO> reverseGeocoding(ReverseGeocodingQO qo) {
 

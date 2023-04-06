@@ -11,11 +11,22 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
+/**
+ * 地图服务请求模板
+ */
 @Component
 public class MapServiceTemplate extends RestTemplate {
 
+    /**
+     * Json 转换映射器
+     */
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
+    /**
+     * 获取标准返回值泛型包装类
+     * @param clazz 返回值类型
+     * @return 返回值泛型包装类
+     */
     private <T> ParameterizedTypeReference<R<T>> getReference(Class<T> clazz) {
         //objectMapper已经缓存Type，不需要额外缓存
         JavaType javaType = objectMapper.getTypeFactory().constructParametrizedType(
@@ -24,6 +35,11 @@ public class MapServiceTemplate extends RestTemplate {
         return ParameterizedTypeReference.forType(javaType);
     }
 
+    /**
+     * 获取标准列表返回值泛型包装类
+     * @param clazz 返回值类型
+     * @return 列表返回值泛型包装类
+     */
     private <T> ParameterizedTypeReference<R<List<T>>> getListReference(Class<T> clazz) {
         //objectMapper已经缓存Type，不需要额外缓存
         JavaType tJavaType = objectMapper.getTypeFactory().constructParametrizedType(
@@ -35,6 +51,11 @@ public class MapServiceTemplate extends RestTemplate {
         return ParameterizedTypeReference.forType(javaType);
     }
 
+    /**
+     * 获取标准页返回值泛型包装类
+     * @param clazz 返回值类型
+     * @return 页返回值泛型包装类
+     */
     private <T> ParameterizedTypeReference<R<Page<T>>> getPageReference(Class<T> clazz) {
         //objectMapper已经缓存Type，不需要额外缓存
         JavaType tJavaType = objectMapper.getTypeFactory().constructParametrizedType(
