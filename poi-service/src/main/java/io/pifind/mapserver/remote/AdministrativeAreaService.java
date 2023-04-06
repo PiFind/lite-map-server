@@ -19,13 +19,12 @@ public class AdministrativeAreaService implements IAdministrativeAreaService {
     @Autowired
     private MapServiceTemplate mapServiceTemplate;
 
-    @Value("map-service.url")
+    @Value("${map-service.url}")
     private String url;
 
     /**
      * 通过行政区ID获取行政区树
      * @param id 行政区ID
-     * @param deep 树的高度（可选，默认为2）
      * @return 行政区树
      */
     @Override
