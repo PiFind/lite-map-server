@@ -28,7 +28,7 @@ public class CategoryController {
      *     <li><b>添加类别失败</b> - 返回失败响应 {@code code != 0}，且会在 {@link R#getMessage()} 中说明原因</li>
      * </ul>
      */
-    @PostMapping("/addCategory")
+    @PostMapping("/add")
     public R<Void> addCategory(@RequestBody CategoryEditDTO category) {
         return categoryService.addCategory(category);
     }
@@ -42,7 +42,7 @@ public class CategoryController {
      *     <li><b>不存在类别</b> - 返回 {@code null} </li>
      * </ul>
      */
-    @GetMapping("/getCategoryById/{id}")
+    @GetMapping("/get/{id}")
     public R<CategoryVO> getCategoryById(@PathVariable Long id) {
         return categoryService.getCategoryById(id);
     }
@@ -56,7 +56,7 @@ public class CategoryController {
      *     <li><b>修改类别失败</b> - 返回失败响应 {@code code != 0}，且会在 {@link R#getMessage()} 中说明原因</li>
      * </ul>
      */
-    @PostMapping("/modifyCategory")
+    @PostMapping("/modify")
     public R<Void> modifyCategory(@RequestBody CategoryEditDTO modifiedCategory) {
         return categoryService.modifyCategory(modifiedCategory);
     }
@@ -75,7 +75,7 @@ public class CategoryController {
      *     <li><b>删除类别失败</b> - 返回失败响应 {@code code != 0}，且会在 {@link R#getMessage()} 中说明原因</li>
      * </ul>
      */
-    @DeleteMapping("/removeCategoryById/{id}")
+    @DeleteMapping("/remove/{id}")
     public R<Void> removeCategoryById(@PathVariable Long id) {
         return categoryService.removeCategoryById(id);
     }

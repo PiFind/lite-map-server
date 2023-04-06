@@ -38,7 +38,6 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
     @Autowired
     private InterestPointSocialRedisService interestPointSocialRedisService;
 
-
     /**
      * 添加兴趣点
      * @param interestPoint {@link InterestPointDTO 兴趣点实体对象}

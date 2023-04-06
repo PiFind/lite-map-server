@@ -65,6 +65,7 @@ public class CategoryServiceImpl implements ICategoryService {
         categoryMapper.insert(categoryPO);
 
         return R.success();
+
     }
 
     /**
@@ -145,6 +146,7 @@ public class CategoryServiceImpl implements ICategoryService {
         }
 
         return R.success();
+
     }
 
     /**
@@ -230,6 +232,7 @@ public class CategoryServiceImpl implements ICategoryService {
         categoryMapper.updateById(categoryPO);
 
         return R.success();
+
     }
 
     /**
@@ -239,10 +242,12 @@ public class CategoryServiceImpl implements ICategoryService {
      */
     @Override
     public R<Void> modifyLocalizedName(LocalizedNameDTO name) {
+
         /*
          * 二者功能一致
          */
         return addLocalizedName(name);
+
     }
 
     /**
@@ -271,6 +276,7 @@ public class CategoryServiceImpl implements ICategoryService {
         categoryMapper.updateById(categoryPO);
 
         return R.success();
+
     }
 
     /**
@@ -296,6 +302,7 @@ public class CategoryServiceImpl implements ICategoryService {
         categoryMapper.updateById(categoryPO);
 
         return R.success();
+
     }
 
 }

@@ -5,9 +5,9 @@ import io.pifind.mapserver.model.constant.BusinessStatusEnum;
 import io.pifind.mapserver.model.constant.InterestPointStatusEnum;
 import io.pifind.mapserver.model.constant.WeekEnum;
 import io.pifind.mapserver.model.po.component.TimeIntervalSet;
+import io.pifind.mapserver.mp.StringListTypeHandler;
 import io.pifind.mapserver.mp.type.BusinessDayTypeHandler;
 import io.pifind.mapserver.mp.type.BusinessHoursTypeHandler;
-import io.pifind.mapserver.mp.type.PoiStringListTypeHandler;
 import lombok.Data;
 
 import java.util.Date;
@@ -106,13 +106,13 @@ public class InterestPointPO {
     /**
      * [必填]电话
      */
-    @TableField(typeHandler = PoiStringListTypeHandler.class)
+    @TableField(typeHandler = StringListTypeHandler.class)
     private List<String> tels;
 
     /**
      * [可选]图片
      */
-    @TableField(typeHandler = PoiStringListTypeHandler.class)
+    @TableField(typeHandler = StringListTypeHandler.class)
     private List<String> images;
 
     /**
@@ -130,13 +130,13 @@ public class InterestPointPO {
     /**
      * [必填]支持消费的币种
      */
-    @TableField("supported_currencies")
+    @TableField(value = "supported_currencies",typeHandler = StringListTypeHandler.class)
     private List<String> supportedCurrencies;
 
     /**
      * [可选]标签
      */
-    @TableField(typeHandler = PoiStringListTypeHandler.class)
+    @TableField(typeHandler = StringListTypeHandler.class)
     private List<String> tags;
 
     /**

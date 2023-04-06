@@ -156,6 +156,7 @@ public class InterestPointSearchServiceImpl implements InterestPointSearchServic
             LambdaQueryWrapper<InterestPointPO> queryWrapper,
             Long areaId
     ) {
+
         // 获取 areaId 下面的行政区 ID ,最多遍历两个层级
         List<Long> areaIdList = new ArrayList<>();
         areaIdList.add(areaId);
@@ -173,6 +174,7 @@ public class InterestPointSearchServiceImpl implements InterestPointSearchServic
         }
         queryWrapper = queryWrapper.in(InterestPointPO::getAdministrativeAreaId,areaIdList);
         return queryWrapper;
+
     }
 
     /**
@@ -187,6 +189,7 @@ public class InterestPointSearchServiceImpl implements InterestPointSearchServic
             SortOrderEnum sortOrder,
             SortReferenceEnum reference
     ) {
+
         // 根据排序模式和排序参考字段加入排序条件
         switch (sortOrder) {
             case ASCENDING: {
@@ -217,6 +220,7 @@ public class InterestPointSearchServiceImpl implements InterestPointSearchServic
             }
         }
         return queryWrapper;
+
     }
 
 
