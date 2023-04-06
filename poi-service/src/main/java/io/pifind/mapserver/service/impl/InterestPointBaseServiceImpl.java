@@ -2,7 +2,7 @@ package io.pifind.mapserver.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.pifind.common.response.R;
-import io.pifind.mapserver.converter.dto.InterestPointVoConverter;
+import io.pifind.mapserver.converter.vo.InterestPointVoConverter;
 import io.pifind.mapserver.converter.po.InterestPointPoConverter;
 import io.pifind.mapserver.error.PoiCodeEnum;
 import io.pifind.mapserver.mapper.InterestPointMapper;

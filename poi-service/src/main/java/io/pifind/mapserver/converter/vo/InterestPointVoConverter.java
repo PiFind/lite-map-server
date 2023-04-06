@@ -1,4 +1,4 @@
-package io.pifind.mapserver.converter.dto;
+package io.pifind.mapserver.converter.vo;
 
 import io.pifind.mapserver.converter.AdvancedConverter;
 import io.pifind.mapserver.model.constant.InterestPointStatusEnum;
