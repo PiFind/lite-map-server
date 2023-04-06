@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.constraints.NotNull;
-
+/**
+ * 兴趣点搜索控制器
+ */
 @RestController
 @RequestMapping("/v1/poi/search")
 public class InterestPointSearchController {

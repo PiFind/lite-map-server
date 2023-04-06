@@ -9,6 +9,9 @@ import io.pifind.poi.model.vo.CategoryVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 类别控制器
+ */
 @RestController
 @RequestMapping("/v1/poi/category")
 public class CategoryController {

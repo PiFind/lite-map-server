@@ -7,6 +7,9 @@ import io.pifind.poi.model.vo.InterestPointVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 兴趣点基础控制器
+ */
 @RestController
 @RequestMapping("/v1/poi/base")
 public class InterestPointBaseController {

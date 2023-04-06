@@ -47,19 +47,19 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
     @Override
     public R<Void> addInterestPoint(@NotNull InterestPointDTO interestPoint) {
 
-        // 将 DTO 对象转换成 PO 对象
+        // (1) 将 DTO 对象转换成 PO 对象
         InterestPointPO po = interestPointPoConverter.convert(interestPoint);
 
-        // 根据PO对象计算 Hash，并设置到 PO 对象中
+        // (2) 根据PO对象计算 Hash，并设置到 PO 对象中
         String hash = hash(po);
         po.setHash(hash);
 
-        // 幂等检查（检查是否有Hash值一样的数据）
+        // (3) 幂等检查（检查是否有Hash值一样的数据）
         if (interestPointMapper.exists(new LambdaQueryWrapper<InterestPointPO>().eq(InterestPointPO::getHash,hash))) {
             return R.failure(PoiCodeEnum.DUPLICATE_POI_DATA);
         }
 
-        // 加入到数据库中
+        // (4) 加入到数据库中
         interestPointMapper.insert(po);
 
         return R.success();
@@ -116,25 +116,25 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
     @Override
     public R<Void> modifyInterestPoint(@NotNull InterestPointDTO modifiedInterestPoint) {
 
-        // 将 DTO 对象转换成 PO 对象
+        // (1) 将 DTO 对象转换成 PO 对象
         InterestPointPO po = interestPointPoConverter.convert(modifiedInterestPoint);
         Long id = po.getId();
 
-        // 检查对象是否存在
+        // (2) 检查对象是否存在
         if (!interestPointMapper.exists(
                 new LambdaQueryWrapper<InterestPointPO>().eq(InterestPointPO::getId,id)
         )) {
             return R.failure(PoiCodeEnum.POI_DATA_NOT_FOUND);
         }
 
-        // 更新数据
+        // (3) 更新数据
         interestPointMapper.updateById(po);
 
-        // 获取更新后的数据并计算其hash
+        // (4) 获取更新后的数据并计算其hash
         InterestPointPO updatedPO = interestPointMapper.selectById(id);
         String hash = hash(updatedPO);
 
-        // 检查是否存在 hash
+        // (5) 检查是否存在 hash
         if (interestPointMapper.exists(
                 new LambdaQueryWrapper<InterestPointPO>()
                         .eq(InterestPointPO::getHash,hash)
@@ -145,7 +145,7 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
             return R.failure(PoiCodeEnum.DUPLICATE_POI_DATA);
         }
 
-        // 如果hash 不一样，更新 hash
+        // (6) 如果hash 不一样，更新 hash
         if (!hash.equals(updatedPO.getHash())) {
             InterestPointPO needUpdateHashPO = new InterestPointPO();
             needUpdateHashPO.setId(id);
@@ -164,7 +164,7 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
     @Override
     public R<Void> removeInterestPointById(@NotNull Long id) {
 
-        // 检查对象是否存在
+        // (1) 检查对象是否存在
         if (!interestPointMapper.exists(
                 new LambdaQueryWrapper<InterestPointPO>().eq(InterestPointPO::getId,id)
         )) {

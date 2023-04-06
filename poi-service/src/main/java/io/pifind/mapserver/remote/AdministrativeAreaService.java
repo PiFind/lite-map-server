@@ -13,6 +13,9 @@ import org.springframework.util.MultiValueMap;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * 行政区服务
+ */
 @Service
 public class AdministrativeAreaService implements IAdministrativeAreaService {
 
