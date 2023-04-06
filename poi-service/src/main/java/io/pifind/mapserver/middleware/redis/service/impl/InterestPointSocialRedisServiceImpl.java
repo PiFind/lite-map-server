@@ -13,6 +13,9 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 兴趣点社交信息Redis服务接口实现类
+ */
 @Service
 public class InterestPointSocialRedisServiceImpl implements InterestPointSocialRedisService {
 
@@ -21,12 +24,30 @@ public class InterestPointSocialRedisServiceImpl implements InterestPointSocialR
     @Resource(name = "InterestPointSocialRedisTemplate")
     private RedisTemplate<String, InterestPointSocialDTO> redisTemplate;
 
+    /**
+     * 是否包含兴趣点ID
+     * @param id 兴趣点ID
+     * @return 返回类型为 boolean
+     * <ul>
+     *     <li><b>包含兴趣点ID</b> - 返回 {@code true}</li>
+     *     <li><b>不包含兴趣点ID</b> - 返回 {@code false}</li>
+     * </ul>
+     */
     @Override
     public boolean containsId(Long id) {
         String key = KEY_GENERATOR.generate(id);
         return Boolean.TRUE.equals(redisTemplate.hasKey(key));
     }
 
+    /**
+     * 清零兴趣点社交相关的数据（直接在 Redis 中删除）
+     * @param id 兴趣点ID
+     * @return 返回类型为 boolean
+     * <ul>
+     *     <li><b>清理成功</b> - 返回 {@code true}</li>
+     *     <li><b>清理失败</b> - 返回 {@code false}</li>
+     * </ul>
+     */
     @Override
     public boolean deleteById(Long id) {
         String key = KEY_GENERATOR.generate(id);
@@ -36,6 +57,12 @@ public class InterestPointSocialRedisServiceImpl implements InterestPointSocialR
         return true;
     }
 
+    /**
+     * 通过兴趣点ID增加浏览量
+     * @param id 兴趣点ID
+     * @param n 增加的浏览量
+     * @return 当前的浏览量增量
+     */
     @Override
     public int increasePageviewsById(Long id, int n) {
         SessionCallback<InterestPointSocialDTO> callback = RedisCallbackFactory.newCallback(
@@ -47,11 +74,22 @@ public class InterestPointSocialRedisServiceImpl implements InterestPointSocialR
         return redisTemplate.execute(callback).getPageviewsIncrement();
     }
 
+    /**
+     * 通过兴趣点ID获取浏览量增量
+     * @param id 兴趣点ID
+     * @return 当前的浏览量增量
+     */
     @Override
     public int getPageviewsIncrementById(Long id) {
         return getInterestPointSocialById(id).getPageviewsIncrement();
     }
 
+    /**
+     * 通过兴趣点ID增加收藏量
+     * @param id 兴趣点ID
+     * @param n 增加的收藏数
+     * @return 当前的收藏量增量
+     */
     @Override
     public int increaseCollectionsById(Long id, int n) {
         SessionCallback<InterestPointSocialDTO> callback = RedisCallbackFactory.newCallback(
@@ -63,11 +101,23 @@ public class InterestPointSocialRedisServiceImpl implements InterestPointSocialR
         return redisTemplate.execute(callback).getCollectionsIncrement();
     }
 
+    /**
+     * 通过兴趣点ID获取收藏数增量
+     * @param id 兴趣点ID
+     * @return 当前的收藏数增量
+     */
     @Override
     public int getCollectionsIncrementById(Long id) {
         return getInterestPointSocialById(id).getCollectionsIncrement();
     }
 
+    /**
+     * 通过兴趣点ID增加积分
+     * @param id 兴趣点ID
+     * @param score 积分数
+     * @param participants 参与评分的人数
+     * @return 当前的积分增量
+     */
     @Override
     public int increaseScoreById(Long id, int score, int participants) {
         SessionCallback<InterestPointSocialDTO> callback = RedisCallbackFactory.newCallback(
@@ -84,16 +134,31 @@ public class InterestPointSocialRedisServiceImpl implements InterestPointSocialR
         return redisTemplate.execute(callback).getScoreIncrement();
     }
 
+    /**
+     * 通过兴趣点ID获取积分增量
+     * @param id 兴趣点ID
+     * @return 当前的积分增量
+     */
     @Override
     public int getScoreIncrementById(Long id) {
         return getInterestPointSocialById(id).getScoreIncrement();
     }
 
+    /**
+     * 通过兴趣点ID获取投票人数增量
+     * @param id 兴趣点ID
+     * @return 当前的投票人数增量
+     */
     @Override
     public int getParticipantsIncrementById(Long id) {
         return getInterestPointSocialById(id).getParticipantsIncrement();
     }
 
+    /**
+     * 通过兴趣点ID获取兴趣点社交DTO对象
+     * @param id 兴趣点ID
+     * @return 兴趣点社交DTO对象
+     */
     @Override
     public InterestPointSocialDTO getInterestPointSocialById(Long id) {
         String key = KEY_GENERATOR.generate(id);
@@ -103,12 +168,21 @@ public class InterestPointSocialRedisServiceImpl implements InterestPointSocialR
         return null;
     }
 
+    /**
+     * 通过兴趣点ID回去兴趣点社交DTO对象
+     * @param dto 兴趣点社交DTO对象
+     */
     @Override
     public void setInterestPointSocial(InterestPointSocialDTO dto) {
         String key = KEY_GENERATOR.generate(dto.getId());
         redisTemplate.opsForValue().set(key,dto);
     }
 
+    /**
+     * 获取存储在 Redis 里面的随机的兴趣点社交DTO列表
+     * @param count 兴趣点社交DTO个数
+     * @return 随机的兴趣点社交DTO列表
+     */
     @Override
     public List<InterestPointSocialDTO> randomInterestPointSocialDtoList(final int count) {
 
@@ -147,6 +221,12 @@ public class InterestPointSocialRedisServiceImpl implements InterestPointSocialR
         return res;
     }
 
+    /**
+     * 根据失效条件随机删除一些兴趣点社交DTO
+     * @param count 随机数量总数
+     * @param condition 无效条件
+     * @return 被移除兴趣点社交DTO数据
+     */
     @Override
     public List<InterestPointSocialDTO> randomDeleteInterestPointSocialByCondition(int count, InvalidCondition condition) {
 

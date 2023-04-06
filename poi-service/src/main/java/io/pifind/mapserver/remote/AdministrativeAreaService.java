@@ -16,9 +16,15 @@ import javax.validation.constraints.NotNull;
 @Service
 public class AdministrativeAreaService implements IAdministrativeAreaService {
 
+    /**
+     * Map Service 模板
+     */
     @Autowired
     private MapServiceTemplate mapServiceTemplate;
 
+    /**
+     * Map Service URL
+     */
     @Value("${map-service.url}")
     private String url;
 

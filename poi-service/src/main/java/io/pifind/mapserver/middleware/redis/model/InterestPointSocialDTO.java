@@ -2,6 +2,9 @@ package io.pifind.mapserver.middleware.redis.model;
 
 import lombok.Data;
 
+/**
+ * 兴趣点社交信息
+ */
 @Data
 public class InterestPointSocialDTO {
 

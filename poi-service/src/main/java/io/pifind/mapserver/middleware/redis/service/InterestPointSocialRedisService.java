@@ -4,6 +4,9 @@ import io.pifind.mapserver.middleware.redis.model.InterestPointSocialDTO;
 
 import java.util.List;
 
+/**
+ * 兴趣点社交信息Redis服务接口
+ */
 public interface InterestPointSocialRedisService {
 
     /**
@@ -90,7 +93,7 @@ public interface InterestPointSocialRedisService {
 
     /**
      * 通过兴趣点ID回去兴趣点社交DTO对象
-     * @param id 兴趣点ID
+     * @param dto 兴趣点社交DTO对象
      */
     void setInterestPointSocial(InterestPointSocialDTO dto);
 
