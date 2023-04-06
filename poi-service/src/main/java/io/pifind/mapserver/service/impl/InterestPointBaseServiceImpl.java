@@ -145,6 +145,7 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
             return R.failure(PoiCodeEnum.DUPLICATE_POI_DATA);
         }
 
+        // 如果hash 不一样，更新 hash
         if (!hash.equals(updatedPO.getHash())) {
             InterestPointPO needUpdateHashPO = new InterestPointPO();
             needUpdateHashPO.setId(id);
@@ -181,7 +182,9 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
      * @return Hash值字符串
      */
     private String hash(InterestPointPO po) {
+        // 明文为：兴趣点名称 + 兴趣点地址
         String plainText = po.getName() + po.getAddress();
+        // Hash 为：MD5(明文)
         return DigestUtils.md5DigestAsHex(plainText.getBytes());
     }
 

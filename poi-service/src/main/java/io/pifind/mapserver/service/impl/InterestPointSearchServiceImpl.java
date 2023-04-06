@@ -30,7 +30,6 @@ import java.util.List;
 @Service
 public class InterestPointSearchServiceImpl implements InterestPointSearchService {
 
-
     /**
      * 最小可信度
      */
@@ -41,7 +40,6 @@ public class InterestPointSearchServiceImpl implements InterestPointSearchServic
 
     @Autowired
     private InterestPointPoConverter interestPointPoConverter;
-
 
     @Autowired
     private InterestPointMapper interestPointMapper;
@@ -101,18 +99,20 @@ public class InterestPointSearchServiceImpl implements InterestPointSearchServic
         //  构建原始分页并查找数据
         // +------------------+
 
+        // (1) 构建原始分页
         MybatisPage<InterestPointPO> interestPointPage = new MybatisPage<>(
                 currentPage,
                 pageSize
         );
 
-        // 查找数据
+        // (2) 查找数据
         interestPointPage = interestPointMapper.selectPage(
                 interestPointPage, queryWrapper
         );
 
-        // 获取记录转换成标准返回页
+        // (3) 获取记录转换成标准返回页
         List<InterestPointPO> records = interestPointPage.getRecords();
+
         return R.page(
                 (int) interestPointPage.getCurrent(),
                 (int) interestPointPage.getSize(),
@@ -131,8 +131,11 @@ public class InterestPointSearchServiceImpl implements InterestPointSearchServic
             LambdaQueryWrapper<InterestPointPO> queryWrapper,
             String keyword
     ) {
+        // 去除空格
+        String realKeyword = keyword.trim();
+        // 如果为空则不加入条件
         if (keyword.trim().isEmpty()) {
-            String realKeyword = keyword.trim();
+            // 加入关键词的条件
             queryWrapper = queryWrapper.and(wrapper -> {
                 wrapper
                     .like(InterestPointPO::getName,realKeyword)
@@ -184,6 +187,7 @@ public class InterestPointSearchServiceImpl implements InterestPointSearchServic
             SortOrderEnum sortOrder,
             SortReferenceEnum reference
     ) {
+        // 根据排序模式和排序参考字段加入排序条件
         switch (sortOrder) {
             case ASCENDING: {
                 switch (reference) {
