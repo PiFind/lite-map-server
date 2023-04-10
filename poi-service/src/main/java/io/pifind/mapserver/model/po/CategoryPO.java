@@ -38,7 +38,7 @@ public class CategoryPO {
     /**
      * 层级
      */
-    private int level;
+    private Integer level;
 
     /**
      * [自动]创建时间

@@ -170,6 +170,7 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
             return R.failure(PoiCodeEnum.POI_DATA_NOT_FOUND);
         }
 
+        // (2) 删除数据
         interestPointMapper.deleteById(id);
 
         return R.success();

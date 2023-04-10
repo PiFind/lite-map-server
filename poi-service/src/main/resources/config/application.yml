@@ -2,6 +2,10 @@ server:
   port: 9005
 
 spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss # 默认是StdDateFormat
+    time-zone: GMT+8
+
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://120.79.38.99:3306/poibase

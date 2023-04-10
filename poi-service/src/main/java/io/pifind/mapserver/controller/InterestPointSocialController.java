@@ -41,10 +41,10 @@ public class InterestPointSocialController {
      * @param score 评分
      * @return 无
      */
-    @GetMapping("/evaluate/{id}")
+    @GetMapping("/evaluate/{id}/{score}")
     public R<Void> evaluate(
             @PathVariable Long id,
-            @RequestParam("score") Double score
+            @PathVariable Double score
     ) {
         return interestPointSocialService.evaluate(id,score);
     }

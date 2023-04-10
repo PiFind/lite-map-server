@@ -195,6 +195,12 @@ public class InterestPointPO {
     private Integer hiddenScore;
 
     /**
+     * 是否上首页
+     */
+    @TableField("home_page")
+    private Boolean homePage;
+
+    /**
      * [必填]兴趣点状态
      */
     @TableField("poi_status")

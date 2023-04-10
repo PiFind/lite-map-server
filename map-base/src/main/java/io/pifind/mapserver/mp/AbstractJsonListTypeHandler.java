@@ -24,7 +24,6 @@ public abstract class AbstractJsonListTypeHandler<T> extends BaseTypeHandler<Lis
     private final CollectionType listType ;
 
     protected AbstractJsonListTypeHandler() {
-
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
         try {
 
@@ -39,10 +38,12 @@ public abstract class AbstractJsonListTypeHandler<T> extends BaseTypeHandler<Lis
             }
 
             // 生成列表转换类型
-            listType = objectMapper.getTypeFactory().constructCollectionType(
+            listType = objectMapper.getTypeFactory().constructCollectionType (
                     ArrayList.class,
                     Class.forName(classname)
             );
+
+            log.info("List<{}> type created",classname);
 
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);

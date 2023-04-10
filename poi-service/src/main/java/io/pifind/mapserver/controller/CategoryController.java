@@ -43,7 +43,7 @@ public class CategoryController {
      * </ul>
      */
     @GetMapping("/get/{id}")
-    public R<CategoryVO> getCategoryById(@PathVariable Long id) {
+    public R<CategoryVO> getCategoryById(@PathVariable("id") Long id) {
         return categoryService.getCategoryById(id);
     }
 

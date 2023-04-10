@@ -11,7 +11,7 @@ import java.util.List;
 public interface CategoryMapper extends BaseMapper<CategoryPO> {
 
     @Select(
-        "SELECT * FORM category WHERE superior = #{id} "
+        "SELECT * FROM category WHERE superior = #{id} "
     )
     List<CategoryPO> selectSubcategoryListById(Long id);
 
