@@ -1,12 +1,18 @@
 package io.pifind.mapserver.middleware.redis.config;
 
 import io.pifind.mapserver.middleware.redis.model.InterestPointSocialDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
 @Configuration
 public class RedisConfiguration {
+
+    @Autowired
+    private RedisConnectionFactory redisConnectionFactory;
 
     /**
      * 用于存储兴趣点社交信息的RedisTemplate
@@ -14,7 +20,9 @@ public class RedisConfiguration {
      */
     @Bean("InterestPointSocialRedisTemplate")
     public RedisTemplate<String, InterestPointSocialDTO> interestPointSocialRedisTemplate() {
-        return new RedisTemplate<>();
+        RedisTemplate<String, InterestPointSocialDTO> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory);
+        return redisTemplate;
     }
 
 }
