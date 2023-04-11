@@ -6,6 +6,7 @@ import io.pifind.common.response.R;
 import io.pifind.mapserver.converter.vo.InterestPointVoConverter;
 import io.pifind.mapserver.converter.po.InterestPointPoConverter;
 import io.pifind.mapserver.mapper.InterestPointMapper;
+import io.pifind.mapserver.model.constant.InterestPointStatusEnum;
 import io.pifind.mapserver.model.po.InterestPointPO;
 import io.pifind.mapserver.mp.page.MybatisPage;
 import io.pifind.place.api.IAdministrativeAreaService;
@@ -92,7 +93,10 @@ public class InterestPointSearchServiceImpl implements InterestPointSearchServic
         // (4) 加入可信度条件(可信度需要大于等于60分)
         queryWrapper = queryWrapper.ge(InterestPointPO::getReliability,MIN_RELIABILITY);
 
-        // (5) 加入排序的条件
+        // (5) 加入状态条件
+        queryWrapper = queryWrapper.eq(InterestPointPO::getPoiStatus, InterestPointStatusEnum.VERIFIED);
+
+        // (6) 加入排序的条件
         queryWrapper = sortQueryWrapper(queryWrapper,sortOrder,reference);
 
         // +------------------+
