@@ -2,31 +2,29 @@ package io.pifind.mapserver.model.constant;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 
-/**
- * 营业状态
- */
-public enum BusinessStatusEnum {
-    /**
-     * 正常
-     */
-    OPEN(0),
+public enum CoordinateSystemEnum {
 
     /**
-     * 休店
+     * GPS 用的坐标系
      */
-    CLOSE(1),
+    WGS84(0),
 
     /**
-     * 倒闭破产
+     * 由中国国家测绘局制定的地理坐标系统。
      */
-    BANKRUPT(2),
+    GCJ02(1),
+
+    /**
+     * 中国北斗系统所使用的坐标系。
+     */
+    CGCS2000(2),
 
     ;
 
     @EnumValue
     private final int code;
 
-    private BusinessStatusEnum(int code) {
+    private CoordinateSystemEnum(int code) {
         this.code = code;
     }
 

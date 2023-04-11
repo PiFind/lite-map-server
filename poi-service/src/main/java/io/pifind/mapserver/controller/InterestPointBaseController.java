@@ -27,7 +27,7 @@ public class InterestPointBaseController {
      * </ul>
      */
     @PostMapping("/add")
-    public R<Void> addInterestPoint(@RequestParam InterestPointDTO interestPoint) {
+    public R<Void> addInterestPoint(@RequestBody InterestPointDTO interestPoint) {
         return interestPointBaseService.addInterestPoint(interestPoint);
     }
 
@@ -36,7 +36,7 @@ public class InterestPointBaseController {
      * @param id 兴趣点ID
      * @return 兴趣点实体类
      */
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public R<InterestPointVO> getInterestPointById(@PathVariable Long id) {
         return interestPointBaseService.getInterestPointById(id);
     }
@@ -60,7 +60,7 @@ public class InterestPointBaseController {
      * @param id 兴趣点ID
      * @return 空
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/remove/{id}")
     public R<Void> removeInterestPointById(@PathVariable Long id) {
         return interestPointBaseService.removeInterestPointById(id);
     }

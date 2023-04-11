@@ -84,7 +84,10 @@ public class InterestPointSocialRedisServiceImpl implements InterestPointSocialR
      */
     @Override
     public int getPageviewsIncrementById(Long id) {
-        return getInterestPointSocialById(id).getPageviewsIncrement();
+        if (containsId(id)) {
+            return getInterestPointSocialById(id).getPageviewsIncrement();
+        }
+        return 0;
     }
 
     /**
@@ -111,7 +114,10 @@ public class InterestPointSocialRedisServiceImpl implements InterestPointSocialR
      */
     @Override
     public int getCollectionsIncrementById(Long id) {
-        return getInterestPointSocialById(id).getCollectionsIncrement();
+        if (containsId(id)) {
+            return getInterestPointSocialById(id).getCollectionsIncrement();
+        }
+        return 0;
     }
 
     /**
@@ -144,7 +150,10 @@ public class InterestPointSocialRedisServiceImpl implements InterestPointSocialR
      */
     @Override
     public int getScoreIncrementById(Long id) {
-        return getInterestPointSocialById(id).getScoreIncrement();
+        if (containsId(id)) {
+            return getInterestPointSocialById(id).getScoreIncrement();
+        }
+        return 0;
     }
 
     /**
@@ -154,7 +163,10 @@ public class InterestPointSocialRedisServiceImpl implements InterestPointSocialR
      */
     @Override
     public int getParticipantsIncrementById(Long id) {
-        return getInterestPointSocialById(id).getParticipantsIncrement();
+        if (containsId(id)) {
+            return getInterestPointSocialById(id).getParticipantsIncrement();
+        }
+        return 0;
     }
 
     /**

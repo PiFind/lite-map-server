@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
  */
 public class BusinessHoursTypeHandler implements TypeHandler<TimeIntervalSet> {
 
-    public static final Pattern PATTERN = Pattern.compile("\\(\\s*[0-9]+\\s*,\\s*[0-9]+\\s*\\)");
+    public static final Pattern PATTERN = Pattern.compile("\\((\\d+\\.\\d+),(\\d+\\.\\d+)\\)");
 
     @Override
     public void setParameter(PreparedStatement preparedStatement, int i, TimeIntervalSet timeIntervalSet, JdbcType jdbcType) throws SQLException {
@@ -40,7 +40,7 @@ public class BusinessHoursTypeHandler implements TypeHandler<TimeIntervalSet> {
             param.append("(")
                     .append(String.format("%.1f",timeInterval.getStart()))
                     .append(",")
-                    .append(String.format("%.1f",timeInterval.getStart()))
+                    .append(String.format("%.1f",timeInterval.getEnd()))
                     .append(")");
         }
 

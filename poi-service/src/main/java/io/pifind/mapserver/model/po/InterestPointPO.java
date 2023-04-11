@@ -2,6 +2,7 @@ package io.pifind.mapserver.model.po;
 
 import com.baomidou.mybatisplus.annotation.*;
 import io.pifind.mapserver.model.constant.BusinessStatusEnum;
+import io.pifind.mapserver.model.constant.CoordinateSystemEnum;
 import io.pifind.mapserver.model.constant.InterestPointStatusEnum;
 import io.pifind.mapserver.model.constant.WeekEnum;
 import io.pifind.mapserver.model.po.component.TimeIntervalSet;
@@ -18,7 +19,7 @@ import java.util.Map;
  * 兴趣点
  */
 @Data
-@TableName(value = "interest_point",autoResultMap = true)
+@TableName(value = "interest_point_00",autoResultMap = true)
 public class InterestPointPO {
 
     /**
@@ -182,7 +183,7 @@ public class InterestPointPO {
     /**
      * 参与评价的人数
      */
-    @TableField("total_participant")
+    @TableField("total_participants")
     private Integer totalParticipants;
 
     /**
@@ -193,6 +194,22 @@ public class InterestPointPO {
      */
     @TableField("hidden_score")
     private Integer hiddenScore;
+
+    /**
+     * 经度
+     */
+    private Double longitude;
+
+    /**
+     * 纬度
+     */
+    private Double latitude;
+
+    /**
+     * 定位坐标系
+     */
+    @TableField("coordinate_system")
+    private CoordinateSystemEnum coordinateSystem;
 
     /**
      * 是否上首页

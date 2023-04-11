@@ -1,5 +1,6 @@
 package io.pifind.mapserver.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.pifind.common.response.R;
 import io.pifind.mapserver.converter.po.CategoryPoConverter;
 import io.pifind.mapserver.converter.vo.CategoryVoConverter;
@@ -90,6 +91,26 @@ public class CategoryServiceImpl implements ICategoryService {
 
         return R.success(categoryVO);
 
+    }
+
+    /**
+     * 根据等级获取类别列表
+     * @param level 分类等级
+     * @return 类别列表
+     */
+    @Override
+    public R<List<CategoryVO>> getCategoryListByLevel(@NotNull Integer level) {
+
+        // (1) 从数据库中根据等级查找分类
+        List<CategoryPO> categoryList = categoryMapper.selectList(
+                new LambdaQueryWrapper<CategoryPO>()
+                .eq(CategoryPO::getLevel,level)
+        );
+
+        // (2) 转换数据
+        List<CategoryVO> categoryVoList = categoryVoConverter.convert(categoryList);
+
+        return R.success(categoryVoList);
     }
 
     /**

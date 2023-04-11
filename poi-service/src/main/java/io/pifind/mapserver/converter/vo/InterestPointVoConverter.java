@@ -1,5 +1,7 @@
 package io.pifind.mapserver.converter.vo;
 
+import io.pifind.map.constant.GeographicCoordinateSystemEnum;
+import io.pifind.map.model.CoordinateDTO;
 import io.pifind.mapserver.converter.AdvancedConverter;
 import io.pifind.mapserver.model.constant.InterestPointStatusEnum;
 import io.pifind.mapserver.model.po.InterestPointPO;
@@ -81,8 +83,8 @@ public interface InterestPointVoConverter extends AdvancedConverter<InterestPoin
             double end = timeIntervalPO.getEnd();
 
             // 转换为时间标准格式
-            String startTime = String.format("%2d:%2d",(int)start,(int)((start - ((int)start))*60.0));
-            String endTime = String.format("%2d:%2d",(int)end,(int)((end - ((int)end))*60.0));
+            String startTime = String.format("%02d:%02d",(int)start,(int)((start - ((int)start))*60.0));
+            String endTime = String.format("%02d:%02d",(int)end,(int)((end - ((int)end))*60.0));
 
             // 创建 DTO 对象
             TimeIntervalDTO timeIntervalDTO = new TimeIntervalDTO();
@@ -107,8 +109,8 @@ public interface InterestPointVoConverter extends AdvancedConverter<InterestPoin
         io.pifind.mapserver.model.constant.BusinessStatusEnum businessStatus = po.getBusinessStatus();
         if (businessStatus != null) {
             switch (businessStatus) {
-                case NORMAL:
-                    vo.setBusinessStatus(BusinessStatusEnum.NORMAL);
+                case OPEN:
+                    vo.setBusinessStatus(BusinessStatusEnum.OPEN);
                     break;
                 case CLOSE:
                     vo.setBusinessStatus(BusinessStatusEnum.CLOSE);
@@ -164,6 +166,25 @@ public interface InterestPointVoConverter extends AdvancedConverter<InterestPoin
         }
         // 展示出保留一位小数的分数
         vo.setScore(Double.parseDouble(String.format("%.1f",score)));
+
+        /*
+         * 坐标转换
+         */
+        CoordinateDTO coordinateDTO = new CoordinateDTO();
+        coordinateDTO.setLatitude(po.getLatitude());
+        coordinateDTO.setLongitude(po.getLongitude());
+        switch (po.getCoordinateSystem()) {
+            case WGS84:
+                coordinateDTO.setSystem(GeographicCoordinateSystemEnum.WGS84);
+                break;
+            case GCJ02:
+                coordinateDTO.setSystem(GeographicCoordinateSystemEnum.GCJ02);
+                break;
+            case CGCS2000:
+                coordinateDTO.setSystem(GeographicCoordinateSystemEnum.CGCS2000);
+                break;
+        }
+        vo.setCoordinate(coordinateDTO);
 
         return vo;
     }

@@ -2,6 +2,7 @@ package io.pifind.mapserver.converter.po;
 
 import io.pifind.mapserver.converter.AdvancedConverter;
 import io.pifind.mapserver.model.constant.BusinessStatusEnum;
+import io.pifind.mapserver.model.constant.CoordinateSystemEnum;
 import io.pifind.mapserver.model.constant.WeekEnum;
 import io.pifind.mapserver.model.po.InterestPointPO;
 import io.pifind.mapserver.model.po.component.TimeIntervalPO;
@@ -77,7 +78,7 @@ public interface InterestPointPoConverter extends
 
             List<TimeIntervalDTO> timeIntervals = businessTime.getBusinessHours();
             TimeIntervalSet timeIntervalSet = new TimeIntervalSet();
-            String timeFormatRegex = "^\\s+[0-9]{2}\\s+:\\s+[0-9]{2}\\s+$";
+            String timeFormatRegex = "^\\s*[0-9]{2}\\s*:\\s*[0-9]{2}\\s*$";
             for (TimeIntervalDTO timeInterval : timeIntervals) {
                 double start = -1,end = -1;
 
@@ -90,7 +91,7 @@ public interface InterestPointPoConverter extends
 
                 String endTime = timeInterval.getEndTime();
                 if (endTime.matches(timeFormatRegex)) {
-                    String[] blocks = startTime.split(":");
+                    String[] blocks = endTime.split(":");
                     end = Double.parseDouble(blocks[0]) +
                             (Double.parseDouble(blocks[1])/60.0);
                 }
@@ -103,6 +104,7 @@ public interface InterestPointPoConverter extends
 
                 timeIntervalSet.add(timeIntervalPO);
             }
+
             interestPointPO.setBusinessHours(timeIntervalSet);
 
             /*
@@ -121,8 +123,8 @@ public interface InterestPointPoConverter extends
         io.pifind.poi.constant.BusinessStatusEnum businessStatus = dto.getBusinessStatus();
         if (businessStatus != null) {
             switch (businessStatus) {
-                case NORMAL:
-                    interestPointPO.setBusinessStatus(BusinessStatusEnum.NORMAL);
+                case OPEN:
+                    interestPointPO.setBusinessStatus(BusinessStatusEnum.OPEN);
                     break;
                 case CLOSE:
                     interestPointPO.setBusinessStatus(BusinessStatusEnum.CLOSE);
@@ -140,6 +142,23 @@ public interface InterestPointPoConverter extends
             }
         }
 
+        /*
+         * 提取经纬度
+         */
+
+        interestPointPO.setLatitude(dto.getCoordinate().getLatitude());
+        interestPointPO.setLongitude(dto.getCoordinate().getLongitude());
+        switch (dto.getCoordinate().getSystem()) {
+            case WGS84:
+                interestPointPO.setCoordinateSystem(CoordinateSystemEnum.WGS84);
+                break;
+            case GCJ02:
+                interestPointPO.setCoordinateSystem(CoordinateSystemEnum.GCJ02);
+                break;
+            case CGCS2000:
+                interestPointPO.setCoordinateSystem(CoordinateSystemEnum.CGCS2000);
+                break;
+        }
         return interestPointPO;
     }
 

@@ -9,6 +9,8 @@ import io.pifind.poi.model.vo.CategoryVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 类别控制器
  */
@@ -45,6 +47,20 @@ public class CategoryController {
     @GetMapping("/get/{id}")
     public R<CategoryVO> getCategoryById(@PathVariable("id") Long id) {
         return categoryService.getCategoryById(id);
+    }
+
+    /**
+     * 根据分类等级获取类别实体对象
+     * @param level 分类等级
+     * @return 返回值类型为 {@link List<CategoryVO>}
+     * <ul>
+     *     <li><b>存在分类等级</b> - 返回 {@link List<CategoryVO> 类别实体对象列表} </li>
+     *     <li><b>不存在类别</b> - 返回 {@code null} </li>
+     * </ul>
+     */
+    @GetMapping("/get/level/{level}")
+    public R<List<CategoryVO>> getCategoryListByLevel(@PathVariable("level") Integer level) {
+        return categoryService.getCategoryListByLevel(level);
     }
 
     /**
