@@ -3,6 +3,7 @@ package io.pifind.mapserver.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.pifind.common.response.Page;
 import io.pifind.common.response.R;
+import io.pifind.common.response.StandardCode;
 import io.pifind.mapserver.converter.vo.InterestPointVoConverter;
 import io.pifind.mapserver.converter.po.InterestPointPoConverter;
 import io.pifind.mapserver.mapper.InterestPointMapper;
@@ -167,6 +168,11 @@ public class InterestPointSearchServiceImpl implements InterestPointSearchServic
         R<AdministrativeAreaDTO> areaInfo = administrativeAreaService.getAdministrativeAreaById(
                 areaId,2
         );
+
+        if (areaInfo.getCode() != StandardCode.SUCCESS) {
+            return queryWrapper;
+        }
+
         List<AdministrativeAreaDTO> subAreas = areaInfo.getData().getAreas();
         for (AdministrativeAreaDTO subArea : subAreas) {
             areaIdList.add(subArea.getId());

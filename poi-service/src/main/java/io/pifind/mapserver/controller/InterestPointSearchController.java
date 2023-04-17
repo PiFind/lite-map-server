@@ -40,10 +40,10 @@ public class InterestPointSearchController {
     @GetMapping("/condition")
     public R<Page<InterestPointVO>> searchPoints(
             @RequestParam("pageSize") Integer pageSize,
-            @RequestParam("currentSize") Integer currentPage,
+            @RequestParam("currentPage") Integer currentPage,
             @RequestParam("areaId") Long areaId,
-            @RequestParam("categoryId") Long categoryId,
-            @RequestParam("keyword") String keyword,
+            @RequestParam(value = "categoryId",required = false) Long categoryId,
+            @RequestParam(value = "keyword",required = false) String keyword,
             @RequestParam("sortOrder") SortOrderEnum sortOrder,
             @RequestParam("reference") SortReferenceEnum reference
     ) {

@@ -62,8 +62,9 @@ public class AdministrativeAreaService implements IAdministrativeAreaService {
         MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
         params.add("id",id.toString());
         params.add("deep",deep.toString());
+        String requestUrl = UriSplicedUtils.spliceToString(url + "area/get",params);
         return mapServiceTemplate.getForStandardResponse(
-                UriSplicedUtils.spliceToString(url + "area/get",params),
+                requestUrl,
                 AdministrativeAreaDTO.class
         );
     }
