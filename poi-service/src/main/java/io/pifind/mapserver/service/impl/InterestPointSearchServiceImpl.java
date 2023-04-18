@@ -124,6 +124,7 @@ public class InterestPointSearchServiceImpl implements InterestPointSearchServic
                 (int) interestPointPage.getTotal(),
                 interestPointVoConverter.convert(records)
         );
+
     }
 
     /**
