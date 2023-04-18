@@ -140,7 +140,7 @@ public class InterestPointSearchServiceImpl implements InterestPointSearchServic
         // 去除空格
         String realKeyword = keyword.trim();
         // 如果为空则不加入条件
-        if (keyword.trim().isEmpty()) {
+        if (!realKeyword.isEmpty()) {
             // 加入关键词的条件
             queryWrapper = queryWrapper.and(wrapper -> {
                 wrapper
