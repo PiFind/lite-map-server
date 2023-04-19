@@ -8,6 +8,7 @@ import io.pifind.mapserver.error.PoiCodeEnum;
 import io.pifind.mapserver.mapper.InterestPointMapper;
 import io.pifind.mapserver.middleware.redis.service.InterestPointSocialRedisService;
 import io.pifind.mapserver.model.po.InterestPointPO;
+import io.pifind.mapserver.util.InterestPointHashUtils;
 import io.pifind.poi.api.InterestPointBaseService;
 import io.pifind.poi.model.dto.InterestPointDTO;
 import io.pifind.poi.model.vo.InterestPointVO;
@@ -15,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
-import org.springframework.util.DigestUtils;
 
 import javax.validation.constraints.NotNull;
 
@@ -51,7 +51,9 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
         po.setPublisher(username);
 
         // (2) 根据PO对象计算 Hash，并设置到 PO 对象中
-        String hash = hash(po);
+        String hash = InterestPointHashUtils.hash(
+                po.getName(),po.getAddress()
+        );
         po.setHash(hash);
 
         // (3) 幂等检查（检查是否有Hash值一样的数据）
@@ -108,7 +110,7 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
     }
 
     /**
-     * 根据兴趣点ID删除兴趣点
+     * 根据兴趣点ID修改兴趣点
      * @param modifiedInterestPoint 修改过兴趣点信息后的{@link InterestPointDTO 兴趣点实体对象}
      * @return 无
      */
@@ -132,7 +134,9 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
 
         // (4) 获取更新后的数据并计算其hash
         InterestPointPO updatedPO = interestPointMapper.selectById(id);
-        String hash = hash(updatedPO);
+        String hash = InterestPointHashUtils.hash(
+                updatedPO.getName(),updatedPO.getAddress()
+        );
 
         // (5) 检查是否存在 hash
         if (interestPointMapper.exists(
@@ -176,16 +180,5 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
         return R.success();
     }
 
-    /**
-     * 根据兴趣点PO对象计算Hash值
-     * @param po 兴趣点PO对象
-     * @return Hash值字符串
-     */
-    private String hash(InterestPointPO po) {
-        // 明文为：兴趣点名称 + 兴趣点地址
-        String plainText = po.getName() + po.getAddress();
-        // Hash 为：MD5(明文)
-        return DigestUtils.md5DigestAsHex(plainText.getBytes());
-    }
 
 }
