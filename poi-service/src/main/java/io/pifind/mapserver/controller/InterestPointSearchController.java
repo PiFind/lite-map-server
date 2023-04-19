@@ -8,6 +8,7 @@ import io.pifind.poi.constant.SortOrderEnum;
 import io.pifind.poi.constant.SortReferenceEnum;
 import io.pifind.poi.model.vo.CategoryVO;
 import io.pifind.poi.model.vo.InterestPointVO;
+import io.pifind.role.annotation.RequestPermission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +39,7 @@ public class InterestPointSearchController {
      * @see CategoryVO
      */
     @GetMapping("/condition")
+    @RequestPermission(name = "poi.search.condition",description = "通过地区、类别和关键字等搜索兴趣点")
     public R<Page<InterestPointVO>> searchPoints(
             @RequestParam("pageSize") Integer pageSize,
             @RequestParam("currentPage") Integer currentPage,

@@ -48,7 +48,7 @@ public class InterestPointSocialServiceImpl implements InterestPointSocialServic
      * @return 无
      */
     @Override
-    public R<Void> browse(@NotNull Long id) {
+    public R<Void> browse(String username,@NotNull Long id) {
         interestPointSocialRedisService.increasePageviewsById(id,1);
         optimizeRedisStorage(id);
         return R.success();
@@ -60,7 +60,7 @@ public class InterestPointSocialServiceImpl implements InterestPointSocialServic
      * @return 无
      */
     @Override
-    public R<Void> collect(@NotNull Long id) {
+    public R<Void> collect(String username,@NotNull Long id) {
         interestPointSocialRedisService.increaseCollectionsById(id,1);
         optimizeRedisStorage(id);
         return R.success();
@@ -73,7 +73,7 @@ public class InterestPointSocialServiceImpl implements InterestPointSocialServic
      * @return 无
      */
     @Override
-    public R<Void> evaluate(@NotNull Long id, @NotNull Double score) {
+    public R<Void> evaluate(String username,@NotNull Long id, @NotNull Double score) {
         interestPointSocialRedisService.increaseScoreById(id,(int)(score + 0.5),1);
         optimizeRedisStorage(id);
         return R.success();

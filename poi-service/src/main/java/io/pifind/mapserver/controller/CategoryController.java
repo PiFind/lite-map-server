@@ -6,6 +6,7 @@ import io.pifind.poi.model.dto.CategoryEditDTO;
 import io.pifind.poi.model.dto.LocalizedNameDTO;
 import io.pifind.poi.model.dto.LocalizedNameGroupDTO;
 import io.pifind.poi.model.vo.CategoryVO;
+import io.pifind.role.annotation.RequestPermission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +32,7 @@ public class CategoryController {
      * </ul>
      */
     @PostMapping("/add")
+    @RequestPermission(name = "poi.category.add",description = "添加POI类别")
     public R<Void> addCategory(@RequestBody CategoryEditDTO category) {
         return categoryService.addCategory(category);
     }
@@ -45,6 +47,7 @@ public class CategoryController {
      * </ul>
      */
     @GetMapping("/get/{id}")
+    @RequestPermission(name = "poi.category.get",description = "获取POI类别")
     public R<CategoryVO> getCategoryById(@PathVariable("id") Long id) {
         return categoryService.getCategoryById(id);
     }
@@ -59,6 +62,7 @@ public class CategoryController {
      * </ul>
      */
     @GetMapping("/get/level/{level}")
+    @RequestPermission(name = "poi.category.getCategoryListByLevel",description = "根据分类等级获取POI类别")
     public R<List<CategoryVO>> getCategoryListByLevel(@PathVariable("level") Integer level) {
         return categoryService.getCategoryListByLevel(level);
     }
@@ -73,6 +77,7 @@ public class CategoryController {
      * </ul>
      */
     @PostMapping("/modify")
+    @RequestPermission(name = "poi.category.modify",description = "修改POI类别")
     public R<Void> modifyCategory(@RequestBody CategoryEditDTO modifiedCategory) {
         return categoryService.modifyCategory(modifiedCategory);
     }
@@ -92,6 +97,7 @@ public class CategoryController {
      * </ul>
      */
     @DeleteMapping("/remove/{id}")
+    @RequestPermission(name = "poi.category.remove",description = "删除POI类别")
     public R<Void> removeCategoryById(@PathVariable Long id) {
         return categoryService.removeCategoryById(id);
     }
@@ -106,6 +112,7 @@ public class CategoryController {
      * </ul>
      */
     @PostMapping("/addLocalizedName")
+    @RequestPermission(name = "poi.category.addLocalizedName",description = "添加POI类别本地化命名")
     public R<Void> addLocalizedName(@RequestBody LocalizedNameDTO name) {
         return categoryService.addLocalizedName(name);
     }
@@ -120,6 +127,7 @@ public class CategoryController {
      * </ul>
      */
     @PostMapping("/addLocalizedNameGroup")
+    @RequestPermission(name = "poi.category.addLocalizedNameGroup",description = "添加POI类别本地化命名组")
     public R<Void> addLocalizedNameGroup(@RequestBody LocalizedNameGroupDTO nameGroup) {
         return categoryService.addLocalizedNameGroup(nameGroup);
     }
@@ -134,6 +142,7 @@ public class CategoryController {
      * </ul>
      */
     @PostMapping("/modifyLocalizedName")
+    @RequestPermission(name = "poi.category.modifyLocalizedName",description = "修改POI类别本地化命名")
     public R<Void> modifyLocalizedName(@RequestBody LocalizedNameDTO name) {
         return categoryService.modifyLocalizedName(name);
     }
@@ -149,6 +158,7 @@ public class CategoryController {
      * </ul>
      */
     @DeleteMapping("/removeLocalizedName/{id}/{language}")
+    @RequestPermission(name = "poi.category.removeLocalizedName",description = "移除POI类别本地化命名")
     public R<Void> removeLocalizedName(
             @PathVariable Long id,
             @PathVariable String language
@@ -166,6 +176,7 @@ public class CategoryController {
      * </ul>
      */
     @DeleteMapping("/removeAllLocalizedNames/{id}")
+    @RequestPermission(name = "poi.category.removeAllLocalizedNames",description = "移除POI类别所有本地化命名")
     public R<Void> removeAllLocalizedNames(@PathVariable Long id) {
         return categoryService.removeAllLocalizedNames(id);
     }

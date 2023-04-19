@@ -1,9 +1,12 @@
 package io.pifind.mapserver.controller;
 
+import io.pifind.authorization.annotation.UserEntity;
+import io.pifind.authorization.model.User;
 import io.pifind.common.response.R;
 import io.pifind.poi.api.InterestPointBaseService;
 import io.pifind.poi.model.dto.InterestPointDTO;
 import io.pifind.poi.model.vo.InterestPointVO;
+import io.pifind.role.annotation.RequestPermission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,8 +30,12 @@ public class InterestPointBaseController {
      * </ul>
      */
     @PostMapping("/add")
-    public R<Void> addInterestPoint(@RequestBody InterestPointDTO interestPoint) {
-        return interestPointBaseService.addInterestPoint(interestPoint);
+    @RequestPermission(name = "poi.base.add",description = "添加POI基础信息")
+    public R<Void> addInterestPoint(
+            @UserEntity User user,
+            @RequestBody InterestPointDTO interestPoint
+    ) {
+        return interestPointBaseService.addInterestPoint(user.getUsername(),interestPoint);
     }
 
     /**
@@ -37,8 +44,12 @@ public class InterestPointBaseController {
      * @return 兴趣点实体类
      */
     @GetMapping("/get/{id}")
-    public R<InterestPointVO> getInterestPointById(@PathVariable Long id) {
-        return interestPointBaseService.getInterestPointById(id);
+    @RequestPermission(name = "poi.base.get",description = "获取POI基础信息")
+    public R<InterestPointVO> getInterestPointById(
+            @UserEntity User user,
+            @PathVariable Long id
+    ) {
+        return interestPointBaseService.getInterestPointById(user.getUsername(),id);
     }
 
     /**
@@ -51,8 +62,12 @@ public class InterestPointBaseController {
      * </ul>
      */
     @PostMapping("/modify")
-    public R<Void> modifyInterestPoint(@RequestBody InterestPointDTO modifiedInterestPoint) {
-        return interestPointBaseService.modifyInterestPoint(modifiedInterestPoint);
+    @RequestPermission(name = "poi.base.modify",description = "修改POI基础信息")
+    public R<Void> modifyInterestPoint(
+            @UserEntity User user,
+            @RequestBody InterestPointDTO modifiedInterestPoint
+    ) {
+        return interestPointBaseService.modifyInterestPoint(user.getUsername(),modifiedInterestPoint);
     }
 
     /**
@@ -61,8 +76,12 @@ public class InterestPointBaseController {
      * @return 空
      */
     @DeleteMapping("/remove/{id}")
-    public R<Void> removeInterestPointById(@PathVariable Long id) {
-        return interestPointBaseService.removeInterestPointById(id);
+    @RequestPermission(name = "poi.base.remove",description = "删除POI基础信息")
+    public R<Void> removeInterestPointById(
+            @UserEntity User user,
+            @PathVariable Long id
+    ) {
+        return interestPointBaseService.removeInterestPointById(user.getUsername(),id);
     }
 
 }

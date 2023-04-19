@@ -6,6 +6,7 @@ import io.pifind.map.model.CoordinateDTO;
 import io.pifind.mapserver.error.PlaceCodeEnum;
 import io.pifind.place.api.IPositioningService;
 import io.pifind.place.model.LocationDTO;
+import io.pifind.role.annotation.RequestPermission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ public class PositioningController {
      * @return 定位实体类对象
      */
     @GetMapping("/ip")
+    @RequestPermission(name = "positioning.ip",description = "根据IP进行定位")
     public R<LocationDTO> getLocationByIP(
             @RequestParam("ip") String ip
     ) {
@@ -32,7 +34,15 @@ public class PositioningController {
     }
 
 
+    /**
+     * 根据坐标进行定位
+     * @param lng 经度
+     * @param lat 纬度
+     * @param system 坐标系
+     * @return 定位实体类对象
+     */
     @GetMapping("/coordinate")
+    @RequestPermission(name = "positioning.coordinate",description = "根据坐标进行定位")
     R<LocationDTO> getLocationByCoordinate(
             @RequestParam("lng") Double lng,
             @RequestParam("lat") Double lat,

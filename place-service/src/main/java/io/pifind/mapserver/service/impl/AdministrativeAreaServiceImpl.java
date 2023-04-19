@@ -29,6 +29,11 @@ public class AdministrativeAreaServiceImpl implements IAdministrativeAreaService
     @Autowired
     private AdministrativeAreaDtoConverter administrativeAreaDtoConverter;
 
+    /**
+     * 判断行政区是否存在
+     * @param id 行政区ID
+     * @return 行政区是否存在
+     */
     @Override
     public R<Boolean> existAdministrativeAreaById(@NotNull Long id) {
         Boolean exist = administrativeAreaMapper.exists(
@@ -38,6 +43,12 @@ public class AdministrativeAreaServiceImpl implements IAdministrativeAreaService
         return R.success(exist);
     }
 
+    /**
+     * 根据行政区ID获取行政区信息
+     * @param id 行政区ID
+     * @param layerLevel 行政区下分深度
+     * @return 行政区信息
+     */
     @Override
     public R<AdministrativeAreaDTO> getAdministrativeAreaById(@NotNull Long id,@NotNull Integer layerLevel) {
 
@@ -80,6 +91,12 @@ public class AdministrativeAreaServiceImpl implements IAdministrativeAreaService
 
     }
 
+    /**
+     * 创建一个行政区树
+     * @param id 行政区ID
+     * @param separator 分隔符
+     * @return 行政区树的根节点
+     */
     @Override
     public R<String> getDetailedAddress(@NotNull Long id,@NotEmpty String separator) {
 

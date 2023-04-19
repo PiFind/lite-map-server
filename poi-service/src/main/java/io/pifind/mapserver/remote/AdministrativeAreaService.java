@@ -28,7 +28,7 @@ public class AdministrativeAreaService implements IAdministrativeAreaService {
     /**
      * Map Service URL
      */
-    @Value("${map-service.url}")
+    @Value("${pifind.map-service.url}")
     private String url;
 
     /**

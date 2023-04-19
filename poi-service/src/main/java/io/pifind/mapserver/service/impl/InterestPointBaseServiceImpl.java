@@ -44,10 +44,11 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
      * @return 无
      */
     @Override
-    public R<Void> addInterestPoint(@NotNull InterestPointDTO interestPoint) {
+    public R<Void> addInterestPoint(String username,@NotNull InterestPointDTO interestPoint) {
 
         // (1) 将 DTO 对象转换成 PO 对象
         InterestPointPO po = interestPointPoConverter.convert(interestPoint);
+        po.setPublisher(username);
 
         // (2) 根据PO对象计算 Hash，并设置到 PO 对象中
         String hash = hash(po);
@@ -71,7 +72,7 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
      * @return {@link InterestPointVO 兴趣点实体对象}
      */
     @Override
-    public R<InterestPointVO> getInterestPointById(@NotNull Long id) {
+    public R<InterestPointVO> getInterestPointById(String username,@NotNull Long id) {
 
         InterestPointPO po = interestPointMapper.selectById(id);
         if (po == null) {
@@ -113,16 +114,16 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public R<Void> modifyInterestPoint(@NotNull InterestPointDTO modifiedInterestPoint) {
+    public R<Void> modifyInterestPoint(String username,@NotNull InterestPointDTO modifiedInterestPoint) {
 
         // (1) 将 DTO 对象转换成 PO 对象
         InterestPointPO po = interestPointPoConverter.convert(modifiedInterestPoint);
+        po.setPublisher(username);
         Long id = po.getId();
 
         // (2) 检查对象是否存在
-        if (!interestPointMapper.exists(
-                new LambdaQueryWrapper<InterestPointPO>().eq(InterestPointPO::getId,id)
-        )) {
+        InterestPointPO interestPointPO = interestPointMapper.selectById(id);
+        if (interestPointPO == null || !interestPointPO.getPublisher().equals(username) ) {
             return R.failure(PoiCodeEnum.POI_DATA_NOT_FOUND);
         }
 
@@ -161,12 +162,11 @@ public class InterestPointBaseServiceImpl implements InterestPointBaseService {
      * @return 无
      */
     @Override
-    public R<Void> removeInterestPointById(@NotNull Long id) {
+    public R<Void> removeInterestPointById(String username,@NotNull Long id) {
 
         // (1) 检查对象是否存在
-        if (!interestPointMapper.exists(
-                new LambdaQueryWrapper<InterestPointPO>().eq(InterestPointPO::getId,id)
-        )) {
+        InterestPointPO interestPointPO = interestPointMapper.selectById(id);
+        if (interestPointPO == null || !interestPointPO.getPublisher().equals(username) ) {
             return R.failure(PoiCodeEnum.POI_DATA_NOT_FOUND);
         }
 
