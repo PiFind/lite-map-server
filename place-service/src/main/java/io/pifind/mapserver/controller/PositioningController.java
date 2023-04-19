@@ -43,7 +43,7 @@ public class PositioningController {
      */
     @GetMapping("/coordinate")
     @RequestPermission(name = "positioning.coordinate",description = "根据坐标进行定位")
-    R<LocationDTO> getLocationByCoordinate(
+    public R<LocationDTO> getLocationByCoordinate(
             @RequestParam("lng") Double lng,
             @RequestParam("lat") Double lat,
             @RequestParam(value = "system",defaultValue = "WGS84",required = false) String system
