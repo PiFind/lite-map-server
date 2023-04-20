@@ -34,6 +34,13 @@
             <version>${io.pifind.map.api}</version>
         </dependency>
 
+        <!-- 角色服务 -->
+        <dependency>
+            <groupId>io.pifind</groupId>
+            <artifactId>user-role-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
         <!-- 数据库相关 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -66,13 +73,6 @@
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
             <version>1.9.6</version>
-        </dependency>
-
-        <!-- 角色服务 -->
-        <dependency>
-            <groupId>io.pifind</groupId>
-            <artifactId>user-role-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
 
     </dependencies>
