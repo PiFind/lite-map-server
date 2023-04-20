@@ -6,6 +6,7 @@ import io.pifind.common.response.R;
 import io.pifind.common.response.StandardCode;
 import io.pifind.mapserver.converter.vo.InterestPointVoConverter;
 import io.pifind.mapserver.converter.po.InterestPointPoConverter;
+import io.pifind.mapserver.error.PoiCodeEnum;
 import io.pifind.mapserver.mapper.InterestPointMapper;
 import io.pifind.mapserver.model.constant.InterestPointStatusEnum;
 import io.pifind.mapserver.model.po.InterestPointPO;
@@ -48,6 +49,20 @@ public class InterestPointSearchServiceImpl implements InterestPointSearchServic
 
     @Autowired
     private IAdministrativeAreaService administrativeAreaService;
+
+    /**
+     * 根据兴趣点ID查看兴趣点
+     * @param id 兴趣点ID
+     * @return 兴趣点
+     */
+    @Override
+    public R<InterestPointVO> viewPointById(@NotNull Long id) {
+        InterestPointPO po = interestPointMapper.selectById(id);
+        if (po == null || !po.getPoiStatus().equals(InterestPointStatusEnum.VERIFIED)) {
+            return R.failure(PoiCodeEnum.POI_DATA_NOT_FOUND);
+        }
+        return R.success(interestPointVoConverter.convert(po));
+    }
 
     /**
      * 搜索兴趣点

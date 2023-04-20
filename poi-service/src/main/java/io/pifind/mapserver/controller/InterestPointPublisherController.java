@@ -2,8 +2,9 @@ package io.pifind.mapserver.controller;
 
 import io.pifind.authorization.annotation.UserEntity;
 import io.pifind.authorization.model.User;
+import io.pifind.common.response.Page;
 import io.pifind.common.response.R;
-import io.pifind.poi.api.InterestPointBaseService;
+import io.pifind.poi.api.InterestPointPublisherService;
 import io.pifind.poi.model.dto.InterestPointDTO;
 import io.pifind.poi.model.vo.InterestPointVO;
 import io.pifind.role.annotation.RequestPermission;
@@ -15,10 +16,10 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/v1/poi/base")
-public class InterestPointBaseController {
+public class InterestPointPublisherController {
 
     @Autowired
-    private InterestPointBaseService interestPointBaseService;
+    private InterestPointPublisherService interestPointPublisherService;
 
     /**
      * 添加一个兴趣点
@@ -35,7 +36,7 @@ public class InterestPointBaseController {
             @UserEntity User user,
             @RequestBody InterestPointDTO interestPoint
     ) {
-        return interestPointBaseService.addInterestPoint(user.getUsername(),interestPoint);
+        return interestPointPublisherService.addInterestPoint(user.getUsername(),interestPoint);
     }
 
     /**
@@ -47,9 +48,27 @@ public class InterestPointBaseController {
     @RequestPermission(name = "poi.base.get",description = "获取POI基础信息")
     public R<InterestPointVO> getInterestPointById(
             @UserEntity User user,
-            @PathVariable Long id
+            @PathVariable("id") Long id
     ) {
-        return interestPointBaseService.getInterestPointById(user.getUsername(),id);
+        return interestPointPublisherService.getInterestPointById(user.getUsername(),id);
+    }
+
+    /**
+     * 根据发布者获取兴趣点分页
+     * @param user 用户
+     * @param currentPage 当前页
+     * @param pageSize 每页大小
+     * @return 返回值类型为 {@link Page<InterestPointDTO>}
+     */
+    @GetMapping("/get/page/{currentPage}/{pageSize}")
+    @RequestPermission(name = "poi.base.get.page",description = "获取POI基础信息分页")
+    public R<Page<InterestPointVO>> getInterestPointPageByPublisher(
+            @UserEntity User user,
+            @PathVariable("currentPage") Integer currentPage,
+            @PathVariable("pageSize") Integer pageSize
+    ) {
+        return interestPointPublisherService
+                .getInterestPointPageByPublisher(user.getUsername(),currentPage,pageSize);
     }
 
     /**
@@ -67,7 +86,7 @@ public class InterestPointBaseController {
             @UserEntity User user,
             @RequestBody InterestPointDTO modifiedInterestPoint
     ) {
-        return interestPointBaseService.modifyInterestPoint(user.getUsername(),modifiedInterestPoint);
+        return interestPointPublisherService.modifyInterestPoint(user.getUsername(),modifiedInterestPoint);
     }
 
     /**
@@ -81,7 +100,7 @@ public class InterestPointBaseController {
             @UserEntity User user,
             @PathVariable Long id
     ) {
-        return interestPointBaseService.removeInterestPointById(user.getUsername(),id);
+        return interestPointPublisherService.removeInterestPointById(user.getUsername(),id);
     }
 
 }

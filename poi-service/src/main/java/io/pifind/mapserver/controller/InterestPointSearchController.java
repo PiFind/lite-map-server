@@ -10,10 +10,9 @@ import io.pifind.poi.model.vo.CategoryVO;
 import io.pifind.poi.model.vo.InterestPointVO;
 import io.pifind.role.annotation.RequestPermission;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * 兴趣点搜索控制器
@@ -24,6 +23,17 @@ public class InterestPointSearchController {
 
     @Autowired
     private InterestPointSearchService interestPointSearchService ;
+
+    /**
+     * 通过ID搜索兴趣点
+     * @param id 兴趣点ID
+     * @return 兴趣点
+     */
+    @GetMapping("/id/{id}")
+    @RequestPermission(name = "poi.search.id",description = "通过ID搜索兴趣点")
+    public R<InterestPointVO> viewPointById(@PathVariable("id") Long id) {
+        return interestPointSearchService.viewPointById(id);
+    }
 
     /**
      * 通过地区、类别和关键字搜索兴趣点（模糊搜索）
