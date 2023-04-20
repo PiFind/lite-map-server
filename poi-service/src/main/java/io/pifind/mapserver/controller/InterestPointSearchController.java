@@ -29,7 +29,7 @@ public class InterestPointSearchController {
      * @param id 兴趣点ID
      * @return 兴趣点
      */
-    @GetMapping("/id/{id}")
+    @GetMapping("/view/{id}")
     @RequestPermission(name = "poi.search.id",description = "通过ID搜索兴趣点")
     public R<InterestPointVO> viewPointById(@PathVariable("id") Long id) {
         return interestPointSearchService.viewPointById(id);
