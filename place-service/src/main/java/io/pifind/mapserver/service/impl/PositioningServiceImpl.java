@@ -31,6 +31,9 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * 定位服务实现类
+ */
 @Slf4j
 @Service
 public class PositioningServiceImpl implements IPositioningService {

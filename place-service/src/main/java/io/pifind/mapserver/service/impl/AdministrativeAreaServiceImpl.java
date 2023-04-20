@@ -18,6 +18,9 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * 行政区基础服务实现类
+ */
 @Service
 public class AdministrativeAreaServiceImpl implements IAdministrativeAreaService {
 
