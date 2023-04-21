@@ -130,7 +130,7 @@ public class UserVoteServiceImpl implements IUserVoteService {
         userVoteRedisTemplate.expire(
                 KEY_GENERATOR.generate(interestPointId),
                 10,
-                TimeUnit.SECONDS
+                TimeUnit.MINUTES
         );
     }
 
