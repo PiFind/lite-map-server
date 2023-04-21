@@ -1,6 +1,7 @@
 package io.pifind.mapserver.middleware.redis.config;
 
 import io.pifind.mapserver.middleware.redis.model.InterestPointSocialDTO;
+import io.pifind.mapserver.middleware.redis.model.UserVoteRecordDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,17 @@ public class RedisConfiguration {
     @Bean("InterestPointSocialRedisTemplate")
     public RedisTemplate<String, InterestPointSocialDTO> interestPointSocialRedisTemplate() {
         RedisTemplate<String, InterestPointSocialDTO> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory);
+        return redisTemplate;
+    }
+
+    /**
+     * 用于存储用户投票记录的RedisTemplate
+     * @return {@link RedisTemplate<String, UserVoteRecordDTO> RedisTemplate实体对象}
+     */
+    @Bean("UserVoteRedisTemplate")
+    public RedisTemplate<String, UserVoteRecordDTO> userVoteRedisTemplate() {
+        RedisTemplate<String, UserVoteRecordDTO> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         return redisTemplate;
     }
