@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 定位控制器
+ */
 @RestController
 @RequestMapping("/v1/positioning")
 public class PositioningController {

@@ -8,6 +8,9 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * 国家
+ */
 @Data
 @TableName(value = "country",autoResultMap = true)
 public class CountryPO {

@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * 行政区控制器
+ */
 @RestController
 @RequestMapping("/v1/area")
 public class AdministrativeAreaController {

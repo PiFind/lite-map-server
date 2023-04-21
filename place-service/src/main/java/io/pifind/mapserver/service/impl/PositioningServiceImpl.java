@@ -59,6 +59,11 @@ public class PositioningServiceImpl implements IPositioningService {
     // @Resource(name = "Amap-GeocodingService")
     // private IGeocodingService chinaGeocodingService;
 
+    /**
+     * 通过IP地址获取地理位置
+     * @param ip 需要定位的目标IP
+     * @return 地理位置
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public R<LocationDTO> getLocationByIP(@NotEmpty String ip) {
@@ -114,6 +119,11 @@ public class PositioningServiceImpl implements IPositioningService {
         return R.success(locationDTO);
     }
 
+    /**
+     * 通过坐标获取定位信息
+     * @param coordinate 坐标
+     * @return 定位信息
+     */
     @Override
     public R<LocationDTO> getLocationByCoordinate(@NotNull CoordinateDTO coordinate) {
 

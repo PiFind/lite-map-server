@@ -3,6 +3,9 @@ package io.pifind.mapserver.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * IPv4地址工具类
+ */
 public class IPv4Utils {
 
     private static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");

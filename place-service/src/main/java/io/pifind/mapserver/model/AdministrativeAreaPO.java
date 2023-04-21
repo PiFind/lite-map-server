@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+/**
+ * 行政区划
+ */
 @Data
 @TableName(value = "administrative_area",autoResultMap = true)
 public class AdministrativeAreaPO {
