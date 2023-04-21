@@ -19,9 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * 兴趣点基础服务实现类
+ */
 @Service
 public class InterestPointDaoServiceImpl implements InterestPointDaoService {
-
 
     public static final int PASS_VOTE_COUNT = 5;
 
@@ -96,9 +98,6 @@ public class InterestPointDaoServiceImpl implements InterestPointDaoService {
         interestPointReviewPO.setInterestPointId(voteDTO.getInterestPointId());
         interestPointReviewPO.setAgree(voteDTO.getAgree());
         interestPointReviewMapper.insert(interestPointReviewPO);
-
-        // (7) 每次投票都会获取 PCM 积分
-        // TODO
 
         return R.success();
     }

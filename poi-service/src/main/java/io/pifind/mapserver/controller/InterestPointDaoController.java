@@ -29,7 +29,10 @@ public class InterestPointDaoController {
      */
     @PostMapping("/vote")
     @RequestPermission(name = "poi.dao.review.vote",description = "DAO用户投票")
-    public R<Void> vote(@UserEntity User user, DaoVoteDTO voteDTO) {
+    public R<Void> vote(
+            @UserEntity User user,
+            @RequestBody DaoVoteDTO voteDTO
+    ) {
         return interestPointDaoService.vote(
                 user.getUsername(), voteDTO
         );
@@ -41,9 +44,12 @@ public class InterestPointDaoController {
      * @param interestPointId 兴趣点ID
      * @return 是否投票成功
      */
-    @GetMapping("/hasVoted")
+    @GetMapping("/hasVoted/{interestPointId}")
     @RequestPermission(name = "poi.dao.review.hasVoted",description = "DAO用户是否已经投过票")
-    public R<Boolean> hasVoted(@UserEntity User user, Long interestPointId) {
+    public R<Boolean> hasVoted(
+            @UserEntity User user,
+            @PathVariable("interestPointId") Long interestPointId
+    ) {
         return interestPointDaoService.hasVoted(
                 user.getUsername(), interestPointId
         );
