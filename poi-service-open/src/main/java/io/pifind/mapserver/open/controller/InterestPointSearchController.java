@@ -1,13 +1,14 @@
-package io.pifind.mapserver.controller;
+package io.pifind.mapserver.open.controller;
 
 import io.pifind.common.response.Page;
 import io.pifind.common.response.R;
+import io.pifind.mapserver.open.service.InterestPointSearchFeignService;
 import io.pifind.place.model.AdministrativeAreaDTO;
-import io.pifind.poi.api.InterestPointSearchService;
 import io.pifind.poi.constant.SortOrderEnum;
 import io.pifind.poi.constant.SortReferenceEnum;
 import io.pifind.poi.model.vo.CategoryVO;
 import io.pifind.poi.model.vo.InterestPointVO;
+import io.pifind.role.annotation.RequestPermission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class InterestPointSearchController {
 
     @Autowired
-    private InterestPointSearchService interestPointSearchService ;
+    private InterestPointSearchFeignService interestPointSearchService ;
 
     /**
      * 通过ID搜索兴趣点
@@ -27,6 +28,7 @@ public class InterestPointSearchController {
      * @return 兴趣点
      */
     @GetMapping("/view/{id}")
+    @RequestPermission(name = "poi.search.id",description = "通过ID搜索兴趣点")
     public R<InterestPointVO> viewPointById(@PathVariable("id") Long id) {
         return interestPointSearchService.viewPointById(id);
     }
@@ -45,6 +47,7 @@ public class InterestPointSearchController {
      * @see CategoryVO
      */
     @GetMapping("/condition")
+    @RequestPermission(name = "poi.search.condition",description = "通过地区、类别和关键字等搜索兴趣点")
     public R<Page<InterestPointVO>> searchPoints(
             @RequestParam("pageSize") Integer pageSize,
             @RequestParam("currentPage") Integer currentPage,

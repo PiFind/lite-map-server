@@ -1,11 +1,9 @@
-package io.pifind.mapserver.controller;
+package io.pifind.mapserver.open.controller;
 
 import io.pifind.common.response.R;
-import io.pifind.map.constant.GeographicCoordinateSystemEnum;
-import io.pifind.map.model.CoordinateDTO;
-import io.pifind.mapserver.error.PlaceCodeEnum;
-import io.pifind.place.api.IPositioningService;
+import io.pifind.mapserver.open.service.IPositioningFeignService;
 import io.pifind.place.model.LocationDTO;
+import io.pifind.role.annotation.RequestPermission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PositioningController {
 
     @Autowired
-    private IPositioningService positioningService;
+    private IPositioningFeignService positioningService;
 
     /**
      * 根据IP进行定位
@@ -28,6 +26,7 @@ public class PositioningController {
      * @return 定位实体类对象
      */
     @GetMapping("/ip")
+    @RequestPermission(name = "positioning.ip",description = "根据IP进行定位")
     public R<LocationDTO> getLocationByIP(
             @RequestParam("ip") String ip
     ) {
@@ -43,28 +42,13 @@ public class PositioningController {
      * @return 定位实体类对象
      */
     @GetMapping("/coordinate")
+    @RequestPermission(name = "positioning.coordinate",description = "根据坐标进行定位")
     public R<LocationDTO> getLocationByCoordinate(
             @RequestParam("lng") Double lng,
             @RequestParam("lat") Double lat,
             @RequestParam(value = "system",defaultValue = "WGS84",required = false) String system
     ) {
-
-        // 将传入的格式转换为枚举
-        GeographicCoordinateSystemEnum systemEnum =
-                GeographicCoordinateSystemEnum.parse(system.toUpperCase());
-
-        // 如果不支持，那么就返回 UNSUPPORTED_COORDINATE_SYSTEM 错误
-        if (systemEnum == null) {
-            return R.failure(PlaceCodeEnum.UNSUPPORTED_COORDINATE_SYSTEM);
-        }
-
-        // 创建一个坐标系对象
-        CoordinateDTO coordinateDTO = new CoordinateDTO();
-        coordinateDTO.setLongitude(lng);
-        coordinateDTO.setLatitude(lat);
-        coordinateDTO.setSystem(systemEnum);
-
-        return positioningService.getLocationByCoordinate(coordinateDTO);
+        return positioningService.getLocationByCoordinate(lng,lat,system);
     }
 
 }

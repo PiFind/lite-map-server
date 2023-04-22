@@ -21,6 +21,8 @@
         <module>third-party</module>
         <module>place-service</module>
         <module>poi-service</module>
+        <module>place-service-open</module>
+        <module>poi-service-open</module>
     </modules>
 
     <repositories>

@@ -1,25 +1,25 @@
-package io.pifind.mapserver.controller;
+package io.pifind.mapserver.open.service;
 
 import io.pifind.common.response.Page;
 import io.pifind.common.response.R;
-import io.pifind.poi.api.InterestPointPublisherService;
+import io.pifind.mapserver.open.support.PoiServiceAPI;
 import io.pifind.poi.model.dto.InterestPointDTO;
 import io.pifind.poi.model.vo.InterestPointVO;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * 兴趣点基础控制器
+ * 兴趣点基础服务
+ * <p>
+ *     该服务包含了除搜索服务外的增删改查（简单查询）等方法
+ * </p>
  */
-@RestController
-@RequestMapping("/v1/poi/base")
-public class InterestPointPublisherController {
-
-    @Autowired
-    private InterestPointPublisherService interestPointPublisherService;
+@FeignClient(name = "poi-publisher-service",url = PoiServiceAPI.URL)
+public interface InterestPointPublisherFeignService {
 
     /**
      * 添加一个兴趣点
+     * @param username 用户名
      * @param interestPoint {@link InterestPointDTO 兴趣点实体对象}
      * @return 无返回值
      * <ul>
@@ -27,26 +27,28 @@ public class InterestPointPublisherController {
      *     <li><b>添加兴趣点失败</b> - 返回失败响应 {@code code != 0}，且会在 {@link R#getMessage()} 中说明原因</li>
      * </ul>
      */
-    @PostMapping("/add")
-    public R<Void> addInterestPoint(
+    @PostMapping("/base/add")
+    R<Void> addInterestPoint(
             @RequestHeader("username") String username,
             @RequestBody InterestPointDTO interestPoint
-    ) {
-        return interestPointPublisherService.addInterestPoint(username,interestPoint);
-    }
+    );
 
     /**
      * 根据兴趣点ID获取兴趣点
+     * 这个是给发布者自己查询使用的，所以兴趣点无论是否审核通过都会进行展示
+     * @param username 用户名
      * @param id 兴趣点ID
-     * @return 兴趣点实体类
+     * @return 返回值类型为 {@link InterestPointDTO}
+     * <ul>
+     *     <li><b>查询到兴趣点</b> - 返回 {@link InterestPointDTO 兴趣点实体对象}</li>
+     *     <li><b>没有查询到兴趣点</b> - 返回 {@code null}</li>
+     * </ul>
      */
-    @GetMapping("/get/{id}")
-    public R<InterestPointVO> getInterestPointById(
+    @GetMapping("/base/get/{id}")
+    R<InterestPointVO> getInterestPointById(
             @RequestHeader("username") String username,
             @PathVariable("id") Long id
-    ) {
-        return interestPointPublisherService.getInterestPointById(username,id);
-    }
+    );
 
     /**
      * 根据发布者获取兴趣点分页
@@ -55,18 +57,16 @@ public class InterestPointPublisherController {
      * @param pageSize 每页大小
      * @return 返回值类型为 {@link Page<InterestPointDTO>}
      */
-    @GetMapping("/get/page/{currentPage}/{pageSize}")
-    public R<Page<InterestPointVO>> getInterestPointPageByPublisher(
+    @GetMapping("/base/get/page/{currentPage}/{pageSize}")
+    R<Page<InterestPointVO>> getInterestPointPageByPublisher(
             @RequestHeader("username") String username,
             @PathVariable("currentPage") Integer currentPage,
             @PathVariable("pageSize") Integer pageSize
-    ) {
-        return interestPointPublisherService
-                .getInterestPointPageByPublisher(username,currentPage,pageSize);
-    }
+    );
 
     /**
-     *
+     * 修改兴趣点信息
+     * @param username 用户名
      * @param modifiedInterestPoint 修改过兴趣点信息后的{@link InterestPointDTO 兴趣点实体对象}
      * @return 无返回值
      * <ul>
@@ -74,25 +74,26 @@ public class InterestPointPublisherController {
      *     <li><b>修改兴趣点失败</b> - 返回失败响应 {@code code != 0}，且会在 {@link R#getMessage()} 中说明原因</li>
      * </ul>
      */
-    @PostMapping("/modify")
-    public R<Void> modifyInterestPoint(
+    @PostMapping("/base/modify")
+    R<Void> modifyInterestPoint(
             @RequestHeader("username") String username,
             @RequestBody InterestPointDTO modifiedInterestPoint
-    ) {
-        return interestPointPublisherService.modifyInterestPoint(username,modifiedInterestPoint);
-    }
+    );
 
     /**
      * 根据兴趣点ID删除兴趣点
+     * @param username 用户名
      * @param id 兴趣点ID
-     * @return 空
+     * @return 无返回值
+     * <ul>
+     *     <li><b>删除兴趣点成功</b> - 返回成功响应 {@code code == 0}</li>
+     *     <li><b>删除兴趣点失败</b> - 返回失败响应 {@code code != 0}，且会在 {@link R#getMessage()} 中说明原因</li>
+     * </ul>
      */
-    @DeleteMapping("/remove/{id}")
-    public R<Void> removeInterestPointById(
+    @DeleteMapping("/base/remove/{id}")
+    R<Void> removeInterestPointById(
             @RequestHeader("username") String username,
-            @PathVariable Long id
-    ) {
-        return interestPointPublisherService.removeInterestPointById(username,id);
-    }
+            @PathVariable("id") Long id
+    );
 
 }

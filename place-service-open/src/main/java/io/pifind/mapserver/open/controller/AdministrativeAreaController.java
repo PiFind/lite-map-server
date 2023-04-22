@@ -1,8 +1,9 @@
-package io.pifind.mapserver.controller;
+package io.pifind.mapserver.open.controller;
 
 import io.pifind.common.response.R;
-import io.pifind.place.api.IAdministrativeAreaService;
+import io.pifind.mapserver.open.service.IAdministrativeAreaFeignService;
 import io.pifind.place.model.AdministrativeAreaDTO;
+import io.pifind.role.annotation.RequestPermission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdministrativeAreaController {
 
     @Autowired
-    private IAdministrativeAreaService administrativeAreaService;
+    private IAdministrativeAreaFeignService administrativeAreaService;
 
     /**
      * 通过行政区ID获取行政区树
@@ -26,6 +27,7 @@ public class AdministrativeAreaController {
      * @return 行政区树
      */
     @GetMapping("/get")
+    @RequestPermission(name = "area.get",description = "获取行政区树")
     public R<AdministrativeAreaDTO> getAdministrativeAreaTreeById(
             @RequestParam("id") Long id,
             @RequestParam(value = "deep",defaultValue = "2",required = false) Integer deep
@@ -43,6 +45,7 @@ public class AdministrativeAreaController {
      * </ul>
      */
     @GetMapping("/exist")
+    @RequestPermission(name = "area.exist",description = "检查是否存在行政区ID")
     public R<Boolean> existAdministrativeAreaById(
             @RequestParam("id") Long id
     ) {
@@ -56,6 +59,7 @@ public class AdministrativeAreaController {
      * @return 行政区ID对应的详细地址字符串
      */
     @GetMapping("/detail")
+    @RequestPermission(name = "area.detail",description = "获取详细地址")
     public R<String> getDetailedAddress(
             @RequestParam("id") Long id,
             @RequestParam(value = "separator",defaultValue = ",",required = false) String separator

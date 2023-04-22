@@ -1,10 +1,7 @@
 package io.pifind.mapserver.controller;
 
-import io.pifind.authorization.annotation.UserEntity;
-import io.pifind.authorization.model.User;
 import io.pifind.common.response.R;
 import io.pifind.poi.api.InterestPointSocialService;
-import io.pifind.role.annotation.RequestPermission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,12 +21,11 @@ public class InterestPointSocialController {
      * @return 无
      */
     @GetMapping("/browse/{id}")
-    @RequestPermission(name = "poi.social.browse",description = "浏览兴趣点")
     public R<Void> browse(
-            @UserEntity User user,
+            @RequestHeader("username") String username,
             @PathVariable Long id
     ) {
-        return interestPointSocialService.browse(user.getUsername(), id);
+        return interestPointSocialService.browse(username, id);
     }
 
     /**
@@ -38,12 +34,11 @@ public class InterestPointSocialController {
      * @return 无
      */
     @GetMapping("/collect/{id}")
-    @RequestPermission(name = "poi.social.collect",description = "收藏兴趣点")
     public R<Void> collect(
-            @UserEntity User user,
+            @RequestHeader("username") String username,
             @PathVariable Long id
     ) {
-        return interestPointSocialService.collect(user.getUsername(), id);
+        return interestPointSocialService.collect(username, id);
     }
 
     /**
@@ -53,14 +48,13 @@ public class InterestPointSocialController {
      * @return 无
      */
     @GetMapping("/evaluate/{id}/{score}")
-    @RequestPermission(name = "poi.social.evaluate",description = "评价兴趣点")
     public R<Void> evaluate(
-            @UserEntity User user,
+            @RequestHeader("username") String username,
             @PathVariable Long id,
             @PathVariable Double score
     ) {
         return interestPointSocialService.evaluate(
-                user.getUsername(),
+                username,
                 id,
                 score
         );
