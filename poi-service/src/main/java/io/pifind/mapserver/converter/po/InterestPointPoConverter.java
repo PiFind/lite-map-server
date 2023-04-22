@@ -1,6 +1,6 @@
 package io.pifind.mapserver.converter.po;
 
-import io.pifind.mapserver.converter.AdvancedConverter;
+import io.pifind.common.converter.AdvancedConverter;
 import io.pifind.mapserver.model.constant.BusinessStatusEnum;
 import io.pifind.mapserver.model.constant.CoordinateSystemEnum;
 import io.pifind.mapserver.model.constant.WeekEnum;

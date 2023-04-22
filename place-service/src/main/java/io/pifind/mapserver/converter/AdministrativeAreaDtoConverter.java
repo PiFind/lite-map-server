@@ -1,5 +1,6 @@
 package io.pifind.mapserver.converter;
 
+import io.pifind.common.converter.AdvancedConverter;
 import io.pifind.mapserver.model.AdministrativeAreaPO;
 import io.pifind.place.model.AdministrativeAreaDTO;
 import org.jetbrains.annotations.NotNull;
@@ -18,13 +19,14 @@ import java.util.Locale;
  * </ul>
  */
 @Mapper(componentModel = "spring")
-public interface AdministrativeAreaDtoConverter {
+public interface AdministrativeAreaDtoConverter extends AdvancedConverter<AdministrativeAreaPO, AdministrativeAreaDTO> {
 
     /**
      * 将行政区PO对象转换为DTO对象
      * @param po 行政区PO对象
      * @return 转换后的DTO对象
      */
+    @Override
     default AdministrativeAreaDTO convert(@NotNull AdministrativeAreaPO po) {
         AdministrativeAreaDTO dto = new AdministrativeAreaDTO();
         dto.setId(po.getId());
@@ -43,11 +45,4 @@ public interface AdministrativeAreaDtoConverter {
         return dto;
     }
 
-    default List<AdministrativeAreaDTO> convert(@NotNull List<AdministrativeAreaPO> pos) {
-        List<AdministrativeAreaDTO> dtoList = new ArrayList<>();
-        for (AdministrativeAreaPO po : pos) {
-            dtoList.add(convert(po));
-        }
-        return dtoList;
-    }
 }

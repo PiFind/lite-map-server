@@ -1,8 +1,8 @@
 package io.pifind.mapserver.converter.vo;
 
+import io.pifind.common.converter.AdvancedConverter;
 import io.pifind.map.constant.GeographicCoordinateSystemEnum;
 import io.pifind.map.model.CoordinateDTO;
-import io.pifind.mapserver.converter.AdvancedConverter;
 import io.pifind.mapserver.model.constant.InterestPointStatusEnum;
 import io.pifind.mapserver.model.po.InterestPointPO;
 import io.pifind.mapserver.model.po.component.TimeIntervalPO;

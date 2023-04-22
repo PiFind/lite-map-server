@@ -1,6 +1,6 @@
 package io.pifind.mapserver.converter.vo;
 
-import io.pifind.mapserver.converter.AdvancedConverter;
+import io.pifind.common.converter.AdvancedConverter;
 import io.pifind.mapserver.model.po.CategoryPO;
 import io.pifind.poi.model.vo.CategoryVO;
 import org.mapstruct.Mapper;
