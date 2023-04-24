@@ -52,7 +52,7 @@ public class AdministrativeAreaController {
     /**
      * 获取详细地址
      * @param id 行政区ID
-     * @param separator 行政区间的间隔夫（可选，默认为英文”,“）
+     * @param separator 行政区间的间隔符（可选，默认为英文”,“）
      * @return 行政区ID对应的详细地址字符串
      */
     @GetMapping("/detail")
