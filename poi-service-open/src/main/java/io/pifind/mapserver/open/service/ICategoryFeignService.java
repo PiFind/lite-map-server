@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * 公司标签服务
  */
-@FeignClient(name = "poi-category-service",url = PoiServiceAPI.URL)
+@FeignClient(name = "poi-category-service",url = PoiServiceAPI.CATEGORY_URL)
 public interface ICategoryFeignService {
 
     /**

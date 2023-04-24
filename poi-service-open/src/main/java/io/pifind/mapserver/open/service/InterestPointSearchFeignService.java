@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * </p>
  * @see Page
  */
-@FeignClient(name = "poi-search-service",url = PoiServiceAPI.URL)
+@FeignClient(name = "poi-search-service",url = PoiServiceAPI.SEARCH_URL)
 public interface InterestPointSearchFeignService {
 
     /**

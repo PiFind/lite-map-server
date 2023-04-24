@@ -6,10 +6,12 @@ spring:
     name: place-service
 
 pifind:
-  place-inner-service:
-    url: http://localhost:19003/v1/
+  place-administrative-area-service:
+    url: http://localhost:19003/v1/area
+  place-positioning-service:
+    url: http://localhost:19003/v1/positioning
   user-permission:
     url: http://localhost:19009/v1/
 
 jwt:
-  secret: xxxxxx
+  secret: pApHeeUK7dtuGFAI2L6XB3nYU1YOMpa8

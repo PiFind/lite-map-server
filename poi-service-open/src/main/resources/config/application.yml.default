@@ -6,8 +6,14 @@ spring:
     name: poi-service
 
 pifind:
-  poi-inner-service:
-    url: http://localhost:19005/v1/
+  poi-category-service:
+    url: http://localhost:19005/v1/poi/category
+  poi-publisher-service:
+    url: http://localhost:19005/v1/poi/base
+  poi-search-service:
+    url: http://localhost:19005/v1/poi/search
+  poi-social-service:
+    url: http://localhost:19005/v1/poi/social
   user-permission:
     url: http://localhost:19009/v1/
 

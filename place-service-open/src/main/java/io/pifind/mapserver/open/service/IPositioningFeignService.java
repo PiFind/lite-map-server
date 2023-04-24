@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "place-positioning-service",url = PlaceServiceAPI.URL)
+@FeignClient(name = "place-positioning-service",url = PlaceServiceAPI.POSITIONING_URL)
 public interface IPositioningFeignService {
 
     /**

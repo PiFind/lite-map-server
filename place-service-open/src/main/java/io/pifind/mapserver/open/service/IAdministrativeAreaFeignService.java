@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "place-administrative-area-service",url = PlaceServiceAPI.URL)
+@FeignClient(name = "place-administrative-area-service",url = PlaceServiceAPI.ADMINISTRATIVE_AREA_URL)
 public interface IAdministrativeAreaFeignService {
 
     /**

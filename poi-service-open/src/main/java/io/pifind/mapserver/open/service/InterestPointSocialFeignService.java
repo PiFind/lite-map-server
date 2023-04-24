@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
  *     所以这里需要进行单独列出
  * </p>
  */
-@FeignClient(name = "poi-social-service",url = PoiServiceAPI.URL)
+@FeignClient(name = "poi-social-service",url = PoiServiceAPI.SOCIAL_URL)
 public interface InterestPointSocialFeignService {
 
     /**

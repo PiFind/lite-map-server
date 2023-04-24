@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  *     该服务包含了除搜索服务外的增删改查（简单查询）等方法
  * </p>
  */
-@FeignClient(name = "poi-publisher-service",url = PoiServiceAPI.URL)
+@FeignClient(name = "poi-publisher-service",url = PoiServiceAPI.PUBLISHER_URL)
 public interface InterestPointPublisherFeignService {
 
     /**
