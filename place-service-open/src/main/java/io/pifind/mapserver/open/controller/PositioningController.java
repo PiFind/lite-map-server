@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PositioningController {
 
     @Autowired
-    private IPositioningFeignService positioningService;
+    private IPositioningFeignService positioningFeignService;
 
     /**
      * 根据IP进行定位
@@ -30,7 +30,7 @@ public class PositioningController {
     public R<LocationDTO> getLocationByIP(
             @RequestParam("ip") String ip
     ) {
-        return positioningService.getLocationByIP(ip);
+        return positioningFeignService.getLocationByIP(ip);
     }
 
 
@@ -48,7 +48,7 @@ public class PositioningController {
             @RequestParam("lat") Double lat,
             @RequestParam(value = "system",defaultValue = "WGS84",required = false) String system
     ) {
-        return positioningService.getLocationByCoordinate(lng,lat,system);
+        return positioningFeignService.getLocationByCoordinate(lng,lat,system);
     }
 
 }

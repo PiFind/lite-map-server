@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class InterestPointSocialController {
 
     @Autowired
-    private InterestPointSocialFeignService interestPointSocialService;
+    private InterestPointSocialFeignService interestPointSocialFeignService;
 
     /**
      * 浏览兴趣点
@@ -32,7 +32,7 @@ public class InterestPointSocialController {
             @UserEntity User user,
             @PathVariable Long id
     ) {
-        return interestPointSocialService.browse(user.getUsername(), id);
+        return interestPointSocialFeignService.browse(user.getUsername(), id);
     }
 
     /**
@@ -46,7 +46,7 @@ public class InterestPointSocialController {
             @UserEntity User user,
             @PathVariable Long id
     ) {
-        return interestPointSocialService.collect(user.getUsername(), id);
+        return interestPointSocialFeignService.collect(user.getUsername(), id);
     }
 
     /**
@@ -62,7 +62,7 @@ public class InterestPointSocialController {
             @PathVariable Long id,
             @PathVariable Double score
     ) {
-        return interestPointSocialService.evaluate(
+        return interestPointSocialFeignService.evaluate(
                 user.getUsername(),
                 id,
                 score

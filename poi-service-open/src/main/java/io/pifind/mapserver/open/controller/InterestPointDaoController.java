@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class InterestPointDaoController {
 
     @Autowired
-    private InterestPointDaoFeignService interestPointDaoService;
+    private InterestPointDaoFeignService interestPointDaoFeignService;
 
     /**
      * DAO用户投票
@@ -33,7 +33,7 @@ public class InterestPointDaoController {
             @UserEntity User user,
             @RequestBody DaoVoteDTO voteDTO
     ) {
-        return interestPointDaoService.vote(
+        return interestPointDaoFeignService.vote(
                 user.getUsername(), voteDTO
         );
     }
@@ -50,7 +50,7 @@ public class InterestPointDaoController {
             @UserEntity User user,
             @PathVariable("interestPointId") Long interestPointId
     ) {
-        return interestPointDaoService.hasVoted(
+        return interestPointDaoFeignService.hasVoted(
                 user.getUsername(), interestPointId
         );
     }
@@ -69,7 +69,7 @@ public class InterestPointDaoController {
             @PathVariable("administrativeAreaId") Long administrativeAreaId,
             @PathVariable("currentPage") Integer currentPage,
             @PathVariable("pageSize") Integer pageSize) {
-        return interestPointDaoService.getReviewPage(
+        return interestPointDaoFeignService.getReviewPage(
                 user.getUsername(), administrativeAreaId,currentPage, pageSize
         );
     }

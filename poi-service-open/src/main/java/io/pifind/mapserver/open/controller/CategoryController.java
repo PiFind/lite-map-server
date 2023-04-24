@@ -17,7 +17,7 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
-    private ICategoryFeignService categoryService;
+    private ICategoryFeignService categoryFeignService;
 
     /**
      * 根据类别ID获取类别实体对象
@@ -31,7 +31,7 @@ public class CategoryController {
     @GetMapping("/get/{id}")
     @RequestPermission(name = "poi.category.get",description = "获取POI类别")
     public R<CategoryVO> getCategoryById(@PathVariable("id") Long id) {
-        return categoryService.getCategoryById(id);
+        return categoryFeignService.getCategoryById(id);
     }
 
     /**
@@ -46,7 +46,7 @@ public class CategoryController {
     @GetMapping("/get/level/{level}")
     @RequestPermission(name = "poi.category.getCategoryListByLevel",description = "根据分类等级获取POI类别")
     public R<List<CategoryVO>> getCategoryListByLevel(@PathVariable("level") Integer level) {
-        return categoryService.getCategoryListByLevel(level);
+        return categoryFeignService.getCategoryListByLevel(level);
     }
 
 }

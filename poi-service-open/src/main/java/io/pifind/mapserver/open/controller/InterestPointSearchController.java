@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class InterestPointSearchController {
 
     @Autowired
-    private InterestPointSearchFeignService interestPointSearchService ;
+    private InterestPointSearchFeignService interestPointSearchFeignService;
 
     /**
      * 通过ID搜索兴趣点
@@ -30,7 +30,7 @@ public class InterestPointSearchController {
     @GetMapping("/view/{id}")
     @RequestPermission(name = "poi.search.id",description = "通过ID搜索兴趣点")
     public R<InterestPointVO> viewPointById(@PathVariable("id") Long id) {
-        return interestPointSearchService.viewPointById(id);
+        return interestPointSearchFeignService.viewPointById(id);
     }
 
     /**
@@ -57,7 +57,7 @@ public class InterestPointSearchController {
             @RequestParam("sortOrder") SortOrderEnum sortOrder,
             @RequestParam("reference") SortReferenceEnum reference
     ) {
-        return interestPointSearchService.searchPoints(
+        return interestPointSearchFeignService.searchPoints(
                 pageSize,
                 currentPage,
                 areaId,

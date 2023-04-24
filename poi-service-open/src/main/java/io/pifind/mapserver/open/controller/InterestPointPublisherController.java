@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class InterestPointPublisherController {
 
     @Autowired
-    private InterestPointPublisherFeignService interestPointPublisherService;
+    private InterestPointPublisherFeignService interestPointPublisherFeignService;
 
     /**
      * 添加一个兴趣点
@@ -36,7 +36,7 @@ public class InterestPointPublisherController {
             @UserEntity User user,
             @RequestBody InterestPointDTO interestPoint
     ) {
-        return interestPointPublisherService.addInterestPoint(user.getUsername(),interestPoint);
+        return interestPointPublisherFeignService.addInterestPoint(user.getUsername(),interestPoint);
     }
 
     /**
@@ -50,7 +50,7 @@ public class InterestPointPublisherController {
             @UserEntity User user,
             @PathVariable("id") Long id
     ) {
-        return interestPointPublisherService.getInterestPointById(user.getUsername(),id);
+        return interestPointPublisherFeignService.getInterestPointById(user.getUsername(),id);
     }
 
     /**
@@ -67,7 +67,7 @@ public class InterestPointPublisherController {
             @PathVariable("currentPage") Integer currentPage,
             @PathVariable("pageSize") Integer pageSize
     ) {
-        return interestPointPublisherService
+        return interestPointPublisherFeignService
                 .getInterestPointPageByPublisher(user.getUsername(),currentPage,pageSize);
     }
 
@@ -86,7 +86,7 @@ public class InterestPointPublisherController {
             @UserEntity User user,
             @RequestBody InterestPointDTO modifiedInterestPoint
     ) {
-        return interestPointPublisherService.modifyInterestPoint(user.getUsername(),modifiedInterestPoint);
+        return interestPointPublisherFeignService.modifyInterestPoint(user.getUsername(),modifiedInterestPoint);
     }
 
     /**
@@ -100,7 +100,7 @@ public class InterestPointPublisherController {
             @UserEntity User user,
             @PathVariable Long id
     ) {
-        return interestPointPublisherService.removeInterestPointById(user.getUsername(),id);
+        return interestPointPublisherFeignService.removeInterestPointById(user.getUsername(),id);
     }
 
 }

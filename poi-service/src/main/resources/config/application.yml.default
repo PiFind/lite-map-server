@@ -1,0 +1,15 @@
+server:
+  port: 19005
+
+spring:
+  application:
+    name: poi-service
+
+pifind:
+  map-inner-service:
+    url: http://localhost:19003/v1/
+  user-permission:
+    url: http://localhost:19009/v1/
+
+jwt:
+  secret: xxxxxx

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdministrativeAreaController {
 
     @Autowired
-    private IAdministrativeAreaFeignService administrativeAreaService;
+    private IAdministrativeAreaFeignService administrativeAreaFeignService;
 
     /**
      * 通过行政区ID获取行政区树
@@ -32,7 +32,7 @@ public class AdministrativeAreaController {
             @RequestParam("id") Long id,
             @RequestParam(value = "deep",defaultValue = "2",required = false) Integer deep
     ) {
-        return administrativeAreaService.getAdministrativeAreaById(id,deep);
+        return administrativeAreaFeignService.getAdministrativeAreaById(id,deep);
     }
 
     /**
@@ -49,7 +49,7 @@ public class AdministrativeAreaController {
     public R<Boolean> existAdministrativeAreaById(
             @RequestParam("id") Long id
     ) {
-        return administrativeAreaService.existAdministrativeAreaById(id);
+        return administrativeAreaFeignService.existAdministrativeAreaById(id);
     }
 
     /**
@@ -64,7 +64,7 @@ public class AdministrativeAreaController {
             @RequestParam("id") Long id,
             @RequestParam(value = "separator",defaultValue = ",",required = false) String separator
     ) {
-        return administrativeAreaService.getDetailedAddress(id,separator);
+        return administrativeAreaFeignService.getDetailedAddress(id,separator);
     }
 
 }

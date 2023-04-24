@@ -1,0 +1,29 @@
+server:
+  port: 19003
+
+spring:
+  application:
+    name: place-inner-service
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://127.0.0.1:3306/pifind
+    username: root
+    password: root
+  messages:
+    basename: i18n.PlaceService
+    encoding: utf-8
+
+# 地图第三方服务
+map-3rd:
+  # 配置 Google API
+  google:
+    key: "xxxxxx"
+  # 配置高德地图 API
+  amap:
+    key: "xxxxxx"
+    sign:
+      open: true
+      key: "xxxxxx"
+
+jwt:
+  secret: xxxxxx
