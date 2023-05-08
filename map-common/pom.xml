@@ -40,9 +40,9 @@
         <!-- mapstruct -->
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
         <org.projectlombok.version>1.18.24</org.projectlombok.version>
-        <io.pifind.common>0.0.2-snapshot</io.pifind.common>
-        <io.pifind.map.api>0.0.1-snapshot</io.pifind.map.api>
-        <io.pifind.map.geocommon>0.0.1-snapshot</io.pifind.map.geocommon>
+        <io.pifind.common>0.0.2-SNAPSHOT</io.pifind.common>
+        <io.pifind.map.api>0.0.1-SNAPSHOT</io.pifind.map.api>
+        <io.pifind.map.geocommon>0.0.1-SNAPSHOT</io.pifind.map.geocommon>
     </properties>
 
     <dependencies>

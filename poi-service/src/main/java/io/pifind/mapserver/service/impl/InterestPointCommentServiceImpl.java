@@ -2,13 +2,18 @@ package io.pifind.mapserver.service.impl;
 
 import io.pifind.common.response.Page;
 import io.pifind.common.response.R;
+import io.pifind.mapserver.mapper.InterestPointCommentMapper;
 import io.pifind.poi.api.InterestPointCommentService;
 import io.pifind.poi.model.dto.InterestPointCommentDTO;
 import io.pifind.poi.model.vo.InterestPointCommentVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class InterestPointCommentServiceImpl implements InterestPointCommentService {
+
+    @Autowired
+    private InterestPointCommentMapper interestPointCommentMapper;
 
     /**
      * 获取评论
@@ -33,7 +38,6 @@ public class InterestPointCommentServiceImpl implements InterestPointCommentServ
             Integer currentPage,
             Integer pageSize
     ) {
-
 
         return null;
     }
