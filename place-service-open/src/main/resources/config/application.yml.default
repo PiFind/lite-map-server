@@ -14,4 +14,4 @@ pifind:
     url: http://localhost:19009/v1/
 
 jwt:
-  secret: pApHeeUK7dtuGFAI2L6XB3nYU1YOMpa8
+  secret: xxxxxx
