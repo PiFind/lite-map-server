@@ -37,7 +37,7 @@ spring:
 
 pifind:
   map-inner-service:
-    url: http://localhost:19003/v1/
+    url: http://api.pifind.io:19003/v1/
 
 jwt:
-  secret: pApHeeUK7dtuGFAI2L6XB3nYU1YOMpa8
+  secret: xxxxxxx
