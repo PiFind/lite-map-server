@@ -178,28 +178,31 @@ public class InterestPointSearchServiceImpl implements InterestPointSearchServic
             Long areaId
     ) {
 
-        // 获取 areaId 下面的行政区 ID ,最多遍历两个层级
-        List<Long> areaIdList = new ArrayList<>();
-        areaIdList.add(areaId);
-        R<AdministrativeAreaDTO> areaInfo = administrativeAreaService.getAdministrativeAreaById(
-                areaId,2
-        );
-
-        if (areaInfo.getCode() != StandardCode.SUCCESS) {
-            return queryWrapper;
-        }
-
-        List<AdministrativeAreaDTO> subAreas = areaInfo.getData().getAreas();
-        for (AdministrativeAreaDTO subArea : subAreas) {
-            areaIdList.add(subArea.getId());
-            if (!subArea.getAreas().isEmpty()) {
-                for (AdministrativeAreaDTO minSubArea : subArea.getAreas()) {
-                    areaIdList.add(minSubArea.getId());
-                }
-            }
-        }
-        queryWrapper = queryWrapper.in(InterestPointPO::getAdministrativeAreaId,areaIdList);
+        queryWrapper = queryWrapper.likeRight(InterestPointPO::getAdministrativeAreaId,areaId);
         return queryWrapper;
+//
+//        // 获取 areaId 下面的行政区 ID ,最多遍历两个层级
+//        List<Long> areaIdList = new ArrayList<>();
+//        areaIdList.add(areaId);
+//        R<AdministrativeAreaDTO> areaInfo = administrativeAreaService.getAdministrativeAreaById(
+//                areaId,2
+//        );
+//
+//        if (areaInfo.getCode() != StandardCode.SUCCESS) {
+//            return queryWrapper;
+//        }
+//
+//        List<AdministrativeAreaDTO> subAreas = areaInfo.getData().getAreas();
+//        for (AdministrativeAreaDTO subArea : subAreas) {
+//            areaIdList.add(subArea.getId());
+//            if (!subArea.getAreas().isEmpty()) {
+//                for (AdministrativeAreaDTO minSubArea : subArea.getAreas()) {
+//                    areaIdList.add(minSubArea.getId());
+//                }
+//            }
+//        }
+//        queryWrapper = queryWrapper.in(InterestPointPO::getAdministrativeAreaId,areaIdList);
+//        return queryWrapper;
 
     }
 
