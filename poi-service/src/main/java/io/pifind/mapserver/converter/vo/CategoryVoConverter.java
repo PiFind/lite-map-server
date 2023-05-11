@@ -12,7 +12,7 @@ public interface CategoryVoConverter extends AdvancedConverter<CategoryPO, Categ
     @Override
     default CategoryVO convert(CategoryPO source) {
         CategoryVO categoryVO = new CategoryVO();
-        if (source.getNames().containsKey(LocaleContextHolder.getLocale())) {
+        if (source.getNames() != null && source.getNames().containsKey(LocaleContextHolder.getLocale())) {
             categoryVO.setName(source.getNames().get(LocaleContextHolder.getLocale()));
         } else {
             categoryVO.setName(source.getNameEN());

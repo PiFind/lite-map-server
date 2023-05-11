@@ -5,6 +5,10 @@ spring:
   application:
     name: poi-service
 
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss # 默认是StdDateFormat
+    time-zone: GMT+8
+
 pifind:
   poi-category-service:
     url: http://localhost:19005/v1/poi/category
