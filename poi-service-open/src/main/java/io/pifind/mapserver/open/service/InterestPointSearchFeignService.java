@@ -28,7 +28,7 @@ public interface InterestPointSearchFeignService {
      * @param id 兴趣点ID
      * @return 返回值为 {@link InterestPointVO}
      */
-    @GetMapping("/search/{id}")
+    @GetMapping("/view/{id}")
     R<InterestPointVO> viewPointById(
             @PathVariable("id") Long id
     );
@@ -46,7 +46,7 @@ public interface InterestPointSearchFeignService {
      * @see AdministrativeAreaDTO
      * @see CategoryEditDTO
      */
-    @GetMapping("/search/condition")
+    @GetMapping("/condition")
     R<Page<InterestPointVO>> searchPoints(
             @RequestParam("pageSize")    Integer pageSize,
             @RequestParam("currentPage") Integer currentPage,

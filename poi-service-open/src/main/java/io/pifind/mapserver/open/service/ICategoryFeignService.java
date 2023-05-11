@@ -24,7 +24,7 @@ public interface ICategoryFeignService {
      *     <li><b>不存在类别</b> - 返回 {@code null} </li>
      * </ul>
      */
-    @GetMapping("/category/get/{id}")
+    @GetMapping("/get/{id}")
     R<CategoryVO> getCategoryById(
             @PathVariable("id") Long id
     );
@@ -38,7 +38,7 @@ public interface ICategoryFeignService {
      *     <li><b>不存在类别</b> - 返回 {@code null} </li>
      * </ul>
      */
-    @GetMapping("/category/get/level/{level}")
+    @GetMapping("/get/level/{level}")
     R<List<CategoryVO>> getCategoryListByLevel(
             @PathVariable("level") Integer level
     );

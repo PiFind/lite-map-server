@@ -27,7 +27,7 @@ public interface InterestPointPublisherFeignService {
      *     <li><b>添加兴趣点失败</b> - 返回失败响应 {@code code != 0}，且会在 {@link R#getMessage()} 中说明原因</li>
      * </ul>
      */
-    @PostMapping("/base/add")
+    @PostMapping("/add")
     R<Void> addInterestPoint(
             @RequestHeader("username") String username,
             @RequestBody InterestPointDTO interestPoint
@@ -44,7 +44,7 @@ public interface InterestPointPublisherFeignService {
      *     <li><b>没有查询到兴趣点</b> - 返回 {@code null}</li>
      * </ul>
      */
-    @GetMapping("/base/get/{id}")
+    @GetMapping("/get/{id}")
     R<InterestPointVO> getInterestPointById(
             @RequestHeader("username") String username,
             @PathVariable("id") Long id
@@ -57,7 +57,7 @@ public interface InterestPointPublisherFeignService {
      * @param pageSize 每页大小
      * @return 返回值类型为 {@link Page<InterestPointDTO>}
      */
-    @GetMapping("/base/get/page/{currentPage}/{pageSize}")
+    @GetMapping("/get/page/{currentPage}/{pageSize}")
     R<Page<InterestPointVO>> getInterestPointPageByPublisher(
             @RequestHeader("username") String username,
             @PathVariable("currentPage") Integer currentPage,
@@ -74,7 +74,7 @@ public interface InterestPointPublisherFeignService {
      *     <li><b>修改兴趣点失败</b> - 返回失败响应 {@code code != 0}，且会在 {@link R#getMessage()} 中说明原因</li>
      * </ul>
      */
-    @PostMapping("/base/modify")
+    @PostMapping("/modify")
     R<Void> modifyInterestPoint(
             @RequestHeader("username") String username,
             @RequestBody InterestPointDTO modifiedInterestPoint
@@ -90,7 +90,7 @@ public interface InterestPointPublisherFeignService {
      *     <li><b>删除兴趣点失败</b> - 返回失败响应 {@code code != 0}，且会在 {@link R#getMessage()} 中说明原因</li>
      * </ul>
      */
-    @DeleteMapping("/base/remove/{id}")
+    @DeleteMapping("/remove/{id}")
     R<Void> removeInterestPointById(
             @RequestHeader("username") String username,
             @PathVariable("id") Long id

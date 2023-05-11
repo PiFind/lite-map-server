@@ -27,7 +27,7 @@ public interface InterestPointSocialFeignService {
      *     <li><b>浏览量增加失败</b> - 返回失败响应 {@code code != 0}，且会在 {@link R#getMessage()} 中说明原因</li>
      * </ul>
      */
-    @GetMapping("/social/browse/{id}")
+    @GetMapping("/browse/{id}")
     R<Void> browse(
             @RequestHeader("username") String username,
             @PathVariable("id") Long id
@@ -43,7 +43,7 @@ public interface InterestPointSocialFeignService {
      *     <li><b>收藏量增加失败</b> - 返回失败响应 {@code code != 0}，且会在 {@link R#getMessage()} 中说明原因</li>
      * </ul>
      */
-    @GetMapping("/social/collect/{id}")
+    @GetMapping("/collect/{id}")
     R<Void> collect(
             @RequestHeader("username") String username,
             @PathVariable("id") Long id
@@ -60,7 +60,7 @@ public interface InterestPointSocialFeignService {
      *     <li><b>收藏量增加失败</b> - 返回失败响应 {@code code != 0}，且会在 {@link R#getMessage()} 中说明原因</li>
      * </ul>
      */
-    @GetMapping("/social/evaluate/{id}/{score}")
+    @GetMapping("/evaluate/{id}/{score}")
     R<Void> evaluate(
             @RequestHeader("username") String username,
             @PathVariable("id") Long id,
