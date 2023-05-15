@@ -184,6 +184,8 @@ public interface InterestPointPoConverter extends
             @Mapping(target = "administrativeAreaId",source = "administrativeAreaId"),
             @Mapping(target = "businessLicense",source = "businessLicense"),
             @Mapping(target = "tels",source = "tels"),
+            @Mapping(target = "logo",source = "logo"),
+            @Mapping(target = "background",source = "background"),
             @Mapping(target = "images",source = "images"),
             @Mapping(target = "consumptionPerPerson",source = "consumptionPerPerson"),
             @Mapping(target = "consumptionCurrency",source = "consumptionCurrency"),

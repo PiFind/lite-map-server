@@ -111,6 +111,16 @@ public class InterestPointPO {
     private List<String> tels;
 
     /**
+     * [可选] LOGO 图片
+     */
+    private String logo;
+
+    /**
+     * [可选] 背景图片
+     */
+    private String background;
+
+    /**
      * [可选]图片
      */
     @TableField(typeHandler = StringListTypeHandler.class)
