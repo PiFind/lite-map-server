@@ -2,6 +2,7 @@ package io.pifind.mapserver.converter.vo;
 
 import io.pifind.common.converter.AdvancedConverter;
 import io.pifind.mapserver.model.po.InterestPointCommentPO;
+import io.pifind.poi.constant.PoiCommentStatusEnum;
 import io.pifind.poi.model.vo.InterestPointCommentVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -11,17 +12,31 @@ import org.mapstruct.Mappings;
 public interface InterestPointCommentVoConverter extends AdvancedConverter<InterestPointCommentPO, InterestPointCommentVO> {
 
     @Override
-    @Mappings({
-            @Mapping(target = "id",source = "source.id"),
-            @Mapping(target = "username",source = "source.username"),
-            @Mapping(target = "interestPointId",source = "source.interestPointId"),
-            @Mapping(target = "superiorId",source = "source.superiorId"),
-            @Mapping(target = "content",source = "source.content"),
-            @Mapping(target = "likes",source = "source.likes"),
-            @Mapping(target = "status",source = "source.status"),
-            @Mapping(target = "createTime",source = "source.createTime"),
-            @Mapping(target = "updateTime",source = "source.updateTime"),
-    })
-    InterestPointCommentVO convert(InterestPointCommentPO source);
+    default InterestPointCommentVO convert(InterestPointCommentPO source) {
+        InterestPointCommentVO interestPointCommentVO = new InterestPointCommentVO();
+        interestPointCommentVO.setId(source.getId());
+        interestPointCommentVO.setUsername(source.getUsername());
+        interestPointCommentVO.setInterestPointId(source.getInterestPointId());
+        interestPointCommentVO.setSuperiorId(source.getSuperiorId());
+        interestPointCommentVO.setContent(source.getContent());
+        interestPointCommentVO.setLikes(source.getLikes());
+        switch (source.getStatus()) {
+            case PENDING_MACHINE_AUDIT: {
+                interestPointCommentVO.setStatus(PoiCommentStatusEnum.UNVERIFIED);
+                break;
+            }
+            case MACHINE_AUDIT_PASS: {
+                interestPointCommentVO.setStatus(PoiCommentStatusEnum.VERIFIED);
+                break;
+            }
+            case MACHINE_AUDIT_REFUSE: {
+                interestPointCommentVO.setStatus(PoiCommentStatusEnum.INVALID);
+                break;
+            }
+        }
+        interestPointCommentVO.setCreateTime(source.getCreateTime());
+        interestPointCommentVO.setUpdateTime(source.getUpdateTime());
+        return interestPointCommentVO;
+    }
 
 }
