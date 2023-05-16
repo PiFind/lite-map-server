@@ -23,12 +23,12 @@ public interface InterestPointMapper extends BaseMapper<InterestPointPO> {
     @Select(
             "SELECT * FROM interest_point_00 AS poi WHERE " +
             "poi_status = 0 AND " +
-            "administrative_area_id LIKE #{administrativeAreaId}% AND " +
+            "administrative_area_id LIKE CONCAT(#{administrativeAreaId},‘%’) AND " +
             "( " +
             "   SELECT COUNT(*) FROM interest_point_review WHERE " +
             "   interest_point_id = poi.id AND " +
             "   username = #{username} AND " +
-            "   unavailable = 0" +
+            "   unavailable = 0 " +
             ") = 0 "
     )
     Page<InterestPointPO> selectReviewInterestPointPage(
