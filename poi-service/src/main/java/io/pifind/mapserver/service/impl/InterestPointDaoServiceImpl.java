@@ -19,6 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 兴趣点基础服务实现类
  */
@@ -128,12 +131,20 @@ public class InterestPointDaoServiceImpl implements InterestPointDaoService {
         page = (MybatisPage<InterestPointPO>)
                 interestPointMapper.selectReviewInterestPointPage(page, username, administrativeAreaId);
 
-        // (2) 返回待审核列表
+        // (2) 转换结果
+        List<InterestPointVO> records ;
+        if (page.getRecords() != null) {
+            records = interestPointVoConverter.convert(page.getRecords());
+        } else {
+            records = new ArrayList<>();
+        }
+
+        // (3) 返回待审核列表
         return R.page(
                 (int) page.getCurrent(),
                 (int) page.getSize(),
                 (int) page.getTotal(),
-                interestPointVoConverter.convert(page.getRecords())
+                records
         );
     }
 
