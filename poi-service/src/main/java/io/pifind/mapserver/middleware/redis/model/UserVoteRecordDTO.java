@@ -2,13 +2,14 @@ package io.pifind.mapserver.middleware.redis.model;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
  * 用户投票记录
  */
 @Data
-public class UserVoteRecordDTO {
+public class UserVoteRecordDTO implements Serializable {
 
     /**
      * 用户投票映射

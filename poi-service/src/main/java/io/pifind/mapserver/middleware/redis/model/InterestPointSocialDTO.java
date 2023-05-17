@@ -2,11 +2,13 @@ package io.pifind.mapserver.middleware.redis.model;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * 兴趣点社交信息
  */
 @Data
-public class InterestPointSocialDTO {
+public class InterestPointSocialDTO implements Serializable {
 
     /**
      * 兴趣点ID
