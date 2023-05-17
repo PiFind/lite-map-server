@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: place-inner-service
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss # 默认是StdDateFormat
+    time-zone: GMT+8
+
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://127.0.0.1:3306/pifind
