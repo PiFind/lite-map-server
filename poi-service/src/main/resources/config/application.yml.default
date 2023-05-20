@@ -46,7 +46,7 @@ rocketmq:
 
 pifind:
   map-inner-service:
-    url: http://api.pifind.io:19003/v1/
+    url: https://api.mapservice.cloud/v1/
 
 jwt:
   secret: xxxxxxx

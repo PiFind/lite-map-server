@@ -11,9 +11,9 @@ spring:
 
 pifind:
   place-administrative-area-service:
-    url: http://localhost:19003/v1/area
+    url: https://api.mapservice.cloud/v1/area
   place-positioning-service:
-    url: http://localhost:19003/v1/positioning
+    url: https://api.mapservice.cloud/v1/positioning
   user-permission:
     url: http://localhost:19009/v1/
 
