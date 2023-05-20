@@ -5,8 +5,6 @@ import io.pifind.mapserver.model.po.InterestPointCommentPO;
 import io.pifind.poi.constant.PoiCommentStatusEnum;
 import io.pifind.poi.model.vo.InterestPointCommentVO;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface InterestPointCommentVoConverter extends AdvancedConverter<InterestPointCommentPO, InterestPointCommentVO> {
@@ -21,15 +19,15 @@ public interface InterestPointCommentVoConverter extends AdvancedConverter<Inter
         interestPointCommentVO.setContent(source.getContent());
         interestPointCommentVO.setLikes(source.getLikes());
         switch (source.getStatus()) {
-            case PENDING_MACHINE_AUDIT: {
+            case PENDING: {
                 interestPointCommentVO.setStatus(PoiCommentStatusEnum.UNVERIFIED);
                 break;
             }
-            case MACHINE_AUDIT_PASS: {
+            case PASS: {
                 interestPointCommentVO.setStatus(PoiCommentStatusEnum.VERIFIED);
                 break;
             }
-            case MACHINE_AUDIT_REFUSE: {
+            case REFUSE: {
                 interestPointCommentVO.setStatus(PoiCommentStatusEnum.INVALID);
                 break;
             }

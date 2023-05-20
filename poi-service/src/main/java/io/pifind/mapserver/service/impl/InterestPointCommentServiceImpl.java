@@ -5,16 +5,20 @@ import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import io.pifind.common.response.Page;
 import io.pifind.common.response.R;
 import io.pifind.mapserver.converter.po.InterestPointCommentPoConverter;
-import io.pifind.mapserver.converter.po.InterestPointPoConverter;
 import io.pifind.mapserver.converter.vo.InterestPointCommentVoConverter;
+import io.pifind.mapserver.error.PoiCodeEnum;
 import io.pifind.mapserver.mapper.InterestPointCommentMapper;
+import io.pifind.mapserver.mapper.InterestPointMapper;
 import io.pifind.mapserver.middleware.rocketmq.MQProducerService;
 import io.pifind.mapserver.middleware.rocketmq.constant.PoiServiceRocketMQConstants;
 import io.pifind.mapserver.middleware.rocketmq.model.PendingMachineAuditCommentDTO;
 import io.pifind.mapserver.model.constant.InterestPointCommentStatusEnum;
+import io.pifind.mapserver.model.constant.InterestPointStatusEnum;
 import io.pifind.mapserver.model.po.InterestPointCommentPO;
+import io.pifind.mapserver.model.po.InterestPointPO;
 import io.pifind.mapserver.mp.page.MybatisPage;
 import io.pifind.poi.api.InterestPointCommentService;
+import io.pifind.poi.constant.PoiStatusEnum;
 import io.pifind.poi.model.dto.InterestPointCommentDTO;
 import io.pifind.poi.model.vo.InterestPointCommentVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +39,9 @@ public class InterestPointCommentServiceImpl implements InterestPointCommentServ
 
     @Autowired
     private InterestPointCommentPoConverter interestPointCommentPoConverter;
+
+    @Autowired
+    private InterestPointMapper interestPointMapper;
 
     @Autowired
     private InterestPointCommentMapper interestPointCommentMapper;
@@ -144,16 +151,30 @@ public class InterestPointCommentServiceImpl implements InterestPointCommentServ
         InterestPointCommentPO commentPO =
                 interestPointCommentPoConverter.convert(dto);
 
+        // (2) 获取兴趣点信息
+        InterestPointPO interestPointPO =
+                interestPointMapper.selectById(dto.getInterestPointId());
+
+        // (3) 判断兴趣点是否存在 以及 兴趣点的状态是否正常
+        if (
+            interestPointPO == null ||
+            !interestPointPO.getPoiStatus().equals(InterestPointStatusEnum.VERIFIED)
+        ) {
+            return R.failure(PoiCodeEnum.POI_DATA_NOT_FOUND);
+        }
+
+        // (4) 创建评论数据
         Long commentId = IdWorker.getId();
         commentPO.setId(commentId);
         commentPO.setLikes(0);
         commentPO.setUsername(username);
-        commentPO.setStatus(InterestPointCommentStatusEnum.PENDING_MACHINE_AUDIT);
+        commentPO.setAdministrativeAreaId(interestPointPO.getAdministrativeAreaId());
+        commentPO.setStatus(InterestPointCommentStatusEnum.PENDING);
 
-        // (2) 添加到数据库
+        // (5) 添加到数据库
         interestPointCommentMapper.insert(commentPO);
 
-        // (3) 推送到机审消费者
+        // (6) 推送到机审消费者
         PendingMachineAuditCommentDTO pendingMachineAuditCommentDTO = new PendingMachineAuditCommentDTO();
         pendingMachineAuditCommentDTO.setCommentId(commentId);
         pendingMachineAuditCommentDTO.setCreateTime(new Date());
@@ -194,7 +215,7 @@ public class InterestPointCommentServiceImpl implements InterestPointCommentServ
         InterestPointCommentPO modifiedComment = new InterestPointCommentPO();
         modifiedComment.setInterestPointId(commentId);
         modifiedComment.setContent(dto.getContent());
-        modifiedComment.setStatus(InterestPointCommentStatusEnum.PENDING_MACHINE_AUDIT);
+        modifiedComment.setStatus(InterestPointCommentStatusEnum.PENDING);
         interestPointCommentMapper.updateById(modifiedComment);
 
         // (6) 推送到机审消费者

@@ -40,7 +40,7 @@ public class MachineAuditCommentConsumer implements RocketMQListener<PendingMach
 
         // (2) 检测评论是否为空，及评论当前状态
         if (interestPointCommentPO == null ||
-                !interestPointCommentPO.getStatus().equals(InterestPointCommentStatusEnum.PENDING_MACHINE_AUDIT)) {
+                !interestPointCommentPO.getStatus().equals(InterestPointCommentStatusEnum.PENDING)) {
             return;
         }
 
@@ -51,7 +51,7 @@ public class MachineAuditCommentConsumer implements RocketMQListener<PendingMach
         InterestPointCommentPO modifiedCommentPO = new InterestPointCommentPO();
         modifiedCommentPO.setId(interestPointCommentPO.getId());
         modifiedCommentPO.setStatus(
-                flag? InterestPointCommentStatusEnum.MACHINE_AUDIT_PASS:InterestPointCommentStatusEnum.MACHINE_AUDIT_REFUSE
+                flag? InterestPointCommentStatusEnum.PASS :InterestPointCommentStatusEnum.REFUSE
         );
         interestPointCommentMapper.updateById(interestPointCommentPO);
         

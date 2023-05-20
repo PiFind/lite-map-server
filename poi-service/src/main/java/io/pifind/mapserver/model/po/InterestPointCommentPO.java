@@ -34,6 +34,12 @@ public class InterestPointCommentPO {
     private Long superiorId;
 
     /**
+     * [必填] 行政区域ID
+     */
+    @TableField("administrative_area_id")
+    private Long administrativeAreaId;
+
+    /**
      * [必填]内容
      */
     private String content;
