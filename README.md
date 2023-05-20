@@ -12,8 +12,7 @@
 ## 启动顺序
 
 地点服务：
-1. place-service
-2. place-service-open
+1. place-service-open
 
 POI 服务：
 1. poi-service
