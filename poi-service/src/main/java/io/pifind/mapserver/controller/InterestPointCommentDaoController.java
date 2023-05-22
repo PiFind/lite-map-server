@@ -2,8 +2,8 @@ package io.pifind.mapserver.controller;
 
 import io.pifind.common.response.Page;
 import io.pifind.common.response.R;
-import io.pifind.poi.api.InterestPointCommentService;
-import io.pifind.poi.model.dto.InterestPointCommentDTO;
+import io.pifind.poi.api.InterestPointCommentDaoService;
+import io.pifind.poi.model.dto.DaoCommentModerationDTO;
 import io.pifind.poi.model.vo.InterestPointCommentVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,93 +13,48 @@ import org.springframework.web.bind.annotation.*;
 public class InterestPointCommentDaoController {
 
     @Autowired
-    private InterestPointCommentService interestPointCommentService;
+    private InterestPointCommentDaoService interestPointCommentDaoService;
 
     /**
-     * 获取评论
-     * @param id 评论ID
-     * @return 评论
+     * 审核评论
+     * @param dto 审核信息
+     * @return 无
      */
-    @GetMapping("/get/{id}")
-    public R<InterestPointCommentVO> getCommentById(
-            @PathVariable("id") Long id
+    @PostMapping("/review")
+    public R<Void> reviewComment(
+            @RequestBody DaoCommentModerationDTO dto
     ) {
-        return interestPointCommentService.getCommentById(id);
+        return interestPointCommentDaoService.reviewComment(dto);
     }
 
     /**
-     * 获取评论分页
-     * @param interestPointId 兴趣点ID
+     * 获取待审核评论分页
+     * @param administrativeAreaId 行政区划ID
      * @param currentPage 当前页
      * @param pageSize 每页大小
-     * @return 评论分页
+     * @return 待审核评论分页
      */
-    @GetMapping("/page/{interestPointId}/{currentPage}/{pageSize}")
-    public R<Page<InterestPointCommentVO>> getCommentPage(
-            @PathVariable("interestPointId") Long interestPointId,
+    @GetMapping("/getPendingCommentPage/{administrativeAreaId}/{currentPage}/{pageSize}")
+    public R<Page<InterestPointCommentVO>> getPendingCommentPage(
+            @PathVariable("administrativeAreaId") Long administrativeAreaId,
             @PathVariable("currentPage") Integer currentPage,
             @PathVariable("pageSize") Integer pageSize
     ) {
-        return interestPointCommentService.getCommentPage(
-                interestPointId,
+        return interestPointCommentDaoService.getPendingCommentPage(
+                administrativeAreaId,
                 currentPage,
                 pageSize
         );
     }
 
     /**
-     * 评论点赞
-     * @param username 用户名
-     * @param id 评论ID
-     * @return 无
-     */
-    @GetMapping("/like")
-    public R<Void> likeComment(
-            @RequestHeader("username") String username,
-            @PathVariable("id") Long id) {
-        return interestPointCommentService.likeComment(username,id);
-    }
-
-    /**
-     * 发表评论
-     * @param username 用户名
-     * @param dto 评论信息
-     * @return 无
-     */
-    @PostMapping("/add")
-    public R<Void> postComment(
-            @RequestHeader("username") String username,
-            @RequestBody InterestPointCommentDTO dto
-    ) {
-        return interestPointCommentService.postComment(username,dto);
-    }
-
-    /**
-     * 修改评论
-     * @param username 用户名
-     * @param dto 评论信息
-     * @return 无
-     */
-    @PostMapping("/modify")
-    public R<Void> modifyComment(
-            @RequestHeader("username") String username,
-            @RequestBody InterestPointCommentDTO dto
-    ) {
-        return interestPointCommentService.modifyComment(username,dto);
-    }
-
-    /**
      * 删除评论
-     * @param username 用户名
      * @param commentId 评论ID
      * @return 无
      */
     @DeleteMapping("/remove/{commentId}")
-    public R<Void> removeComment(
-            @RequestHeader("username") String username,
-            @PathVariable("commentId") Long commentId
-    ) {
-        return interestPointCommentService.removeComment(username,commentId);
+    public R<Void> removeComment(@PathVariable("commentId") Long commentId) {
+        return interestPointCommentDaoService.removeComment(commentId);
     }
 
 }
