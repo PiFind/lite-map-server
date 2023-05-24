@@ -24,6 +24,8 @@
         <module>place-service-open</module>
         <module>poi-service-open</module>
         <module>map-common</module>
+        <module>poi-api</module>
+        <module>place-api</module>
     </modules>
 
     <repositories>
@@ -135,6 +137,17 @@
         </dependency>
 
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>pifind-maven-releases</id>
+            <url>https://pifind.mvn.pub/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>pifind-maven-snapshots</id>
+            <url>https://pifind.mvn.pub/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <build>
         <plugins>

@@ -4,9 +4,12 @@ import io.pifind.common.response.Page;
 import io.pifind.common.response.R;
 import io.pifind.poi.api.InterestPointDaoService;
 import io.pifind.poi.model.dto.DaoVoteDTO;
+import io.pifind.poi.model.vo.InterestPointReviewVO;
 import io.pifind.poi.model.vo.InterestPointVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * DAO用户审核控制器
@@ -48,6 +51,17 @@ public class InterestPointDaoController {
         return interestPointDaoService.hasVoted(
                 username, interestPointId
         );
+    }
+
+    /**
+     * 根据兴趣点id获取审核列表
+     *
+     * @param interestPointId 兴趣点ID
+     * @return 是否投票成功
+     */
+    @GetMapping("/getReview/{interestPointId}")
+    public R<List<InterestPointReviewVO>> getReview(@PathVariable("interestPointId") Long interestPointId) {
+        return interestPointDaoService.getReviewList(interestPointId);
     }
 
     /**

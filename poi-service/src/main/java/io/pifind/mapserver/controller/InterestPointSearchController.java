@@ -2,7 +2,6 @@ package io.pifind.mapserver.controller;
 
 import io.pifind.common.response.Page;
 import io.pifind.common.response.R;
-import io.pifind.place.model.AdministrativeAreaDTO;
 import io.pifind.poi.api.InterestPointSearchService;
 import io.pifind.poi.constant.SortOrderEnum;
 import io.pifind.poi.constant.SortReferenceEnum;

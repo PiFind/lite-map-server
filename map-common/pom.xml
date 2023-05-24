@@ -8,7 +8,6 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.7.6</version>
-        <relativePath/>
     </parent>
 
     <groupId>io.pifind.map</groupId>
@@ -34,7 +33,7 @@
         <!-- mapstruct -->
         <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
         <!-- spring boot -->
-        <springboot.autoconfigure.version>2.7.4</springboot.autoconfigure.version>
+        <springboot.autoconfigure.version>2.7.6</springboot.autoconfigure.version>
         <!-- mybatis-plus -->
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
         <!-- mapstruct -->
@@ -46,15 +45,6 @@
     </properties>
 
     <dependencies>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -107,21 +97,21 @@
         <dependency>
             <groupId>io.pifind</groupId>
             <artifactId>common</artifactId>
-            <version>${io.pifind.common}</version>
+            <version>0.0.2-SNAPSHOT</version>
         </dependency>
 
         <!-- PiFind 地理公共库 -->
         <dependency>
             <groupId>io.pifind.map</groupId>
             <artifactId>geo-common</artifactId>
-            <version>${io.pifind.map.geocommon}</version>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <!-- 地图服务公共库 -->
         <dependency>
             <groupId>io.pifind.map</groupId>
             <artifactId>common</artifactId>
-            <version>${io.pifind.map.api}</version>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
     </dependencies>

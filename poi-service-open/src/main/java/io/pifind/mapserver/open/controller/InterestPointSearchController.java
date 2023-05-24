@@ -3,7 +3,6 @@ package io.pifind.mapserver.open.controller;
 import io.pifind.common.response.Page;
 import io.pifind.common.response.R;
 import io.pifind.mapserver.open.service.InterestPointSearchFeignService;
-import io.pifind.place.model.AdministrativeAreaDTO;
 import io.pifind.poi.constant.SortOrderEnum;
 import io.pifind.poi.constant.SortReferenceEnum;
 import io.pifind.poi.model.vo.CategoryVO;

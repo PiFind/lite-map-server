@@ -18,6 +18,17 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>pifind-maven-releases</id>
+            <url>https://pifind.mvn.pub/repository/maven-releases/</url>
+        </repository>
+        <repository>
+            <id>pifind-maven-snapshots</id>
+            <url>https://pifind.mvn.pub/repository/maven-snapshots/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
 
         <!-- 角色服务 -->
@@ -25,6 +36,12 @@
             <groupId>io.pifind</groupId>
             <artifactId>user-role-common</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-boot-autoconfigure</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- POI服务标准API -->
@@ -32,6 +49,16 @@
             <groupId>io.pifind.map</groupId>
             <artifactId>place-api</artifactId>
             <version>${io.pifind.map.api}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-boot-autoconfigure</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>mapstruct</artifactId>
+                    <groupId>org.mapstruct</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-openfeign -->
@@ -39,6 +66,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
             <version>3.1.6</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-boot-autoconfigure</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
     </dependencies>

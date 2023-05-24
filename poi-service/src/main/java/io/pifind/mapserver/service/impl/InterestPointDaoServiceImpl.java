@@ -14,13 +14,17 @@ import io.pifind.mapserver.model.po.InterestPointReviewPO;
 import io.pifind.mapserver.mp.page.MybatisPage;
 import io.pifind.poi.api.InterestPointDaoService;
 import io.pifind.poi.model.dto.DaoVoteDTO;
+import io.pifind.poi.model.vo.InterestPointReviewVO;
 import io.pifind.poi.model.vo.InterestPointVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 兴趣点基础服务实现类
@@ -148,5 +152,18 @@ public class InterestPointDaoServiceImpl implements InterestPointDaoService {
         );
     }
 
+    @Override
+    public R<List<InterestPointReviewVO>> getReviewList(Long interestPointId) {
+        List<InterestPointReviewPO> reviewList = interestPointReviewMapper.getReviewList(interestPointId);
+        if (CollectionUtils.isEmpty(reviewList)) {
+            return R.success();
+        }
+        List<InterestPointReviewVO> reviewVOList = reviewList.stream().map((review) -> {
+            InterestPointReviewVO reviewVO = new InterestPointReviewVO();
+            BeanUtils.copyProperties(review, reviewVO);
+            return reviewVO;
+        }).collect(Collectors.toList());
+        return R.success(reviewVOList);
+    }
 
 }
