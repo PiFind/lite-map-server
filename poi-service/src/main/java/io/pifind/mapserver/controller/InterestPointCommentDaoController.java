@@ -36,7 +36,7 @@ public class InterestPointCommentDaoController {
      */
     @GetMapping("/getPendingCommentPage/{administrativeAreaId}/{currentPage}/{pageSize}")
     public R<Page<InterestPointCommentVO>> getPendingCommentPage(
-            @PathVariable("administrativeAreaId") Long administrativeAreaId,
+            @PathVariable("administrativeAreaId") String administrativeAreaId,
             @PathVariable("currentPage") Integer currentPage,
             @PathVariable("pageSize") Integer pageSize
     ) {

@@ -1,6 +1,7 @@
 package io.pifind.mapserver.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import io.pifind.common.response.R;
 import io.pifind.common.response.StandardCode;
 import io.pifind.map.model.CoordinateDTO;
@@ -89,7 +90,7 @@ public class PositioningServiceImpl implements IPositioningService {
 
         // 如果为获取的地域ID为0，那么就通过第三方地图API进行查询
         // 并将结果写入数据库
-        if (locationDTO.getAdministrativeAreaId() == 0) {
+        if (StringUtils.isBlank(locationDTO.getAdministrativeAreaId())) {
 
             // 先去从 location 去匹配一下
             // 如果不能匹配到就再调用第三方
@@ -102,11 +103,11 @@ public class PositioningServiceImpl implements IPositioningService {
                 );
             }
 
-            locationDTO.setAdministrativeAreaId(areaId);
+            locationDTO.setAdministrativeAreaId(areaId.toString());
 
             // 将数据写入数据库
             IP2LocationPO modifiedPO = new IP2LocationPO();
-            modifiedPO.setAdministrativeAreaId(areaId);
+            modifiedPO.setAdministrativeAreaId(areaId.toString());
             ip2LocationMapper.update(
                     modifiedPO,
                     new LambdaQueryWrapper<IP2LocationPO>()
@@ -162,7 +163,7 @@ public class PositioningServiceImpl implements IPositioningService {
         locationDTO.setCoordinate(coordinate);
 
         // 设置行政区划ID
-        locationDTO.setAdministrativeAreaId(areaId);
+        locationDTO.setAdministrativeAreaId(areaId.toString());
 
         return R.success(locationDTO);
     }

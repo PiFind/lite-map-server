@@ -42,13 +42,7 @@ public class InterestPointSearchServiceImpl implements InterestPointSearchServic
     private InterestPointVoConverter interestPointVoConverter;
 
     @Autowired
-    private InterestPointPoConverter interestPointPoConverter;
-
-    @Autowired
     private InterestPointMapper interestPointMapper;
-
-    @Autowired
-    private IAdministrativeAreaService administrativeAreaService;
 
     /**
      * 根据兴趣点ID查看兴趣点
@@ -79,12 +73,11 @@ public class InterestPointSearchServiceImpl implements InterestPointSearchServic
     public R<Page<InterestPointVO>> searchPoints(
             @NotNull  Integer pageSize,
             @NotNull  Integer currentPage,
-            @NotNull  Long areaId,
+            @NotNull  String areaId,
             @Nullable Long categoryId,
             @Nullable String keyword,
             @NotNull  SortOrderEnum sortOrder,
-            @NotNull  SortReferenceEnum reference
-    ) {
+            @NotNull  SortReferenceEnum reference ) {
 
         // +------------+
         //  构建查询包装器
@@ -175,7 +168,7 @@ public class InterestPointSearchServiceImpl implements InterestPointSearchServic
      */
     private LambdaQueryWrapper<InterestPointPO> findAreasQueryWrapper (
             LambdaQueryWrapper<InterestPointPO> queryWrapper,
-            Long areaId
+            String areaId
     ) {
 
         queryWrapper = queryWrapper.likeRight(InterestPointPO::getAdministrativeAreaId,areaId);

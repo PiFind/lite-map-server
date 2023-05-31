@@ -39,7 +39,7 @@ public interface InterestPointDaoService {
      */
     R<Page<InterestPointVO>> getReviewPage(
             String username,
-            Long administrativeAreaId,
+            String administrativeAreaId,
             Integer currentPage,
             Integer pageSize
     );

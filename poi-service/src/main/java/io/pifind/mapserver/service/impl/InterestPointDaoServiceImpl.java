@@ -129,7 +129,7 @@ public class InterestPointDaoServiceImpl implements InterestPointDaoService {
      * @return 待审核列表
      */
     @Override
-    public R<Page<InterestPointVO>> getReviewPage(String username,Long administrativeAreaId,Integer currentPage, Integer pageSize) {
+    public R<Page<InterestPointVO>> getReviewPage(String username,String administrativeAreaId,Integer currentPage, Integer pageSize) {
         // (1) 获取待审核列表
         MybatisPage<InterestPointPO> page = new MybatisPage<>(currentPage, pageSize);
         page = (MybatisPage<InterestPointPO>)

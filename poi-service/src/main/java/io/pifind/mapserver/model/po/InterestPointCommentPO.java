@@ -37,7 +37,7 @@ public class InterestPointCommentPO {
      * [必填] 行政区域ID
      */
     @TableField("administrative_area_id")
-    private Long administrativeAreaId;
+    private String administrativeAreaId;
 
     /**
      * [必填]内容

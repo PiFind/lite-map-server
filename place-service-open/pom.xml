@@ -31,19 +31,6 @@
 
     <dependencies>
 
-        <!-- 角色服务 -->
-        <dependency>
-            <groupId>io.pifind</groupId>
-            <artifactId>user-role-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>spring-boot-autoconfigure</artifactId>
-                    <groupId>org.springframework.boot</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
         <!-- POI服务标准API -->
         <dependency>
             <groupId>io.pifind.map</groupId>

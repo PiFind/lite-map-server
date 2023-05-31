@@ -66,7 +66,7 @@ public class InterestPointPO {
      * [必填]行政区ID
      */
     @TableField("administrative_area_id")
-    private Long administrativeAreaId;
+    private String administrativeAreaId;
 
     /**
      * [必填]营业日（单周）

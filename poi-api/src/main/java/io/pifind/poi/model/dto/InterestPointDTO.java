@@ -51,7 +51,7 @@ public class InterestPointDTO {
      * 行政区ID
      */
     @JsonSerialize(using = ToStringSerializer.class)
-    private Long administrativeAreaId;
+    private String administrativeAreaId;
 
     /**
      * 营业时间

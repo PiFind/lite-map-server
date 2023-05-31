@@ -21,6 +21,16 @@ public class CategoryEditDTO {
     private String name;
 
     /**
+     * 父id
+     */
+    private String parentId;
+
+    /**
+     * code
+     */
+    private Integer code;
+
+    /**
      * 类别名的英文名
      */
     private String nameEN;

@@ -65,7 +65,7 @@ public class IP2LocationPO {
     /**
      * 对应的行政区ID
      */
-    private Long administrativeAreaId;
+    private String administrativeAreaId;
 
     /**
      * 创建时间

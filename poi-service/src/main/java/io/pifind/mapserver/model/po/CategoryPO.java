@@ -31,6 +31,11 @@ public class CategoryPO {
     private String nameEN;
 
     /**
+     * code
+     */
+    private Integer code;
+
+    /**
      * 上级ID
      */
     private Long superior;

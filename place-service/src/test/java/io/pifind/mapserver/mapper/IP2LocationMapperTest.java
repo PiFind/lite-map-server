@@ -139,7 +139,7 @@ public class IP2LocationMapperTest {
                     }
 
                     // 写入数据
-                    ip2LocationPO.setAdministrativeAreaId(area.getId());
+                    ip2LocationPO.setAdministrativeAreaId(area.getId().toString());
                     ip2LocationMapper.update(
                             ip2LocationPO,
                             new LambdaQueryWrapper<IP2LocationPO>()

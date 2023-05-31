@@ -19,6 +19,7 @@ public interface CategoryVoConverter extends AdvancedConverter<CategoryPO, Categ
         }
         categoryVO.setNameEN(source.getNameEN());
         categoryVO.setId(source.getId());
+        categoryVO.setCode(source.getCode());
         categoryVO.setSuperior(source.getSuperior());
         categoryVO.setUpdateTime(source.getUpdateTime());
         categoryVO.setCreateTime(source.getCreateTime());

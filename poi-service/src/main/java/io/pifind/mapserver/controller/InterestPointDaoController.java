@@ -74,7 +74,7 @@ public class InterestPointDaoController {
     @GetMapping("/getReviewPage/{administrativeAreaId}/{currentPage}/{pageSize}")
     public R<Page<InterestPointVO>> getReviewPage(
             @RequestHeader("username") String username,
-            @PathVariable("administrativeAreaId") Long administrativeAreaId,
+            @PathVariable("administrativeAreaId") String administrativeAreaId,
             @PathVariable("currentPage") Integer currentPage,
             @PathVariable("pageSize") Integer pageSize) {
         return interestPointDaoService.getReviewPage(

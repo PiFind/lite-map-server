@@ -30,6 +30,11 @@ public class CategoryVO {
     private String nameEN;
 
     /**
+     * code
+     */
+    private Integer code;
+
+    /**
      * 上级分类的ID
      */
     @JsonSerialize(using = ToStringSerializer.class)

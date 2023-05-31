@@ -1,5 +1,5 @@
 server:
-  port: 19005
+  port: 9005
 
 spring:
   application:
@@ -46,7 +46,7 @@ rocketmq:
 
 pifind:
   map-inner-service:
-    url: http://localhost:19003/v1/
+    url: http://localhost:9003/v1/
 
 jwt:
   secret: pApHeeUK7dtuGFAI2L6XB3nYU1YOMpa8

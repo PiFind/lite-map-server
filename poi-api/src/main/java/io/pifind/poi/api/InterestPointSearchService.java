@@ -43,7 +43,7 @@ public interface InterestPointSearchService {
     R<Page<InterestPointVO>> searchPoints(
             @NotNull  Integer pageSize,
             @NotNull  Integer currentPage,
-            @NotNull  Long areaId,
+            @NotNull  String areaId,
             @Nullable Long categoryId,
             @Nullable String keyword,
             @NotNull  SortOrderEnum sortOrder,

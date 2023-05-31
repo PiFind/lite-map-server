@@ -25,7 +25,7 @@ public interface InterestPointCommentDaoService {
      * @return 待审核评论分页
      */
     R<Page<InterestPointCommentVO>> getPendingCommentPage(
-            Long administrativeAreaId,
+            String administrativeAreaId,
             Integer currentPage,
             Integer pageSize
     );

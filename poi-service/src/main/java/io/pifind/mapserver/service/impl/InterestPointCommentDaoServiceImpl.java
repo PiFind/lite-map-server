@@ -63,7 +63,7 @@ public class InterestPointCommentDaoServiceImpl implements InterestPointCommentD
      */
     @Override
     public R<Page<InterestPointCommentVO>> getPendingCommentPage(
-            Long administrativeAreaId,
+            String administrativeAreaId,
             Integer currentPage,
             Integer pageSize
     ) {

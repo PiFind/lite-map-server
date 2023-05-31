@@ -42,6 +42,6 @@ public class LocationDTO {
      * 定位到的行政区ID
      */
     @JsonSerialize(using = ToStringSerializer.class)
-    private Long administrativeAreaId;
+    private String administrativeAreaId;
 
 }

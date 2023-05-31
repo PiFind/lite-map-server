@@ -50,7 +50,7 @@ public interface InterestPointMapper extends BaseMapper<InterestPointPO> {
     Page<InterestPointPO> selectReviewInterestPointPage(
             Page<InterestPointPO> page,
             String username,
-            Long administrativeAreaId
+            String administrativeAreaId
     );
 
 }
