@@ -21,7 +21,7 @@ spring:
 
   redis:
     #Redis服务器地址，
-    host: 47.245.112.188
+    host: 127.0.0.1
     #Redis服务器端口,默认为6379.若有改动按改动后的来
     port: 6379
     #Redis服务器连接密码，默认为空，若有设置按设置的来
@@ -35,7 +35,7 @@ spring:
         max-idle: 8
 
 rocketmq:
-  name-server: 127.0.0.1:9876 # 访问地址
+  name-server: 173.19.2.231:9876 # 访问地址
   producer:
     group: POI_SERVICE_GROUP
     enable-msg-trace: true
