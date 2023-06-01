@@ -1,5 +1,6 @@
 package io.pifind.mapserver.controller;
 
+import io.pifind.authorization.annotation.UserName;
 import io.pifind.common.response.Page;
 import io.pifind.common.response.R;
 import io.pifind.poi.api.InterestPointCommentService;
@@ -53,7 +54,7 @@ public class InterestPointCommentController {
      */
     @GetMapping("/like/{id}")
     public R<Void> likeComment(
-            @RequestHeader("username") String username,
+            @UserName String username,
             @PathVariable("id") Long id
     ) {
         return interestPointCommentService.likeComment(username,id);
@@ -67,7 +68,7 @@ public class InterestPointCommentController {
      */
     @PostMapping("/add")
     public R<Void> postComment(
-            @RequestHeader("username") String username,
+            @UserName String username,
             @RequestBody InterestPointCommentDTO dto
     ) {
         return interestPointCommentService.postComment(username,dto);
@@ -81,7 +82,7 @@ public class InterestPointCommentController {
      */
     @PostMapping("/modify")
     public R<Void> modifyComment(
-            @RequestHeader("username") String username,
+            @UserName String username,
             @RequestBody InterestPointCommentDTO dto
     ) {
         return interestPointCommentService.modifyComment(username,dto);
@@ -95,7 +96,7 @@ public class InterestPointCommentController {
      */
     @DeleteMapping("/remove/{id}")
     public R<Void> removeComment(
-            @RequestHeader("username") String username,
+            @UserName String username,
             @PathVariable("id") Long id
     ) {
         return interestPointCommentService.removeComment(username, id);

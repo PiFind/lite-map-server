@@ -1,5 +1,6 @@
 package io.pifind.mapserver.controller;
 
+import io.pifind.authorization.annotation.UserName;
 import io.pifind.common.response.R;
 import io.pifind.poi.api.InterestPointSocialService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class InterestPointSocialController {
      */
     @GetMapping("/browse/{id}")
     public R<Void> browse(
-            @RequestHeader("username") String username,
+            @UserName String username,
             @PathVariable Long id
     ) {
         return interestPointSocialService.browse(username, id);
@@ -35,7 +36,7 @@ public class InterestPointSocialController {
      */
     @GetMapping("/collect/{id}")
     public R<Void> collect(
-            @RequestHeader("username") String username,
+            @UserName String username,
             @PathVariable Long id
     ) {
         return interestPointSocialService.collect(username, id);
@@ -49,7 +50,7 @@ public class InterestPointSocialController {
      */
     @GetMapping("/evaluate/{id}/{score}")
     public R<Void> evaluate(
-            @RequestHeader("username") String username,
+            @UserName String username,
             @PathVariable Long id,
             @PathVariable Double score
     ) {

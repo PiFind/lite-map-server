@@ -1,5 +1,6 @@
 package io.pifind.mapserver.controller;
 
+import io.pifind.authorization.annotation.UserName;
 import io.pifind.common.response.Page;
 import io.pifind.common.response.R;
 import io.pifind.poi.api.InterestPointDaoService;
@@ -29,7 +30,7 @@ public class InterestPointDaoController {
      */
     @PostMapping("/vote")
     public R<Void> vote(
-            @RequestHeader("username") String username,
+            @UserName String username,
             @RequestBody DaoVoteDTO voteDTO
     ) {
         return interestPointDaoService.vote(
@@ -45,7 +46,7 @@ public class InterestPointDaoController {
      */
     @GetMapping("/hasVoted/{interestPointId}")
     public R<Boolean> hasVoted(
-            @RequestHeader("username") String username,
+            @UserName String username,
             @PathVariable("interestPointId") Long interestPointId
     ) {
         return interestPointDaoService.hasVoted(
@@ -73,7 +74,7 @@ public class InterestPointDaoController {
      */
     @GetMapping("/getReviewPage/{administrativeAreaId}/{currentPage}/{pageSize}")
     public R<Page<InterestPointVO>> getReviewPage(
-            @RequestHeader("username") String username,
+            @UserName String username,
             @PathVariable("administrativeAreaId") String administrativeAreaId,
             @PathVariable("currentPage") Integer currentPage,
             @PathVariable("pageSize") Integer pageSize) {

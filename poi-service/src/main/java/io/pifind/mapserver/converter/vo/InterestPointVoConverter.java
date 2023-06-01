@@ -20,6 +20,7 @@ import org.mapstruct.Mappings;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Mapper(componentModel = "spring")
 public interface InterestPointVoConverter extends AdvancedConverter<InterestPointPO,InterestPointVO> {
@@ -173,16 +174,18 @@ public interface InterestPointVoConverter extends AdvancedConverter<InterestPoin
         CoordinateDTO coordinateDTO = new CoordinateDTO();
         coordinateDTO.setLatitude(po.getLatitude());
         coordinateDTO.setLongitude(po.getLongitude());
-        switch (po.getCoordinateSystem()) {
-            case WGS84:
-                coordinateDTO.setSystem(GeographicCoordinateSystemEnum.WGS84);
-                break;
-            case GCJ02:
-                coordinateDTO.setSystem(GeographicCoordinateSystemEnum.GCJ02);
-                break;
-            case CGCS2000:
-                coordinateDTO.setSystem(GeographicCoordinateSystemEnum.CGCS2000);
-                break;
+        if (Objects.nonNull(po.getCoordinateSystem())) {
+            switch (po.getCoordinateSystem()) {
+                case WGS84:
+                    coordinateDTO.setSystem(GeographicCoordinateSystemEnum.WGS84);
+                    break;
+                case GCJ02:
+                    coordinateDTO.setSystem(GeographicCoordinateSystemEnum.GCJ02);
+                    break;
+                case CGCS2000:
+                    coordinateDTO.setSystem(GeographicCoordinateSystemEnum.CGCS2000);
+                    break;
+            }
         }
         vo.setCoordinate(coordinateDTO);
 

@@ -1,5 +1,6 @@
 package io.pifind.mapserver.controller;
 
+import io.pifind.authorization.annotation.UserName;
 import io.pifind.common.response.Page;
 import io.pifind.common.response.R;
 import io.pifind.poi.api.InterestPointPublisherService;
@@ -28,8 +29,7 @@ public class InterestPointPublisherController {
      * </ul>
      */
     @PostMapping("/add")
-    public R<Void> addInterestPoint(
-            @RequestHeader("username") String username,
+    public R<Void> addInterestPoint(@UserName String username,
             @RequestBody InterestPointDTO interestPoint
     ) {
         return interestPointPublisherService.addInterestPoint(username,interestPoint);
@@ -42,7 +42,7 @@ public class InterestPointPublisherController {
      */
     @GetMapping("/get/{id}")
     public R<InterestPointVO> getInterestPointById(
-            @RequestHeader("username") String username,
+            @UserName String username,
             @PathVariable("id") Long id
     ) {
         return interestPointPublisherService.getInterestPointById(username,id);
@@ -57,7 +57,7 @@ public class InterestPointPublisherController {
      */
     @GetMapping("/get/page/{currentPage}/{pageSize}")
     public R<Page<InterestPointVO>> getInterestPointPageByPublisher(
-            @RequestHeader("username") String username,
+            @UserName String username,
             @PathVariable("currentPage") Integer currentPage,
             @PathVariable("pageSize") Integer pageSize
     ) {
@@ -76,7 +76,7 @@ public class InterestPointPublisherController {
      */
     @PostMapping("/modify")
     public R<Void> modifyInterestPoint(
-            @RequestHeader("username") String username,
+            @UserName String username,
             @RequestBody InterestPointDTO modifiedInterestPoint
     ) {
         return interestPointPublisherService.modifyInterestPoint(username,modifiedInterestPoint);
@@ -89,7 +89,7 @@ public class InterestPointPublisherController {
      */
     @DeleteMapping("/remove/{id}")
     public R<Void> removeInterestPointById(
-            @RequestHeader("username") String username,
+            @UserName String username,
             @PathVariable Long id
     ) {
         return interestPointPublisherService.removeInterestPointById(username,id);

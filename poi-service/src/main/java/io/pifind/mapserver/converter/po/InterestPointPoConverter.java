@@ -17,6 +17,7 @@ import org.mapstruct.Mappings;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Mapper(componentModel = "spring")
 public interface InterestPointPoConverter extends
@@ -148,16 +149,18 @@ public interface InterestPointPoConverter extends
 
         interestPointPO.setLatitude(dto.getCoordinate().getLatitude());
         interestPointPO.setLongitude(dto.getCoordinate().getLongitude());
-        switch (dto.getCoordinate().getSystem()) {
-            case WGS84:
-                interestPointPO.setCoordinateSystem(CoordinateSystemEnum.WGS84);
-                break;
-            case GCJ02:
-                interestPointPO.setCoordinateSystem(CoordinateSystemEnum.GCJ02);
-                break;
-            case CGCS2000:
-                interestPointPO.setCoordinateSystem(CoordinateSystemEnum.CGCS2000);
-                break;
+        if (Objects.nonNull(dto.getCoordinate().getSystem())) {
+            switch (dto.getCoordinate().getSystem()) {
+                case WGS84:
+                    interestPointPO.setCoordinateSystem(CoordinateSystemEnum.WGS84);
+                    break;
+                case GCJ02:
+                    interestPointPO.setCoordinateSystem(CoordinateSystemEnum.GCJ02);
+                    break;
+                case CGCS2000:
+                    interestPointPO.setCoordinateSystem(CoordinateSystemEnum.CGCS2000);
+                    break;
+            }
         }
         return interestPointPO;
     }
