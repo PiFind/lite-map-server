@@ -1,5 +1,7 @@
 package io.pifind.mapserver.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.pifind.common.response.Page;
 import io.pifind.common.response.R;
 import io.pifind.mapserver.converter.vo.InterestPointVoConverter;
@@ -24,7 +26,10 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static io.pifind.mapserver.model.constant.InterestPointStatusEnum.VERIFIED;
 
 /**
  * 兴趣点基础服务实现类
@@ -65,47 +70,43 @@ public class InterestPointDaoServiceImpl implements InterestPointDaoService {
         }
 
         // (2) 获取兴趣点信息是否存在
-        InterestPointPO interestPointPO =
-                interestPointMapper.selectById(voteDTO.getInterestPointId());
+        InterestPointPO interestPointPO = interestPointMapper.selectById(voteDTO.getInterestPointId());
         if (interestPointPO == null) {
             return R.failure(PoiCodeEnum.POI_DATA_NOT_FOUND);
         }
 
-        // (3) 对兴趣点进行投票
-        UserVoteRecordDTO userVoteRecord =
-                userVoteService.vote(username, voteDTO.getInterestPointId(), voteDTO.getAgree());
+        // (3) 判断兴趣点是否是自己
+        if (username.equals(interestPointPO.getPublisher())) {
+            return R.failure(PoiCodeEnum.POI_DATA_OWNER);
+        }
 
-        // (4) 如果兴趣点的投票同意通过大于等于 PASS_VOTE_COUNT 则将兴趣点的状态改为已审核
+        // (4) 判断兴趣点是否已审核过
+        if (Objects.nonNull(interestPointPO.getPoiStatus()) && VERIFIED.code() == interestPointPO.getPoiStatus().code()) {
+            return R.failure(PoiCodeEnum.POI_DATA_OWNER);
+        }
+
+        // (5) 对兴趣点进行投票
+        UserVoteRecordDTO userVoteRecord = userVoteService.vote(username, voteDTO.getInterestPointId(), voteDTO.getAgree());
+
+        // (6) 如果兴趣点的投票同意通过大于等于 PASS_VOTE_COUNT 则将兴趣点的状态改为已审核
         if (userVoteRecord.getAgrees() > PASS_VOTE_COUNT) {
 
             // 更新数据
             InterestPointPO modifiedInterestPointPO = new InterestPointPO();
             modifiedInterestPointPO.setId(voteDTO.getInterestPointId());
-            modifiedInterestPointPO.setPoiStatus(InterestPointStatusEnum.VERIFIED);
-            interestPointMapper.updateById(modifiedInterestPointPO);
-
-            // 删除数据
-            userVoteService.remove(voteDTO.getInterestPointId());
-        } else if (userVoteRecord.getTotal() > MAX_VOTE_COUNT) {
-            // (5)如果兴趣点的投票总数超过 MAX_VOTE_COUNT ，那么设置兴趣点的状态为已拒绝
-
-            // 更新数据
-            InterestPointPO modifiedInterestPointPO = new InterestPointPO();
-            modifiedInterestPointPO.setId(voteDTO.getInterestPointId());
-            modifiedInterestPointPO.setPoiStatus(InterestPointStatusEnum.INVALID);
+            modifiedInterestPointPO.setPoiStatus(VERIFIED);
             interestPointMapper.updateById(modifiedInterestPointPO);
 
             // 删除数据
             userVoteService.remove(voteDTO.getInterestPointId());
         }
 
-        // (6) 增加一个投票记录
+        // (7) 增加一个投票记录
         InterestPointReviewPO interestPointReviewPO = new InterestPointReviewPO();
         interestPointReviewPO.setUsername(username);
         interestPointReviewPO.setInterestPointId(voteDTO.getInterestPointId());
         interestPointReviewPO.setAgree(voteDTO.getAgree());
         interestPointReviewMapper.insert(interestPointReviewPO);
-
         return R.success();
     }
 
@@ -129,7 +130,7 @@ public class InterestPointDaoServiceImpl implements InterestPointDaoService {
      * @return 待审核列表
      */
     @Override
-    public R<Page<InterestPointVO>> getReviewPage(String username,String administrativeAreaId,Integer currentPage, Integer pageSize) {
+    public R<Page<InterestPointVO>> getReviewPage(String username, String administrativeAreaId, Integer currentPage, Integer pageSize) {
         // (1) 获取待审核列表
         MybatisPage<InterestPointPO> page = new MybatisPage<>(currentPage, pageSize);
         page = (MybatisPage<InterestPointPO>)
@@ -165,5 +166,36 @@ public class InterestPointDaoServiceImpl implements InterestPointDaoService {
         }).collect(Collectors.toList());
         return R.success(reviewVOList);
     }
+
+    @Override
+    public R<Page<InterestPointReviewVO>> getReviewList(String username, Boolean agree, Integer currentPage, Integer pageSize) {
+        MybatisPage<InterestPointReviewPO> reviewPage = new MybatisPage<>(currentPage, pageSize);
+        interestPointReviewMapper.selectPage(reviewPage, new LambdaQueryWrapper<InterestPointReviewPO>()
+                .eq(InterestPointReviewPO::getUsername, username)
+                .eq(InterestPointReviewPO::getAgree, agree)
+                .orderByDesc(InterestPointReviewPO::getUpdateTime)
+        );
+        List<InterestPointReviewVO> records;
+        if (CollectionUtils.isEmpty(reviewPage.getRecords())) {
+            records = new ArrayList<>();
+        } else {
+            records = reviewPage.getRecords().stream().map((review) -> {
+                InterestPointPO interestPointPO = interestPointMapper.selectById(review.getInterestPointId());
+                InterestPointVO interestPointVO = new InterestPointVO();
+                InterestPointReviewVO reviewVO = new InterestPointReviewVO();
+                BeanUtils.copyProperties(review, reviewVO);
+                BeanUtils.copyProperties(interestPointPO, interestPointVO);
+                reviewVO.setInterestPoint(interestPointVO);
+                return reviewVO;
+            }).collect(Collectors.toList());
+        }
+        return R.page(
+                (int) reviewPage.getCurrent(),
+                (int) reviewPage.getSize(),
+                (int) reviewPage.getTotal(),
+                records
+        );
+    }
+
 
 }

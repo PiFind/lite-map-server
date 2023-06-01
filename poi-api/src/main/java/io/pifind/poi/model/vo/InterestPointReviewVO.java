@@ -48,4 +48,6 @@ public class InterestPointReviewVO {
      * [自动]逻辑删除字段
      */
     private Boolean unavailable;
+
+    private InterestPointVO interestPoint;
 }

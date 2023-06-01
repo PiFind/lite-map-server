@@ -66,6 +66,23 @@ public class InterestPointDaoController {
     }
 
     /**
+     * 获取当前用户已审核/已拒绝的兴趣点列表
+     *
+     * @param username
+     * @param agree
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/getReviewList")
+    public R<Page<InterestPointReviewVO>> getReviewList(@UserName String username,
+                                                        @RequestParam(value = "agree", defaultValue = "true") Boolean agree,
+                                                        @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
+                                                        @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+        return interestPointDaoService.getReviewList(username, agree, currentPage, pageSize);
+    }
+
+    /**
      * DAO用户获取待审核列表
      * @param username 用户名
      * @param currentPage 当前页

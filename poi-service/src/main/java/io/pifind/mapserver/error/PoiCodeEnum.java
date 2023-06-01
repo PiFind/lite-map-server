@@ -10,6 +10,7 @@ public enum PoiCodeEnum {
 
     DUPLICATE_POI_DATA(0x210001,"Poi.DuplicatePoiData"),
     POI_DATA_NOT_FOUND(0x210002,"Poi.PoiDataNotFound"),
+    POI_DATA_OWNER(0x210003,"Poi.PoiDataOwner"),
     ;
 
     private final int code;

@@ -1,11 +1,9 @@
 package io.pifind.mapserver.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.pifind.mapserver.model.po.InterestPointPO;
 import io.pifind.mapserver.mp.StringListTypeHandler;
-import io.pifind.mapserver.mp.page.MybatisPage;
 import io.pifind.mapserver.mp.type.BusinessDayTypeHandler;
 import io.pifind.mapserver.mp.type.BusinessHoursTypeHandler;
 import org.apache.ibatis.annotations.Mapper;

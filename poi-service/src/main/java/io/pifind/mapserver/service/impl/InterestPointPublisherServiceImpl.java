@@ -23,6 +23,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+import static io.pifind.mapserver.model.constant.InterestPointStatusEnum.UNVERIFIED;
+
 /**
  * 兴趣点基础服务实现类
  * @see io.pifind.poi.api.InterestPointPublisherService
@@ -170,6 +172,8 @@ public class InterestPointPublisherServiceImpl implements InterestPointPublisher
             return R.failure(PoiCodeEnum.POI_DATA_NOT_FOUND);
         }
 
+        //更新为未审核
+        po.setPoiStatus(UNVERIFIED);
         // (3) 更新数据
         interestPointMapper.updateById(po);
 

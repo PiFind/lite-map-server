@@ -51,4 +51,15 @@ public interface InterestPointDaoService {
      * @return
      */
     R<List<InterestPointReviewVO>> getReviewList(Long interestPointId);
+
+    /**
+     * 获取当前用户已审核/已拒绝的兴趣点列表
+     *
+     * @param username
+     * @param agree
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    R<Page<InterestPointReviewVO>> getReviewList(String username, Boolean agree, Integer currentPage, Integer pageSize);
 }
