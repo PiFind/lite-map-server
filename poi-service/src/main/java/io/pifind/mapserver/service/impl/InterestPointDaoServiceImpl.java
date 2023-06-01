@@ -168,11 +168,10 @@ public class InterestPointDaoServiceImpl implements InterestPointDaoService {
     }
 
     @Override
-    public R<Page<InterestPointReviewVO>> getReviewList(String username, Boolean agree, Integer currentPage, Integer pageSize) {
+    public R<Page<InterestPointReviewVO>> getReviewList(String username, Integer currentPage, Integer pageSize) {
         MybatisPage<InterestPointReviewPO> reviewPage = new MybatisPage<>(currentPage, pageSize);
         interestPointReviewMapper.selectPage(reviewPage, new LambdaQueryWrapper<InterestPointReviewPO>()
                 .eq(InterestPointReviewPO::getUsername, username)
-                .eq(InterestPointReviewPO::getAgree, agree)
                 .orderByDesc(InterestPointReviewPO::getUpdateTime)
         );
         List<InterestPointReviewVO> records;
