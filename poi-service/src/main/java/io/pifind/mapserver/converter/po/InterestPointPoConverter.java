@@ -39,7 +39,6 @@ public interface InterestPointPoConverter extends
          */
 
         if (businessTime != null) {
-
             /*
              * 提取营业日
              */
@@ -114,7 +113,6 @@ public interface InterestPointPoConverter extends
 
             interestPointPO.setVacationStartTime(businessTime.getVacationStartTime());
             interestPointPO.setVacationEndTime(businessTime.getVacationEndTime());
-
         }
 
         /*
@@ -146,20 +144,21 @@ public interface InterestPointPoConverter extends
         /*
          * 提取经纬度
          */
-
-        interestPointPO.setLatitude(dto.getCoordinate().getLatitude());
-        interestPointPO.setLongitude(dto.getCoordinate().getLongitude());
-        if (Objects.nonNull(dto.getCoordinate().getSystem())) {
-            switch (dto.getCoordinate().getSystem()) {
-                case WGS84:
-                    interestPointPO.setCoordinateSystem(CoordinateSystemEnum.WGS84);
-                    break;
-                case GCJ02:
-                    interestPointPO.setCoordinateSystem(CoordinateSystemEnum.GCJ02);
-                    break;
-                case CGCS2000:
-                    interestPointPO.setCoordinateSystem(CoordinateSystemEnum.CGCS2000);
-                    break;
+        if (Objects.nonNull(dto.getCoordinate())) {
+            interestPointPO.setLatitude(dto.getCoordinate().getLatitude());
+            interestPointPO.setLongitude(dto.getCoordinate().getLongitude());
+            if (Objects.nonNull(dto.getCoordinate().getSystem())) {
+                switch (dto.getCoordinate().getSystem()) {
+                    case WGS84:
+                        interestPointPO.setCoordinateSystem(CoordinateSystemEnum.WGS84);
+                        break;
+                    case GCJ02:
+                        interestPointPO.setCoordinateSystem(CoordinateSystemEnum.GCJ02);
+                        break;
+                    case CGCS2000:
+                        interestPointPO.setCoordinateSystem(CoordinateSystemEnum.CGCS2000);
+                        break;
+                }
             }
         }
         return interestPointPO;
@@ -176,7 +175,6 @@ public interface InterestPointPoConverter extends
      * @return 转换后的 {@link InterestPointPO 兴趣点PO对象}
      * @see InterestPointPoConverter#convert(InterestPointDTO)
      */
-    @Deprecated
     @Mappings({
             @Mapping(target = "id",source = "id"),
             @Mapping(target = "name",source = "name"),
