@@ -1,5 +1,6 @@
 package io.pifind.mapserver.mp;
 
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -61,9 +62,12 @@ public class StringListTypeHandler extends BaseTypeHandler<List<String>> {
     }
 
     private List<String> convert(String str) {
+        if (StringUtils.isBlank(str)) {
+            return null;
+        }
         try {
             return objectMapper.readValue(str, listType);
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             return null;
         }
     }
