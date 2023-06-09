@@ -326,4 +326,19 @@ public class CategoryServiceImpl implements ICategoryService {
 
     }
 
+    @Override
+    public R<List<CategoryVO>> getCategoryListBySuperior(Long superior) {
+        // (1) 从数据库中根据父类找子类
+        List<CategoryPO> categoryList = categoryMapper.selectList(
+                new LambdaQueryWrapper<CategoryPO>()
+                        .eq(CategoryPO::getSuperior,superior)
+                        .eq(CategoryPO::getUnavailable, false)
+        );
+
+        // (2) 转换数据
+        List<CategoryVO> categoryVoList = categoryVoConverter.convert(categoryList);
+
+        return R.success(categoryVoList);
+    }
+
 }

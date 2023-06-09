@@ -130,4 +130,11 @@ public interface ICategoryService {
      */
     R<Void> removeAllLocalizedNames(Long id);
 
+    /**
+     * 根据父类查询子类列表
+     *
+     * @param superior
+     * @return
+     */
+    R<List<CategoryVO>> getCategoryListBySuperior(Long superior);
 }

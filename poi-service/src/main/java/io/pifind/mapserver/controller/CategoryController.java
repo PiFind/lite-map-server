@@ -64,6 +64,20 @@ public class CategoryController {
     }
 
     /**
+     * 根据分类等级获取类别实体对象
+     * @param superior 分类等级
+     * @return 返回值类型为 {@link List<CategoryVO>}
+     * <ul>
+     *     <li><b>存在分类等级</b> - 返回 {@link List<CategoryVO> 类别实体对象列表} </li>
+     *     <li><b>不存在类别</b> - 返回 {@code null} </li>
+     * </ul>
+     */
+    @GetMapping("/get/{superior}/child")
+    public R<List<CategoryVO>> getCategoryListByLevel(@PathVariable("superior") Long superior) {
+        return categoryService.getCategoryListBySuperior(superior);
+    }
+
+    /**
      * 修改类别信息
      * @param modifiedCategory 修改过后的{@link CategoryEditDTO 类别实体对象}
      * @return 无返回值
