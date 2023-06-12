@@ -21,14 +21,12 @@ public interface InterestPointMapper extends BaseMapper<InterestPointPO> {
      * 查询需要审核的兴趣点
      * @param page 分页
      * @param username 用户名
-     * @param administrativeAreaId 行政区划ID
      * @return 兴趣点列表
      */
     @Select(
         "SELECT * " +
         "FROM interest_point_00 " +
         "WHERE poi_status = 0 " +
-        "AND administrative_area_id LIKE CONCAT(#{administrativeAreaId}, '%') " +
         "AND ( " +
         "    SELECT COUNT(*) " +
         "    FROM interest_point_review " +
@@ -45,10 +43,6 @@ public interface InterestPointMapper extends BaseMapper<InterestPointPO> {
             @Result(column = "supported_currencies", property = "supportedCurrencies",typeHandler = StringListTypeHandler.class),
             @Result(column = "tags", property = "tags",typeHandler = StringListTypeHandler.class),
     })
-    Page<InterestPointPO> selectReviewInterestPointPage(
-            Page<InterestPointPO> page,
-            String username,
-            String administrativeAreaId
-    );
+    Page<InterestPointPO> selectReviewInterestPointPage(Page<InterestPointPO> page, String username);
 
 }

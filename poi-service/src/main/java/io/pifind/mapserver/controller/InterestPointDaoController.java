@@ -87,15 +87,11 @@ public class InterestPointDaoController {
      * @param pageSize 每页大小
      * @return 待审核列表
      */
-    @GetMapping("/getReviewPage/{administrativeAreaId}/{currentPage}/{pageSize}")
-    public R<Page<InterestPointVO>> getReviewPage(
-            @UserName String username,
-            @PathVariable("administrativeAreaId") String administrativeAreaId,
-            @PathVariable("currentPage") Integer currentPage,
-            @PathVariable("pageSize") Integer pageSize) {
-        return interestPointDaoService.getReviewPage(
-                username, administrativeAreaId,currentPage, pageSize
-        );
+    @GetMapping("/getReviewPage/{currentPage}/{pageSize}")
+    public R<Page<InterestPointVO>> getReviewPage(@UserName String username,
+                                                  @PathVariable("currentPage") Integer currentPage,
+                                                  @PathVariable("pageSize") Integer pageSize) {
+        return interestPointDaoService.getReviewPage(username,currentPage, pageSize);
     }
 
 }

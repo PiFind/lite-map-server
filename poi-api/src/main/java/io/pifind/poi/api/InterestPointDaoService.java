@@ -32,17 +32,11 @@ public interface InterestPointDaoService {
     /**
      * 获取待审核列表
      * @param username 用户名
-     * @param administrativeAreaId 行政区划ID
      * @param currentPage 当前页
      * @param pageSize 每页大小
      * @return 待审核列表
      */
-    R<Page<InterestPointVO>> getReviewPage(
-            String username,
-            String administrativeAreaId,
-            Integer currentPage,
-            Integer pageSize
-    );
+    R<Page<InterestPointVO>> getReviewPage(String username, Integer currentPage, Integer pageSize);
 
     /**
      * 获取审核数据列表
