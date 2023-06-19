@@ -82,7 +82,9 @@ public class CategoryServiceImpl implements ICategoryService {
         if (categoryPO == null) {
             return R.failure();
         }
-        List<CategoryPO> subcategoryList =  categoryMapper.selectSubcategoryListById(id);
+        List<CategoryPO> subcategoryList =  categoryMapper.selectList(
+                new LambdaQueryWrapper<CategoryPO>().eq(CategoryPO::getSuperior, id)
+        );
 
         // (2) 转换数据
         CategoryVO categoryVO = categoryVoConverter.convert(categoryPO);

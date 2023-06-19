@@ -6,6 +6,7 @@ import io.pifind.poi.model.vo.CategoryVO;
 import org.mapstruct.Mapper;
 
 import java.util.Locale;
+import java.util.Objects;
 
 @Mapper(componentModel = "spring")
 public interface CategoryVoConverter extends AdvancedConverter<CategoryPO, CategoryVO> {
@@ -13,10 +14,15 @@ public interface CategoryVoConverter extends AdvancedConverter<CategoryPO, Categ
     @Override
     default CategoryVO convert(CategoryPO source) {
         CategoryVO categoryVO = new CategoryVO();
-        Locale locale = Locale.CHINA;
-        if (source.getNames() != null && source.getNames().containsKey(locale)) {
-            categoryVO.setName(source.getNames().get(locale));
-        } else {
+        String chinaLang = Locale.CHINA.getLanguage();
+        if (source.getNames() != null) {
+            source.getNames().forEach((locale, name) -> {
+                if (locale.getLanguage().equals(chinaLang)) {
+                    categoryVO.setName(name);
+                }
+            });
+        }
+        if (Objects.isNull(categoryVO.getName())) {
             categoryVO.setName(source.getNameEN());
         }
         categoryVO.setNameEN(source.getNameEN());
