@@ -4,7 +4,8 @@ import io.pifind.common.converter.AdvancedConverter;
 import io.pifind.mapserver.model.po.CategoryPO;
 import io.pifind.poi.model.vo.CategoryVO;
 import org.mapstruct.Mapper;
-import org.springframework.context.i18n.LocaleContextHolder;
+
+import java.util.Locale;
 
 @Mapper(componentModel = "spring")
 public interface CategoryVoConverter extends AdvancedConverter<CategoryPO, CategoryVO> {
@@ -12,8 +13,9 @@ public interface CategoryVoConverter extends AdvancedConverter<CategoryPO, Categ
     @Override
     default CategoryVO convert(CategoryPO source) {
         CategoryVO categoryVO = new CategoryVO();
-        if (source.getNames() != null && source.getNames().containsKey(LocaleContextHolder.getLocale())) {
-            categoryVO.setName(source.getNames().get(LocaleContextHolder.getLocale()));
+        Locale locale = Locale.CHINA;
+        if (source.getNames() != null && source.getNames().containsKey(locale)) {
+            categoryVO.setName(source.getNames().get(locale));
         } else {
             categoryVO.setName(source.getNameEN());
         }

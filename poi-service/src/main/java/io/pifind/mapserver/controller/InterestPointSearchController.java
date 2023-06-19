@@ -8,6 +8,7 @@ import io.pifind.poi.constant.SortReferenceEnum;
 import io.pifind.poi.model.vo.CategoryVO;
 import io.pifind.poi.model.vo.InterestPointVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -50,17 +51,12 @@ public class InterestPointSearchController {
             @RequestParam(value = "categoryId",required = false) Long categoryId,
             @RequestParam(value = "keyword",required = false) String keyword,
             @RequestParam("sortOrder") SortOrderEnum sortOrder,
-            @RequestParam("reference") SortReferenceEnum reference
-    ) {
-        return interestPointSearchService.searchPoints(
-                pageSize,
-                currentPage,
-                areaId,
-                categoryId,
-                keyword,
-                sortOrder,
-                reference
-        );
+            @RequestParam("reference") SortReferenceEnum reference) {
+        R<Page<InterestPointVO>> result = interestPointSearchService.searchPoints(pageSize, currentPage, areaId, categoryId, keyword, sortOrder, reference);
+        if (CollectionUtils.isEmpty(result.getData().getRecords())) {
+            result = interestPointSearchService.searchPoints(pageSize, currentPage, null, categoryId, keyword, sortOrder, reference);
+        }
+        return result;
     }
 
 }

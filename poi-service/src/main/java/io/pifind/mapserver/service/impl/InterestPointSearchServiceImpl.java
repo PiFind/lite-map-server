@@ -3,15 +3,12 @@ package io.pifind.mapserver.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.pifind.common.response.Page;
 import io.pifind.common.response.R;
-import io.pifind.common.response.StandardCode;
 import io.pifind.mapserver.converter.vo.InterestPointVoConverter;
-import io.pifind.mapserver.converter.po.InterestPointPoConverter;
 import io.pifind.mapserver.error.PoiCodeEnum;
 import io.pifind.mapserver.mapper.InterestPointMapper;
 import io.pifind.mapserver.model.constant.InterestPointStatusEnum;
 import io.pifind.mapserver.model.po.InterestPointPO;
 import io.pifind.mapserver.mp.page.MybatisPage;
-import io.pifind.place.api.IAdministrativeAreaService;
 import io.pifind.place.model.AdministrativeAreaDTO;
 import io.pifind.poi.api.InterestPointSearchService;
 import io.pifind.poi.constant.SortOrderEnum;
@@ -23,8 +20,8 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 兴趣点搜索服务实现类
@@ -86,9 +83,10 @@ public class InterestPointSearchServiceImpl implements InterestPointSearchServic
         LambdaQueryWrapper<InterestPointPO> queryWrapper =
                 new LambdaQueryWrapper<InterestPointPO>();
 
-        // (1) 加入查找行政区的条件
-        queryWrapper = findAreasQueryWrapper(queryWrapper,areaId);
-
+        if (Objects.nonNull(areaId)) {
+            // (1) 加入查找行政区的条件
+            queryWrapper = findAreasQueryWrapper(queryWrapper,areaId);
+        }
         // (2) 加入查找分类的条件
         if (categoryId != null) {
             queryWrapper = queryWrapper.eq(InterestPointPO::getCategoryId,categoryId);
@@ -168,35 +166,10 @@ public class InterestPointSearchServiceImpl implements InterestPointSearchServic
      */
     private LambdaQueryWrapper<InterestPointPO> findAreasQueryWrapper (
             LambdaQueryWrapper<InterestPointPO> queryWrapper,
-            String areaId
-    ) {
+            String areaId) {
 
         queryWrapper = queryWrapper.likeRight(InterestPointPO::getAdministrativeAreaId,areaId);
         return queryWrapper;
-//
-//        // 获取 areaId 下面的行政区 ID ,最多遍历两个层级
-//        List<Long> areaIdList = new ArrayList<>();
-//        areaIdList.add(areaId);
-//        R<AdministrativeAreaDTO> areaInfo = administrativeAreaService.getAdministrativeAreaById(
-//                areaId,2
-//        );
-//
-//        if (areaInfo.getCode() != StandardCode.SUCCESS) {
-//            return queryWrapper;
-//        }
-//
-//        List<AdministrativeAreaDTO> subAreas = areaInfo.getData().getAreas();
-//        for (AdministrativeAreaDTO subArea : subAreas) {
-//            areaIdList.add(subArea.getId());
-//            if (!subArea.getAreas().isEmpty()) {
-//                for (AdministrativeAreaDTO minSubArea : subArea.getAreas()) {
-//                    areaIdList.add(minSubArea.getId());
-//                }
-//            }
-//        }
-//        queryWrapper = queryWrapper.in(InterestPointPO::getAdministrativeAreaId,areaIdList);
-//        return queryWrapper;
-
     }
 
     /**
