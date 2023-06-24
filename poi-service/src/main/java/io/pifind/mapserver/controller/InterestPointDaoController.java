@@ -29,13 +29,9 @@ public class InterestPointDaoController {
      * @return 根据code判断是否投票成功
      */
     @PostMapping("/vote")
-    public R<Void> vote(
-            @UserName String username,
-            @RequestBody DaoVoteDTO voteDTO
-    ) {
-        return interestPointDaoService.vote(
-                username, voteDTO
-        );
+    public R<Void> vote(@UserName String username, @RequestHeader("lang") String lang, @RequestBody DaoVoteDTO voteDTO) {
+        voteDTO.setLocale(lang);
+        return interestPointDaoService.vote(username, voteDTO);
     }
 
     /**
@@ -45,13 +41,8 @@ public class InterestPointDaoController {
      * @return 是否投票成功
      */
     @GetMapping("/hasVoted/{interestPointId}")
-    public R<Boolean> hasVoted(
-            @UserName String username,
-            @PathVariable("interestPointId") Long interestPointId
-    ) {
-        return interestPointDaoService.hasVoted(
-                username, interestPointId
-        );
+    public R<Boolean> hasVoted(@UserName String username, @PathVariable("interestPointId") Long interestPointId) {
+        return interestPointDaoService.hasVoted(username, interestPointId);
     }
 
     /**

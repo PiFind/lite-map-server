@@ -30,8 +30,9 @@ public class InterestPointPublisherController {
      */
     @PostMapping("/add")
     public R<Void> addInterestPoint(@UserName String username,
-            @RequestBody InterestPointDTO interestPoint
-    ) {
+                                    @RequestHeader("lang") String lang,
+                                    @RequestBody InterestPointDTO interestPoint) {
+        interestPoint.setLocale(lang);
         return interestPointPublisherService.addInterestPoint(username,interestPoint);
     }
 
@@ -56,13 +57,10 @@ public class InterestPointPublisherController {
      * @return 返回值类型为 {@link Page<InterestPointDTO>}
      */
     @GetMapping("/get/page/{currentPage}/{pageSize}")
-    public R<Page<InterestPointVO>> getInterestPointPageByPublisher(
-            @UserName String username,
-            @PathVariable("currentPage") Integer currentPage,
-            @PathVariable("pageSize") Integer pageSize
-    ) {
-        return interestPointPublisherService
-                .getInterestPointPageByPublisher(username,currentPage,pageSize);
+    public R<Page<InterestPointVO>> getInterestPointPageByPublisher(@UserName String username,
+                                                                    @PathVariable("currentPage") Integer currentPage,
+                                                                    @PathVariable("pageSize") Integer pageSize) {
+        return interestPointPublisherService.getInterestPointPageByPublisher(username,currentPage,pageSize);
     }
 
     /**
@@ -75,10 +73,10 @@ public class InterestPointPublisherController {
      * </ul>
      */
     @PostMapping("/modify")
-    public R<Void> modifyInterestPoint(
-            @UserName String username,
-            @RequestBody InterestPointDTO modifiedInterestPoint
-    ) {
+    public R<Void> modifyInterestPoint(@UserName String username,
+                                       @RequestHeader("lang") String lang,
+                                       @RequestBody InterestPointDTO modifiedInterestPoint) {
+        modifiedInterestPoint.setLocale(lang);
         return interestPointPublisherService.modifyInterestPoint(username,modifiedInterestPoint);
     }
 
