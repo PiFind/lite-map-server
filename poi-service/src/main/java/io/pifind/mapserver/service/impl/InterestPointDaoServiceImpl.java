@@ -133,11 +133,10 @@ public class InterestPointDaoServiceImpl implements InterestPointDaoService {
      * @return 待审核列表
      */
     @Override
-    public R<Page<InterestPointVO>> getReviewPage(String username, Integer currentPage, Integer pageSize) {
+    public R<Page<InterestPointVO>> getReviewPage(String username, String locale, Integer currentPage, Integer pageSize) {
         // (1) 获取待审核列表
         MybatisPage<InterestPointPO> page = new MybatisPage<>(currentPage, pageSize);
-        page = (MybatisPage<InterestPointPO>)
-                interestPointMapper.selectReviewInterestPointPage(page, username);
+        page = (MybatisPage<InterestPointPO>) interestPointMapper.selectReviewInterestPointPage(page, username, locale);
 
         // (2) 转换结果
         List<InterestPointVO> records ;

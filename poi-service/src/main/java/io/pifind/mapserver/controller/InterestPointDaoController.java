@@ -80,9 +80,10 @@ public class InterestPointDaoController {
      */
     @GetMapping("/getReviewPage/{currentPage}/{pageSize}")
     public R<Page<InterestPointVO>> getReviewPage(@UserName String username,
+                                                  @RequestHeader("lang") String lang,
                                                   @PathVariable("currentPage") Integer currentPage,
                                                   @PathVariable("pageSize") Integer pageSize) {
-        return interestPointDaoService.getReviewPage(username,currentPage, pageSize);
+        return interestPointDaoService.getReviewPage(username, lang, currentPage, pageSize);
     }
 
 }

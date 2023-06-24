@@ -25,13 +25,14 @@ public interface InterestPointMapper extends BaseMapper<InterestPointPO> {
      */
     @Select(
         "SELECT * " +
-        "FROM interest_point_00 " +
-        "WHERE poi_status = 0 " +
+        "FROM interest_point " +
+        "WHERE poi_status = 0  AND locale = #{locale} +" +
         "AND ( " +
         "    SELECT COUNT(*) " +
         "    FROM interest_point_review " +
-        "    WHERE interest_point_id = interest_point_00.id " +
+        "    WHERE interest_point_id = interest_point.id " +
         "    AND username = #{username} " +
+
         "    AND unavailable = 0 " +
         ") = 0"
     )
@@ -43,6 +44,6 @@ public interface InterestPointMapper extends BaseMapper<InterestPointPO> {
             @Result(column = "supported_currencies", property = "supportedCurrencies",typeHandler = StringListTypeHandler.class),
             @Result(column = "tags", property = "tags",typeHandler = StringListTypeHandler.class),
     })
-    Page<InterestPointPO> selectReviewInterestPointPage(Page<InterestPointPO> page, String username);
+    Page<InterestPointPO> selectReviewInterestPointPage(Page<InterestPointPO> page, String username, String locale);
 
 }
