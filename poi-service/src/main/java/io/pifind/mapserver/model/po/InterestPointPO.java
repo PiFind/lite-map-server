@@ -272,6 +272,7 @@ public class InterestPointPO {
     /**
      * 描述
      */
+    @TableField("description")
     private String desc;
 
     /**
