@@ -19,7 +19,7 @@ import java.util.Map;
  * 兴趣点
  */
 @Data
-@TableName(value = "interest_point_00",autoResultMap = true)
+@TableName(value = "interest_point",autoResultMap = true)
 public class InterestPointPO {
 
     /**
@@ -269,4 +269,13 @@ public class InterestPointPO {
     @TableLogic
     private Boolean unavailable;
 
+    /**
+     * 描述
+     */
+    private String desc;
+
+    /**
+     * 本地语言
+     */
+    private String locale;
 }

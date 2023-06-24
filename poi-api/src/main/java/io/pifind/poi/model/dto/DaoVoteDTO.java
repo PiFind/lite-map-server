@@ -23,4 +23,8 @@ public class DaoVoteDTO {
      */
     private String note;
 
+    /**
+     * 审核语言
+     */
+    private String locale;
 }

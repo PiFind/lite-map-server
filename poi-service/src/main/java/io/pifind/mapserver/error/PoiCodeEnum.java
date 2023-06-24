@@ -11,6 +11,7 @@ public enum PoiCodeEnum {
     DUPLICATE_POI_DATA(0x210001,"Poi.DuplicatePoiData"),
     POI_DATA_NOT_FOUND(0x210002,"Poi.PoiDataNotFound"),
     POI_DATA_OWNER(0x210003,"Poi.PoiDataOwner"),
+    POI_DATA_NOT_VOTE_OTHER_LANGUAGE(0x210004,"Poi.poiDataNotVoteOtherLanguages"),
     ;
 
     private final int code;

@@ -118,4 +118,14 @@ public class InterestPointDTO {
      */
     private CoordinateDTO coordinate;
 
+    /**
+     * 描述
+     */
+    private String desc;
+
+    /**
+     * 本地语言
+     */
+    private String locale;
+
 }

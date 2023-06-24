@@ -1,16 +1,14 @@
 package io.pifind.mapserver.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.pifind.common.response.Page;
 import io.pifind.common.response.R;
 import io.pifind.mapserver.converter.vo.InterestPointVoConverter;
 import io.pifind.mapserver.error.PoiCodeEnum;
 import io.pifind.mapserver.mapper.InterestPointMapper;
 import io.pifind.mapserver.mapper.InterestPointReviewMapper;
-import io.pifind.mapserver.middleware.redis.service.IUserVoteService;
 import io.pifind.mapserver.middleware.redis.model.UserVoteRecordDTO;
-import io.pifind.mapserver.model.constant.InterestPointStatusEnum;
+import io.pifind.mapserver.middleware.redis.service.IUserVoteService;
 import io.pifind.mapserver.model.po.InterestPointPO;
 import io.pifind.mapserver.model.po.InterestPointReviewPO;
 import io.pifind.mapserver.mp.page.MybatisPage;
@@ -18,6 +16,7 @@ import io.pifind.poi.api.InterestPointDaoService;
 import io.pifind.poi.model.dto.DaoVoteDTO;
 import io.pifind.poi.model.vo.InterestPointReviewVO;
 import io.pifind.poi.model.vo.InterestPointVO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,6 +72,10 @@ public class InterestPointDaoServiceImpl implements InterestPointDaoService {
         InterestPointPO interestPointPO = interestPointMapper.selectById(voteDTO.getInterestPointId());
         if (interestPointPO == null) {
             return R.failure(PoiCodeEnum.POI_DATA_NOT_FOUND);
+        }
+
+        if (StringUtils.isNotBlank(interestPointPO.getLocale()) && !interestPointPO.getLocale().equals(voteDTO.getLocale())) {
+            return R.failure(PoiCodeEnum.POI_DATA_NOT_VOTE_OTHER_LANGUAGE);
         }
 
         // (3) 判断兴趣点是否是自己
