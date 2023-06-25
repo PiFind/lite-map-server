@@ -83,7 +83,7 @@ public class UserVoteServiceImpl implements IUserVoteService {
                 UserVoteRecordDTO userVoteRecordDTO = null;
 
                 // (2) 检查是否存在投票记录
-                String key  =KEY_GENERATOR.generate(interestPointId);
+                String key  = KEY_GENERATOR.generate(interestPointId);
                 if (Boolean.TRUE.equals(operations.hasKey(key))) {
                     // 如果存在投票记录,那么检查是否已经投过票了
                     if (hasVoted(username, interestPointId)) {
@@ -96,7 +96,7 @@ public class UserVoteServiceImpl implements IUserVoteService {
                         userVoteMap.put(username, agree);
                         userVoteRecordDTO.setUserVoteMap(userVoteMap);
                         userVoteRecordDTO.setTotal(userVoteRecordDTO.getTotal() + 1);
-                        userVoteRecordDTO.setAgrees(agree?userVoteRecordDTO.getAgrees() + 1:userVoteRecordDTO.getAgrees());
+                        userVoteRecordDTO.setAgrees(agree ? userVoteRecordDTO.getAgrees() + 1 : userVoteRecordDTO.getAgrees());
                         operations.opsForValue().set(key, userVoteRecordDTO);
                     }
                 } else {
@@ -106,7 +106,7 @@ public class UserVoteServiceImpl implements IUserVoteService {
                     userVoteMap.put(username, agree);
                     userVoteRecordDTO.setUserVoteMap(userVoteMap);
                     userVoteRecordDTO.setTotal(1);
-                    userVoteRecordDTO.setAgrees(agree?1:0);
+                    userVoteRecordDTO.setAgrees(agree ? 1 : 0);
                     operations.opsForValue().set(key, userVoteRecordDTO);
                 }
 

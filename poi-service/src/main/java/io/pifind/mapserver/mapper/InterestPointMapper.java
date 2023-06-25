@@ -26,7 +26,7 @@ public interface InterestPointMapper extends BaseMapper<InterestPointPO> {
     @Select(
         "SELECT * " +
         "FROM interest_point " +
-        "WHERE poi_status = 0  AND locale = #{locale} +" +
+        "WHERE poi_status = 0  AND locale = #{locale} " +
         "AND ( " +
         "    SELECT COUNT(*) " +
         "    FROM interest_point_review " +

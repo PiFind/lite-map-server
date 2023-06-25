@@ -33,7 +33,8 @@ public interface InterestPointVoConverter extends AdvancedConverter<InterestPoin
     @Override
     default InterestPointVO convert(InterestPointPO po) {
         InterestPointVO vo = liteConvert(po);
-
+        vo.setLocale(po.getLocale());
+        vo.setDesc(po.getDesc());
         /*
          * 设置营业时间
          */

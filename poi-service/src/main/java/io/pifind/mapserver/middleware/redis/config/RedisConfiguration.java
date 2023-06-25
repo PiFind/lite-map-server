@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
 public class RedisConfiguration {
@@ -22,6 +22,8 @@ public class RedisConfiguration {
     @Bean("InterestPointSocialRedisTemplate")
     public RedisTemplate<String, InterestPointSocialDTO> interestPointSocialRedisTemplate() {
         RedisTemplate<String, InterestPointSocialDTO> redisTemplate = new RedisTemplate<>();
+        StringRedisSerializer redisSerializer = new StringRedisSerializer();
+        redisTemplate.setKeySerializer(redisSerializer);
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         return redisTemplate;
     }
@@ -33,6 +35,8 @@ public class RedisConfiguration {
     @Bean("UserVoteRedisTemplate")
     public RedisTemplate<String, UserVoteRecordDTO> userVoteRedisTemplate() {
         RedisTemplate<String, UserVoteRecordDTO> redisTemplate = new RedisTemplate<>();
+        StringRedisSerializer redisSerializer = new StringRedisSerializer();
+        redisTemplate.setKeySerializer(redisSerializer);
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         return redisTemplate;
     }

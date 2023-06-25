@@ -155,4 +155,13 @@ public class InterestPointVO {
      */
     private Date updateTime;
 
+    /**
+     * 描述
+     */
+    private String desc;
+
+    /**
+     * 本地语言
+     */
+    private String locale;
 }
