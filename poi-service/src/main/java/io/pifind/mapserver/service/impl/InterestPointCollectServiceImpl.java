@@ -1,6 +1,7 @@
 package io.pifind.mapserver.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import io.pifind.common.response.Page;
 import io.pifind.common.response.R;
 import io.pifind.mapserver.converter.vo.InterestPointVoConverter;
@@ -64,6 +65,7 @@ public class InterestPointCollectServiceImpl implements InterestPointCollectServ
     @Override
     public R<Page<InterestPointVO>> getCollectList(String username, Integer currentPage, Integer pageSize) {
         MybatisPage<InterestPointCollectPO> collectPage = new MybatisPage<>(currentPage,pageSize);
+        collectPage.addOrder(OrderItem.desc("create_time"));
 
         interestPointCollectMapper.selectPage(collectPage, new LambdaQueryWrapper<InterestPointCollectPO>()
                         .eq(InterestPointCollectPO::getUsername, username));
