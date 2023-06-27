@@ -3,6 +3,7 @@ package io.pifind.mapserver.config;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import io.pifind.common.request.StandardRestTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,4 +20,8 @@ public class PoiServiceConfiguration {
         return interceptor;
     }
 
+    @Bean
+    public StandardRestTemplate standardRestTemplate() {
+        return new StandardRestTemplate();
+    }
 }

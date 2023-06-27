@@ -48,6 +48,8 @@ pifind:
     url: http://localhost:9003/v1/
   user-permission:
     url: http://localhost:9009/v1/
+  user-service:
+    url: http://localhost:9009/v1/
 
 jwt:
   secret: pApHeeUK7dtuGFAI2L6XB3nYU1YOMpa8

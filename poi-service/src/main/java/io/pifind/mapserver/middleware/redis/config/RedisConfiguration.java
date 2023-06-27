@@ -1,5 +1,6 @@
 package io.pifind.mapserver.middleware.redis.config;
 
+import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
 import io.pifind.mapserver.middleware.redis.model.InterestPointSocialDTO;
 import io.pifind.mapserver.middleware.redis.model.UserVoteRecordDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
@@ -32,11 +34,11 @@ public class RedisConfiguration {
      * 用于存储用户投票记录的RedisTemplate
      * @return {@link RedisTemplate<String, UserVoteRecordDTO> RedisTemplate实体对象}
      */
-    @Bean("UserVoteRedisTemplate")
+    @Bean("userVoteRedisTemplate")
     public RedisTemplate<String, UserVoteRecordDTO> userVoteRedisTemplate() {
         RedisTemplate<String, UserVoteRecordDTO> redisTemplate = new RedisTemplate<>();
-        StringRedisSerializer redisSerializer = new StringRedisSerializer();
-        redisTemplate.setKeySerializer(redisSerializer);
+        redisTemplate.setKeySerializer(RedisSerializer.string());
+        redisTemplate.setHashKeySerializer(RedisSerializer.string());
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         return redisTemplate;
     }

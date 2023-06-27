@@ -1,5 +1,6 @@
 package io.pifind.mapserver.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.pifind.common.response.Page;
 import io.pifind.common.response.R;
@@ -47,6 +48,9 @@ public class InterestPointDaoServiceImpl implements InterestPointDaoService {
     private IUserVoteService userVoteService;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private InterestPointMapper interestPointMapper;
 
     @Autowired
@@ -90,6 +94,7 @@ public class InterestPointDaoServiceImpl implements InterestPointDaoService {
 
         // (5) 对兴趣点进行投票
         UserVoteRecordDTO userVoteRecord = userVoteService.vote(username, voteDTO.getInterestPointId(), voteDTO.getAgree());
+        System.out.println("username:" + username + ",interestPointId:" + voteDTO.getInterestPointId() + ", userVoteRecord:" + JSON.toJSONString(userVoteRecord));
 
         // (6) 如果兴趣点的投票同意通过大于等于 PASS_VOTE_COUNT 则将兴趣点的状态改为已审核
         if (userVoteRecord.getAgrees() > PASS_VOTE_COUNT) {
@@ -164,6 +169,7 @@ public class InterestPointDaoServiceImpl implements InterestPointDaoService {
         List<InterestPointReviewVO> reviewVOList = reviewList.stream().map((review) -> {
             InterestPointReviewVO reviewVO = new InterestPointReviewVO();
             BeanUtils.copyProperties(review, reviewVO);
+            reviewVO.setAvatar(userService.getUserInfo(review.getUsername()).getAvatar());
             return reviewVO;
         }).collect(Collectors.toList());
         return R.success(reviewVOList);
