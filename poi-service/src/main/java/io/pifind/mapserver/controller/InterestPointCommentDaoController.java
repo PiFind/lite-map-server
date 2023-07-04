@@ -21,9 +21,7 @@ public class InterestPointCommentDaoController {
      * @return 无
      */
     @PostMapping("/review")
-    public R<Void> reviewComment(
-            @RequestBody DaoCommentModerationDTO dto
-    ) {
+    public R<Void> reviewComment(@RequestBody DaoCommentModerationDTO dto) {
         return interestPointCommentDaoService.reviewComment(dto);
     }
 
@@ -35,16 +33,10 @@ public class InterestPointCommentDaoController {
      * @return 待审核评论分页
      */
     @GetMapping("/getPendingCommentPage/{administrativeAreaId}/{currentPage}/{pageSize}")
-    public R<Page<InterestPointCommentVO>> getPendingCommentPage(
-            @PathVariable("administrativeAreaId") String administrativeAreaId,
-            @PathVariable("currentPage") Integer currentPage,
-            @PathVariable("pageSize") Integer pageSize
-    ) {
-        return interestPointCommentDaoService.getPendingCommentPage(
-                administrativeAreaId,
-                currentPage,
-                pageSize
-        );
+    public R<Page<InterestPointCommentVO>> getPendingCommentPage(@PathVariable("administrativeAreaId") String administrativeAreaId,
+                                                                 @PathVariable("currentPage") Integer currentPage,
+                                                                 @PathVariable("pageSize") Integer pageSize) {
+        return interestPointCommentDaoService.getPendingCommentPage(administrativeAreaId, currentPage, pageSize);
     }
 
     /**

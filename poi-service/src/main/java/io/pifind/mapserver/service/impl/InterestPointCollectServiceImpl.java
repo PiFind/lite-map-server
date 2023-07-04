@@ -80,4 +80,12 @@ public class InterestPointCollectServiceImpl implements InterestPointCollectServ
 
         return R.page((int) collectPage.getCurrent(), (int) collectPage.getSize(), (int) collectPage.getTotal(), pointVOList);
     }
+
+    @Override
+    public R<Boolean> hasCollect(String username, Long interestPointId) {
+        Long count = interestPointCollectMapper.selectCount(new LambdaQueryWrapper<InterestPointCollectPO>()
+                .eq(InterestPointCollectPO::getUsername, username)
+                .eq(InterestPointCollectPO::getInterestPointId, interestPointId));
+        return R.success(count >= 1);
+    }
 }

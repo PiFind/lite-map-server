@@ -34,6 +34,17 @@ public class InterestPointCollectController {
     }
 
     /**
+     * 是否收藏
+     *
+     * @param username 用户名
+     * @return
+     */
+    @GetMapping("/has/{interestPointId}")
+    public R<Boolean> hasCollect(@UserName String username, @PathVariable("interestPointId") Long interestPointId) {
+        return interestPointCollectService.hasCollect(username, interestPointId);
+    }
+
+    /**
      * 取消收藏
      *
      * @param username 用户名

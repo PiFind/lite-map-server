@@ -22,10 +22,7 @@ public class InterestPointSocialController {
      * @return 无
      */
     @GetMapping("/browse/{id}")
-    public R<Void> browse(
-            @UserName String username,
-            @PathVariable Long id
-    ) {
+    public R<Void> browse(@UserName String username, @PathVariable Long id) {
         return interestPointSocialService.browse(username, id);
     }
 
@@ -35,10 +32,7 @@ public class InterestPointSocialController {
      * @return 无
      */
     @GetMapping("/collect/{id}")
-    public R<Void> collect(
-            @UserName String username,
-            @PathVariable Long id
-    ) {
+    public R<Void> collect(@UserName String username, @PathVariable Long id) {
         return interestPointSocialService.collect(username, id);
     }
 
@@ -49,15 +43,7 @@ public class InterestPointSocialController {
      * @return 无
      */
     @GetMapping("/evaluate/{id}/{score}")
-    public R<Void> evaluate(
-            @UserName String username,
-            @PathVariable Long id,
-            @PathVariable Double score
-    ) {
-        return interestPointSocialService.evaluate(
-                username,
-                id,
-                score
-        );
+    public R<Void> evaluate(@UserName String username, @PathVariable Long id, @PathVariable Double score) {
+        return interestPointSocialService.evaluate(username, id, score);
     }
 }

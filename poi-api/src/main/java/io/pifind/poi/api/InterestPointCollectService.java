@@ -38,4 +38,13 @@ public interface InterestPointCollectService {
      * @return
      */
     R<Page<InterestPointVO>> getCollectList(String username, Integer currentPage, Integer pageSize);
+
+    /**
+     * 是否收藏
+     *
+     * @param username
+     * @param interestPointId
+     * @return
+     */
+    R<Boolean> hasCollect(String username, Long interestPointId);
 }

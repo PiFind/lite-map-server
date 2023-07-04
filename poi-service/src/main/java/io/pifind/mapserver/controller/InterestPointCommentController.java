@@ -22,9 +22,7 @@ public class InterestPointCommentController {
      * @return 评论
      */
     @GetMapping("/get/{id}")
-    public R<InterestPointCommentVO> getCommentById(
-            @PathVariable("id") Long id
-    ) {
+    public R<InterestPointCommentVO> getCommentById(@PathVariable("id") Long id) {
         return interestPointCommentService.getCommentById(id);
     }
 
@@ -36,14 +34,10 @@ public class InterestPointCommentController {
      * @return 评论分页
      */
     @GetMapping("/get/page/{interestPointId}/{currentPage}/{pageSize}")
-    public R<Page<InterestPointCommentVO>> getCommentPage(
-            @PathVariable("interestPointId") Long interestPointId,
-            @PathVariable("currentPage") Integer currentPage,
-            @PathVariable("pageSize") Integer pageSize
-    ) {
-        return interestPointCommentService.getCommentPage(
-                interestPointId,currentPage,pageSize
-        );
+    public R<Page<InterestPointCommentVO>> getCommentPage(@PathVariable("interestPointId") Long interestPointId,
+                                                          @PathVariable("currentPage") Integer currentPage,
+                                                          @PathVariable("pageSize") Integer pageSize) {
+        return interestPointCommentService.getCommentPage(interestPointId,currentPage,pageSize);
     }
 
     /**
@@ -53,10 +47,7 @@ public class InterestPointCommentController {
      * @return 无
      */
     @GetMapping("/like/{id}")
-    public R<Void> likeComment(
-            @UserName String username,
-            @PathVariable("id") Long id
-    ) {
+    public R<Void> likeComment(@UserName String username, @PathVariable("id") Long id) {
         return interestPointCommentService.likeComment(username,id);
     }
 
@@ -67,10 +58,7 @@ public class InterestPointCommentController {
      * @return 无
      */
     @PostMapping("/add")
-    public R<Void> postComment(
-            @UserName String username,
-            @RequestBody InterestPointCommentDTO dto
-    ) {
+    public R<Void> postComment(@UserName String username, @RequestBody InterestPointCommentDTO dto) {
         return interestPointCommentService.postComment(username,dto);
     }
 
@@ -81,10 +69,7 @@ public class InterestPointCommentController {
      * @return 无
      */
     @PostMapping("/modify")
-    public R<Void> modifyComment(
-            @UserName String username,
-            @RequestBody InterestPointCommentDTO dto
-    ) {
+    public R<Void> modifyComment(@UserName String username, @RequestBody InterestPointCommentDTO dto) {
         return interestPointCommentService.modifyComment(username,dto);
     }
 
@@ -95,10 +80,7 @@ public class InterestPointCommentController {
      * @return 无
      */
     @DeleteMapping("/remove/{id}")
-    public R<Void> removeComment(
-            @UserName String username,
-            @PathVariable("id") Long id
-    ) {
+    public R<Void> removeComment(@UserName String username, @PathVariable("id") Long id) {
         return interestPointCommentService.removeComment(username, id);
     }
 

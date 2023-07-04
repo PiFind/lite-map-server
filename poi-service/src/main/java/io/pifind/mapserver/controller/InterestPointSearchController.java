@@ -44,14 +44,13 @@ public class InterestPointSearchController {
      * @see CategoryVO
      */
     @GetMapping("/condition")
-    public R<Page<InterestPointVO>> searchPoints(
-            @RequestParam("pageSize") Integer pageSize,
-            @RequestParam("currentPage") Integer currentPage,
-            @RequestParam("areaId") String areaId,
-            @RequestParam(value = "categoryId",required = false) Long categoryId,
-            @RequestParam(value = "keyword",required = false) String keyword,
-            @RequestParam("sortOrder") SortOrderEnum sortOrder,
-            @RequestParam("reference") SortReferenceEnum reference) {
+    public R<Page<InterestPointVO>> searchPoints(@RequestParam("pageSize") Integer pageSize,
+                                                 @RequestParam("currentPage") Integer currentPage,
+                                                 @RequestParam("areaId") String areaId,
+                                                 @RequestParam(value = "categoryId",required = false) Long categoryId,
+                                                 @RequestParam(value = "keyword",required = false) String keyword,
+                                                 @RequestParam("sortOrder") SortOrderEnum sortOrder,
+                                                 @RequestParam("reference") SortReferenceEnum reference) {
         R<Page<InterestPointVO>> result = interestPointSearchService.searchPoints(pageSize, currentPage, areaId, categoryId, keyword, sortOrder, reference);
         if (CollectionUtils.isEmpty(result.getData().getRecords())) {
             result = interestPointSearchService.searchPoints(pageSize, currentPage, null, categoryId, keyword, sortOrder, reference);

@@ -42,10 +42,7 @@ public class InterestPointPublisherController {
      * @return 兴趣点实体类
      */
     @GetMapping("/get/{id}")
-    public R<InterestPointVO> getInterestPointById(
-            @UserName String username,
-            @PathVariable("id") Long id
-    ) {
+    public R<InterestPointVO> getInterestPointById(@UserName String username, @PathVariable("id") Long id) {
         return interestPointPublisherService.getInterestPointById(username,id);
     }
 
@@ -86,10 +83,7 @@ public class InterestPointPublisherController {
      * @return 空
      */
     @DeleteMapping("/remove/{id}")
-    public R<Void> removeInterestPointById(
-            @UserName String username,
-            @PathVariable Long id
-    ) {
+    public R<Void> removeInterestPointById(@UserName String username, @PathVariable Long id) {
         return interestPointPublisherService.removeInterestPointById(username,id);
     }
 
