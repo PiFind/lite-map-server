@@ -87,4 +87,14 @@ public class InterestPointPublisherController {
         return interestPointPublisherService.removeInterestPointById(username,id);
     }
 
+
+    /**
+     * 下架兴趣点
+     * @param id 兴趣点ID
+     * @return
+     */
+    @GetMapping("/off/{id}")
+    public R offShelf(@PathVariable("id") Long id) {
+        return interestPointPublisherService.offShelf(id);
+    }
 }

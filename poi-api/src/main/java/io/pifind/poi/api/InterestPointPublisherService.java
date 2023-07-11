@@ -78,4 +78,11 @@ public interface InterestPointPublisherService {
      */
     R<Void> removeInterestPointById(@NotEmpty String username,@NotNull Long id);
 
+    /**
+     * 下架
+     *
+     * @param id
+     * @return
+     */
+    R offShelf(Long id);
 }

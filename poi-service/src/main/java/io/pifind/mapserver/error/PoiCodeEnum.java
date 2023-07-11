@@ -12,6 +12,7 @@ public enum PoiCodeEnum {
     POI_DATA_NOT_FOUND(0x210002,"Poi.PoiDataNotFound"),
     POI_DATA_OWNER(0x210003,"Poi.PoiDataOwner"),
     POI_DATA_NOT_VOTE_OTHER_LANGUAGE(0x210004,"Poi.poiDataNotVoteOtherLanguages"),
+    POI_HAVE_OFF_SHELF(0x210004,"Poi.poiHaveOffShelf"),
     ;
 
     private final int code;

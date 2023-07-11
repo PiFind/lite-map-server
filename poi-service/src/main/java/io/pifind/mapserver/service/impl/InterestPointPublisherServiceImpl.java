@@ -225,5 +225,22 @@ public class InterestPointPublisherServiceImpl implements InterestPointPublisher
         return R.success();
     }
 
+    @Override
+    public R offShelf(Long id) {
+        // (2) 检查对象是否存在
+        InterestPointPO interestPoint = interestPointMapper.selectById(id);
+        if (interestPoint == null) {
+            return R.failure(PoiCodeEnum.POI_DATA_NOT_FOUND);
+        }
 
+        if (UNVERIFIED.equals(interestPoint.getPoiStatus())) {
+            return R.failure(PoiCodeEnum.POI_HAVE_OFF_SHELF);
+        }
+
+        //更新为未审核
+        interestPoint.setPoiStatus(UNVERIFIED);
+        // (3) 更新数据
+        int result = interestPointMapper.updateById(interestPoint);
+        return result == 1 ? R.success() : R.failure();
+    }
 }
