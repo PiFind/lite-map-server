@@ -70,7 +70,7 @@ public class InterestPointPublisherController {
      * </ul>
      */
     @PostMapping("/modify")
-    public R<Void> modifyInterestPoint(@UserName String username,
+    public R<InterestPointVO> modifyInterestPoint(@UserName String username,
                                        @RequestHeader("lang") String lang,
                                        @RequestBody InterestPointDTO modifiedInterestPoint) {
         modifiedInterestPoint.setLocale(lang);

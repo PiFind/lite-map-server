@@ -64,7 +64,7 @@ public interface InterestPointPublisherService {
      *     <li><b>修改兴趣点失败</b> - 返回失败响应 {@code code != 0}，且会在 {@link R#getMessage()} 中说明原因</li>
      * </ul>
      */
-    R<Void> modifyInterestPoint(@NotEmpty String username,@NotNull InterestPointDTO modifiedInterestPoint);
+    R<InterestPointVO> modifyInterestPoint(@NotEmpty String username,@NotNull InterestPointDTO modifiedInterestPoint);
 
     /**
      * 根据兴趣点ID删除兴趣点

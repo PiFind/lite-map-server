@@ -159,7 +159,7 @@ public class InterestPointPublisherServiceImpl implements InterestPointPublisher
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public R<Void> modifyInterestPoint(@NotEmpty String username,@NotNull InterestPointDTO modifiedInterestPoint) {
+    public R<InterestPointVO> modifyInterestPoint(@NotEmpty String username,@NotNull InterestPointDTO modifiedInterestPoint) {
 
         // (1) 将 DTO 对象转换成 PO 对象
         InterestPointPO po = interestPointPoConverter.convert(modifiedInterestPoint);
@@ -187,8 +187,7 @@ public class InterestPointPublisherServiceImpl implements InterestPointPublisher
         if (interestPointMapper.exists(
                 new LambdaQueryWrapper<InterestPointPO>()
                         .eq(InterestPointPO::getHash,hash)
-                        .ne(InterestPointPO::getId,id)
-        )) {
+                        .ne(InterestPointPO::getId,id))) {
             // 回滚
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return R.failure(PoiCodeEnum.DUPLICATE_POI_DATA);
@@ -201,8 +200,10 @@ public class InterestPointPublisherServiceImpl implements InterestPointPublisher
             needUpdateHashPO.setHash(hash);
             interestPointMapper.updateById(needUpdateHashPO);
         }
+        interestPointPO = interestPointMapper.selectById(id);
+        InterestPointVO interestPointVO = interestPointVoConverter.convert(interestPointPO);
 
-        return R.success();
+        return R.success(interestPointVO);
     }
 
     /**
