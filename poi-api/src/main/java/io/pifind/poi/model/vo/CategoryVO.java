@@ -41,6 +41,11 @@ public class CategoryVO {
     private Long superior;
 
     /**
+     * 父类
+     */
+    private CategoryVO parent;
+
+    /**
      * 该类目下的所有子类
      */
     private List<CategoryVO> categories;

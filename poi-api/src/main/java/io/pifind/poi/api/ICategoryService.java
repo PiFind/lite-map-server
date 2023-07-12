@@ -137,4 +137,12 @@ public interface ICategoryService {
      * @return
      */
     R<List<CategoryVO>> getCategoryListBySuperior(Long superior);
+
+    /**
+     * 根据子类查询父类列表
+     *
+     * @param id
+     * @return
+     */
+    CategoryVO getParentCategoryById(Long id);
 }

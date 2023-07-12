@@ -184,4 +184,14 @@ public class CategoryController {
         return categoryService.removeAllLocalizedNames(id);
     }
 
+    /**
+     * 根据类别id递归查询父类
+     * @param id 类别ID
+     * @return 返回值类型为 {@link CategoryVO}
+     *
+     */
+    @GetMapping("/get/parent/{id}")
+    public R<CategoryVO> getParentCategoryById(@PathVariable("id") Long id) {
+        return R.success(categoryService.getParentCategoryById(id));
+    }
 }

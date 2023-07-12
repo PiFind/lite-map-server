@@ -17,10 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 类别服务实现类
@@ -343,4 +340,18 @@ public class CategoryServiceImpl implements ICategoryService {
         return R.success(categoryVoList);
     }
 
+    @Override
+    public CategoryVO getParentCategoryById(Long id) {
+        // (1) 从数据库中找到当前的分类
+        CategoryPO categoryPO = categoryMapper.selectById(id);
+        if (Objects.isNull(categoryPO)) {
+            return null;
+        }
+        CategoryVO child = categoryVoConverter.convert(categoryPO);
+        if (Objects.nonNull(categoryPO.getSuperior()) && categoryPO.getLevel() > 1) {
+            CategoryVO parentCategory = getParentCategoryById(categoryPO.getSuperior());
+            child.setParent(parentCategory);
+        }
+        return child;
+    }
 }
