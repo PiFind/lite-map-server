@@ -99,6 +99,12 @@ public class InterestPointPO {
     private String businessLicense;
 
     /**
+     * 营业执照图片路径
+     */
+    @TableField("business_license_url")
+    private String businessLicenseUrl;
+
+    /**
      * [必填]营业状态
      */
     @TableField("business_status")

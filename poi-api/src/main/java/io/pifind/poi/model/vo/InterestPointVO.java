@@ -66,6 +66,11 @@ public class InterestPointVO {
     private String businessLicense;
 
     /**
+     * 营业执照图片路径
+     */
+    private String businessLicenseUrl;
+
+    /**
      * 营业状态
      */
     private BusinessStatusEnum businessStatus;

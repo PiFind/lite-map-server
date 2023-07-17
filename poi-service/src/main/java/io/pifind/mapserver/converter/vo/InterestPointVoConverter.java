@@ -214,6 +214,7 @@ public interface InterestPointVoConverter extends AdvancedConverter<InterestPoin
             @Mapping(target = "categoryId",source = "categoryId"),
             @Mapping(target = "administrativeAreaId",source = "administrativeAreaId"),
             @Mapping(target = "businessLicense",source = "businessLicense"),
+            @Mapping(target = "businessLicenseUrl",source = "businessLicenseUrl"),
             @Mapping(target = "tels",source = "tels"),
             @Mapping(target = "logo",source = "logo"),
             @Mapping(target = "background",source = "background"),
