@@ -31,7 +31,7 @@ public class IInterestPointIntegralController {
      * @return 无
      */
     @GetMapping
-    public R integral(@UserEntity User user, @RequestParam String username, @RequestParam String type) {
-        return interestPointIntegralService.integral(username, type);
+    public R integral(@UserEntity User user, @RequestParam String type) {
+        return interestPointIntegralService.integral(user.getUsername(), type);
     }
 }
