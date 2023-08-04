@@ -1,16 +1,17 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.245.112.188:3306/pifind_poibase
+    url: jdbc:mysql://119.13.109.190:3306/pifind_poibase
     username: root
-    password: L&Ffr+(Ew2Ns
+    password: Pichainmall@2022
 
   redis:
     #Redis服务器地址，
-    host: 127.0.0.1
+    host: 119.13.109.190
     #Redis服务器端口,默认为6379.若有改动按改动后的来
     port: 6379
     #Redis服务器连接密码，默认为空，若有设置按设置的来
+    password: 123456
     jedis:
       pool:
         #连接池最大连接数，若为负责则表示没有任何限制
@@ -21,13 +22,18 @@ spring:
         max-idle: 8
 
 rocketmq:
-  name-server: 173.19.2.231:9876 # 访问地址
+  name-server: 119.13.109.190:9876 # 访问地址
   producer:
     group: POI_SERVICE_GROUP
     enable-msg-trace: true
     send-message-timeout: 3000 # 发消息超时时长
     retry-times-when-send-failed: 3 # 同步发送消息失败重试次数，默认2
     retry-times-when-send-async-failed: 3 # 异步发送消息失败重试次数，默认2
+
+pcm:
+  wallet:
+    url: https://test.pcmwallet.com
+    appId: 3
 
 jwt:
   secret: pApHeeUK7dtuGFAI2L6XB3nYU1YOMpa8
