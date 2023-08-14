@@ -1,5 +1,6 @@
 package io.pifind.mapserver.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.pifind.common.response.R;
 import io.pifind.mapserver.mapper.InterestPointReportMapper;
 import io.pifind.mapserver.model.constant.ReportType;
@@ -29,6 +30,12 @@ public class InterestPointReportServiceImpl implements IInterestPointReportServi
     public R report(InterestPointReportDTO dto) {
         if (Objects.isNull(ReportType.parse(dto.getType()))) {
             return R.failure("report reason is illegal");
+        }
+        InterestPointReportPO pointReportPO = reportMapper.selectOne(new LambdaQueryWrapper<InterestPointReportPO>()
+                .eq(InterestPointReportPO::getReportId, dto.getReportId())
+                .eq(InterestPointReportPO::getReportedId, dto.getReportedId()));
+        if (Objects.nonNull(pointReportPO)) {
+            return R.failure("You have reported!");
         }
         InterestPointReportPO reportPO = new InterestPointReportPO();
         BeanUtils.copyProperties(dto, reportPO);

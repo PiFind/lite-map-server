@@ -1,7 +1,9 @@
 package io.pifind.mapserver.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import io.pifind.common.response.R;
 import io.pifind.mapserver.model.dto.PcmIntegralDTO;
+import io.pifind.mapserver.util.Md5Util;
 import io.pifind.mapserver.util.OkHttpUtil;
 import io.pifind.mapserver.util.Result;
 import io.pifind.mapserver.util.SignatureGenerator;
@@ -47,6 +49,28 @@ public class InterestPointIntegralServiceImpl implements IInterestPointIntegralS
         }  catch (Exception e) {
             log.error("username:{} trans error:", username, e);
             return R.failure("integral error");
+        }
+    }
+
+    @Override
+    public R integralList(String username) {
+        try {
+            String token = Md5Util.getMD5StrSecretKey(username);
+            String uri = String.format("/api/adv/pcm/points/user/contributes?user_name=%s&app_id=%d&x_token=%s", username, appId, token);
+            Result result = OkHttpUtil.doGet(url + uri, Result.class);
+            Object list = null;
+            if (Result.isOk(result)) {
+                Object data = result.getData();
+                if (data instanceof JSONObject) {
+                    JSONObject jsonObj = (JSONObject) data;
+                    list = jsonObj.getJSONArray("list");
+                }
+                return R.success(list);
+            }
+            return R.failure(result.getMsg());
+        }  catch (Exception e) {
+            log.error("username:{} integralList error:", username, e);
+            return R.failure("integral list error");
         }
     }
 }

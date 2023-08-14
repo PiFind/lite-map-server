@@ -19,4 +19,12 @@ public interface IInterestPointIntegralService {
      * @return
      */
     R integral(String username, String type);
+
+    /**
+     * 积分列表
+     *
+     * @param username
+     * @return
+     */
+    R integralList(String username);
 }

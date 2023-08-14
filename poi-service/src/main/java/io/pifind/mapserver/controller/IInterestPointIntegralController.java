@@ -25,7 +25,7 @@ public class IInterestPointIntegralController {
     private IInterestPointIntegralService interestPointIntegralService;
 
     /**
-     * 举报
+     * 积分
      * @param user 用户信息
      * @param type 类型
      * @return 无
@@ -33,5 +33,15 @@ public class IInterestPointIntegralController {
     @GetMapping
     public R integral(@UserEntity User user, @RequestParam String type) {
         return interestPointIntegralService.integral(user.getUsername(), type);
+    }
+
+    /**
+     * 积分列表
+     * @param user 用户信息
+     * @return 无
+     */
+    @GetMapping("/list")
+    public R integralList(@UserEntity User user) {
+        return interestPointIntegralService.integralList(user.getUsername());
     }
 }
